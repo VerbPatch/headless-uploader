@@ -1,0 +1,62 @@
+---
+title: "Tus Upload"
+description: "How to perform reliable and resumable file uploads using the Tus protocol."
+---
+
+# Tus Upload (Resumable)
+
+Tus is an open protocol for resumable file uploads. It is the best choice for large files or users with unstable network connections.
+
+## Requirements
+
+To use Tus, you must install the `tus-js-client` package in your project.
+
+<CodeBlock>
+```bash
+npm install tus-js-client
+```
+</CodeBlock>
+
+## Basic Configuration
+
+Set the `protocol` to `'tus'` and provide the `endpoint` of your Tus-compatible server.
+
+<CodeBlock>
+```typescript
+import { useUploader } from '@verbpatch/headless-uploader';
+
+const uploader = useUploader({
+  protocol: 'tus',
+  tus: {
+    endpoint: 'https://tusd.tusdemo.net/files/',
+    chunkSize: 5 * 1024 * 1024, // 5MB chunks
+    retryDelays: [0, 1000, 3000, 5000],
+  }
+});
+```
+</CodeBlock>
+
+## Why use Tus?
+
+*   **Resumability**: If a user loses connection or closes the tab, the upload can be resumed exactly where it left off.
+*   **Reliability**: Built-in support for retrying failed chunks.
+*   **Standardized**: Works with any Tus-compatible backend (available in Go, Node.js, Python, PHP, etc.).
+
+## Tus Specific Options
+
+You can pass any valid `tus-js-client` options through the `tus` configuration block:
+
+<CodeBlock>
+```typescript
+const uploader = useUploader({
+  protocol: 'tus',
+  tus: {
+    endpoint: '/files/',
+    metadata: {
+      owner: 'user-123'
+    },
+    removeFingerprintOnSuccess: true,
+  }
+});
+```
+</CodeBlock>

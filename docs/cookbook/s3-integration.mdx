@@ -1,0 +1,62 @@
+---
+title: "S3 Integration"
+description: "How to use Headless Uploader with Amazon S3 using pre-signed URLs."
+---
+
+# S3 Integration
+
+Uploading files directly to Amazon S3 (or any S3-compatible storage like MinIO, DigitalOcean Spaces, or Cloudflare R2) is a common requirement. Headless Uploader makes this easy through its `cloud` protocol and S3 adapter.
+
+## The Pre-signed URL Workflow
+
+To maintain security, your client-side application should never contain your S3 secret keys. Instead, use a pre-signed URL:
+
+1. **Request URL**: Your frontend asks your backend for a pre-signed URL for a specific file.
+2. **Generate URL**: Your backend uses the AWS SDK to generate a temporary URL that allows a `PUT` request for that file.
+3. **Upload**: Your frontend uses Headless Uploader to send the file directly to that URL.
+
+## Implementation
+
+You can implement this by using the `createS3Adapter` and setting the protocol to `'cloud'`:
+
+<CodeBlock>
+```typescript
+import { useUploader, createS3Adapter } from '@verbpatch/headless-uploader';
+
+const uploader = useUploader({
+  protocol: 'cloud',
+  cloudAdapter: createS3Adapter({
+    async getUploadUrl(file) {
+      // 1. Call your backend to get the pre-signed URL
+      const response = await fetch('/api/s3/generate-presigned-url', {
+        method: 'POST',
+        body: JSON.stringify({
+          fileName: file.metadata.name,
+          contentType: file.metadata.type,
+        }),
+      });
+      
+      if (!response.ok) throw new Error('Failed to get upload URL');
+      
+      const { url } = await response.json();
+      return url;
+    },
+    // Optional: Add custom headers (e.g. for tagging or ACLs)
+    headers: {
+      'x-amz-acl': 'public-read'
+    }
+  }),
+  onUploadSuccess: (file, response) => {
+    console.log('File successfully uploaded to S3:', response.url);
+  },
+});
+```
+</CodeBlock>
+
+## Advanced S3 Features
+
+When using S3, you might want to consider:
+
+* **Direct Uploads**: For smaller files, uploading the whole file at once is easiest.
+* **Multipart Uploads**: For larger files (over 100MB), S3's multipart upload API is more reliable. You can implement this using a custom protocol adapter if native resumability is required.
+* **Tus Integration**: If you need reliable, resumable uploads for very large files, you can use a Tus server that stores data in S3.

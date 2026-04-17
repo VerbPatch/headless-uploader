@@ -1,5 +1,14 @@
 # @verbpatch/headless-uploader
 
+## cloud
+
+- [AzureAdapterOptions](/uploader/docs/api/cloud/AzureAdapterOptions)
+- [GCSAdapterOptions](/uploader/docs/api/cloud/GCSAdapterOptions)
+- [S3AdapterOptions](/uploader/docs/api/cloud/S3AdapterOptions)
+- [createAzureAdapter](/uploader/docs/api/cloud/createAzureAdapter)
+- [createGCSAdapter](/uploader/docs/api/cloud/createGCSAdapter)
+- [createS3Adapter](/uploader/docs/api/cloud/createS3Adapter)
+
 ## hooks
 
 - [useUploader](/uploader/docs/api/hooks/useUploader)
@@ -40,7 +49,6 @@
 - [formatTime](/uploader/docs/api/utils/formatTime)
 - [generateId](/uploader/docs/api/utils/generateId)
 - [safeBase64](/uploader/docs/api/utils/safeBase64)
-- [sleep](/uploader/docs/api/utils/sleep)
 
 ## validation
 

@@ -1,0 +1,69 @@
+---
+title: "WebTransport Upload"
+description: "How to use the cutting-edge WebTransport protocol for high-performance uploads."
+---
+
+# WebTransport Upload (High Performance)
+
+WebTransport is a modern API that provides low-latency, bidirectional, client-server communication using HTTP/3 and QUIC. It is the highest performance option for modern browsers.
+
+## Browser Support
+
+WebTransport is a cutting-edge technology. Before using it, verify support for your target users:
+*   **Supported**: Chrome / Edge 97+, Firefox 114+.
+*   **Unsupported**: Safari (all versions).
+
+<CodeBlock>
+```typescript
+import { useUploader, getSupportedProtocols } from '@verbpatch/headless-uploader';
+
+const protocols = getSupportedProtocols();
+const isSupported = protocols.includes('webtransport');
+```
+</CodeBlock>
+
+## Basic Configuration
+
+Set the `protocol` to `'webtransport'` and provide your secure server URL (must be `https://`).
+
+<CodeBlock>
+```typescript
+import { useUploader } from '@verbpatch/headless-uploader';
+
+const uploader = useUploader({
+  protocol: 'webtransport',
+  webtransport: {
+    url: 'https://api.example.com:4433/webtransport-upload',
+    bidirectionalStreams: true,
+    congestionControl: 'throughput'
+  }
+});
+```
+</CodeBlock>
+
+## Key Advantages
+
+*   **Speed**: Built on top of HTTP/3 and QUIC, bypassing the limitations of TCP head-of-line blocking.
+*   **Multiplexing**: Supports multiple independent streams over a single connection.
+*   **Efficiency**: Lower overhead than WebSockets for high-volume data transfers.
+
+## Security Note
+
+WebTransport **requires** a secure connection (HTTPS). For local development, you may need to provide certificate hashes if you are using self-signed certificates.
+
+<CodeBlock>
+```typescript
+const uploader = useUploader({
+  protocol: 'webtransport',
+  webtransport: {
+    url: 'https://localhost:4433/upload',
+    serverCertificateHashes: [
+      {
+        algorithm: 'sha-256',
+        value: new Uint8Array([/* ... hash bytes ... */])
+      }
+    ]
+  }
+});
+```
+</CodeBlock>

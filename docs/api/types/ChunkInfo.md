@@ -5,7 +5,7 @@ description: Contains metadata and state for a single part of a chunked upload.
 
 # ChunkInfo
 
-Defined in: packages/headless-uploader/src/types/uploader.ts:84
+Defined in: [packages/headless-uploader/src/types/uploader.ts:84](https://github.com/VerbPatch/headless-uploader/blob/f38e759ac298841ab72a7b52e9b46bf3740f2af7/packages/headless-uploader/src/types/uploader.ts#L84)
 
 Chunk information
 
@@ -15,7 +15,7 @@ Chunk information
 
 > **blob**: `Blob`
 
-Defined in: packages/headless-uploader/src/types/uploader.ts:90
+Defined in: [packages/headless-uploader/src/types/uploader.ts:90](https://github.com/VerbPatch/headless-uploader/blob/f38e759ac298841ab72a7b52e9b46bf3740f2af7/packages/headless-uploader/src/types/uploader.ts#L90)
 
 ***
 
@@ -23,7 +23,7 @@ Defined in: packages/headless-uploader/src/types/uploader.ts:90
 
 > **end**: `number`
 
-Defined in: packages/headless-uploader/src/types/uploader.ts:87
+Defined in: [packages/headless-uploader/src/types/uploader.ts:87](https://github.com/VerbPatch/headless-uploader/blob/f38e759ac298841ab72a7b52e9b46bf3740f2af7/packages/headless-uploader/src/types/uploader.ts#L87)
 
 ***
 
@@ -31,7 +31,7 @@ Defined in: packages/headless-uploader/src/types/uploader.ts:87
 
 > **index**: `number`
 
-Defined in: packages/headless-uploader/src/types/uploader.ts:85
+Defined in: [packages/headless-uploader/src/types/uploader.ts:85](https://github.com/VerbPatch/headless-uploader/blob/f38e759ac298841ab72a7b52e9b46bf3740f2af7/packages/headless-uploader/src/types/uploader.ts#L85)
 
 ***
 
@@ -39,7 +39,7 @@ Defined in: packages/headless-uploader/src/types/uploader.ts:85
 
 > **retries**: `number`
 
-Defined in: packages/headless-uploader/src/types/uploader.ts:92
+Defined in: [packages/headless-uploader/src/types/uploader.ts:92](https://github.com/VerbPatch/headless-uploader/blob/f38e759ac298841ab72a7b52e9b46bf3740f2af7/packages/headless-uploader/src/types/uploader.ts#L92)
 
 ***
 
@@ -47,7 +47,7 @@ Defined in: packages/headless-uploader/src/types/uploader.ts:92
 
 > **size**: `number`
 
-Defined in: packages/headless-uploader/src/types/uploader.ts:88
+Defined in: [packages/headless-uploader/src/types/uploader.ts:88](https://github.com/VerbPatch/headless-uploader/blob/f38e759ac298841ab72a7b52e9b46bf3740f2af7/packages/headless-uploader/src/types/uploader.ts#L88)
 
 ***
 
@@ -55,7 +55,7 @@ Defined in: packages/headless-uploader/src/types/uploader.ts:88
 
 > **start**: `number`
 
-Defined in: packages/headless-uploader/src/types/uploader.ts:86
+Defined in: [packages/headless-uploader/src/types/uploader.ts:86](https://github.com/VerbPatch/headless-uploader/blob/f38e759ac298841ab72a7b52e9b46bf3740f2af7/packages/headless-uploader/src/types/uploader.ts#L86)
 
 ***
 
@@ -63,7 +63,7 @@ Defined in: packages/headless-uploader/src/types/uploader.ts:86
 
 > **status**: [`ChunkStatus`](/uploader/docs/api/types/ChunkStatus)
 
-Defined in: packages/headless-uploader/src/types/uploader.ts:89
+Defined in: [packages/headless-uploader/src/types/uploader.ts:89](https://github.com/VerbPatch/headless-uploader/blob/f38e759ac298841ab72a7b52e9b46bf3740f2af7/packages/headless-uploader/src/types/uploader.ts#L89)
 
 ***
 
@@ -71,4 +71,4 @@ Defined in: packages/headless-uploader/src/types/uploader.ts:89
 
 > **uploadedBytes**: `number`
 
-Defined in: packages/headless-uploader/src/types/uploader.ts:91
+Defined in: [packages/headless-uploader/src/types/uploader.ts:91](https://github.com/VerbPatch/headless-uploader/blob/f38e759ac298841ab72a7b52e9b46bf3740f2af7/packages/headless-uploader/src/types/uploader.ts#L91)

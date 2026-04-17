@@ -1,0 +1,36 @@
+---
+title: "What is Headless Uploader?"
+description: "Headless Uploader is a powerful, unstyled, and highly customizable engine for building file upload experiences in your JavaScript applications."
+---
+
+# What is Headless Uploader?
+
+Headless Uploader is a powerful, unstyled, and highly customizable engine for building file upload experiences in your JavaScript applications. It handles the complex logic of file handling, validation, progress tracking, and multi-protocol transfers, leaving the UI entirely to you.
+
+## The "Headless" Philosophy
+
+Just like other headless libraries, Headless Uploader provides all the logic, state management, and functionality for file uploads, but without any pre-built UI components. This gives you complete control over the markup and styling, allowing you to create an uploader that perfectly matches your application's design system—whether it's a simple button, a sophisticated drag-and-drop zone, or a complex dashboard.
+
+## Why Headless Uploader?
+
+Building a robust file uploader is surprisingly difficult. You have to deal with large files, network interruptions, different protocols (HTTP, Tus, WebSockets), image previews, and cross-framework compatibility.
+
+Headless Uploader solves this by providing a framework-agnostic core logic written in plain TypeScript. We then offer thin, reactive wrappers for popular frameworks like React, Vue, Svelte, and more.
+
+* **Write once, use anywhere**: Use the same core upload logic across different frameworks.
+* **Maintain consistency**: Ensure consistent behavior and features, regardless of the technology stack.
+* **Protocol Flexibility**: Easily switch between standard HTTP, resumable Tus, or real-time WebSocket uploads.
+* **Avoid vendor lock-in**: Easily migrate between frameworks without rewriting your upload logic.
+
+## Core Features
+
+* **Framework-Agnostic Core**: The central logic is written in plain TypeScript.
+* **Reactive Wrappers**: Seamless integration for React, Vue, Svelte, Angular, and more.
+* **Multi-Protocol Support**: Built-in support for HTTP, Tus, WebSocket, WebTransport, and Cloud (S3/Azure/GCS).
+* **Chunked Uploads**: Split large files into chunks for more reliable transfers and parallel processing.
+* **Resumability**: Pause and resume uploads, even after a page refresh (when using Tus).
+* **Real-time Progress**: Detailed progress metrics including speed, time remaining, and chunk status.
+* **Validation Engine**: Robust file type (MIME/extension), size, and custom validation.
+* **Image/Video Previews**: Automatic generation of high-performance previews.
+* **Metadata Extraction**: Automatic extraction of image dimensions, video duration, and more.
+* **Cloud Integration**: Easy-to-use adapter pattern for S3 and other cloud providers.

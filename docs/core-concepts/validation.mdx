@@ -1,0 +1,113 @@
+---
+title: "Validation"
+description: "How to configure and customize file validation in Headless Uploader."
+---
+
+# Validation
+
+Headless Uploader includes a powerful validation engine that ensures files meet your application's requirements before the upload process begins.
+
+## Built-in Validation
+
+You can configure several built-in validation rules through the `UploaderConfig`:
+
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`maxFiles`</td>
+      <td>`number`</td>
+      <td>Maximum number of files allowed in the queue.</td>
+    </tr>
+    <tr>
+      <td>`maxFileSize`</td>
+      <td>`number`</td>
+      <td>Maximum size for a single file (in bytes).</td>
+    </tr>
+    <tr>
+      <td>`minFileSize`</td>
+      <td>`number`</td>
+      <td>Minimum size for a single file (in bytes).</td>
+    </tr>
+    <tr>
+      <td>`acceptedTypes`</td>
+      <td>`string[]`</td>
+      <td>Allowed MIME types or file extensions.</td>
+    </tr>
+    <tr>
+      <td>`allowDuplicates`</td>
+      <td>`boolean`</td>
+      <td>Whether to allow adding the same file multiple times.</td>
+    </tr>
+  </tbody>
+</table>
+
+## File Type Validation
+
+`acceptedTypes` is highly flexible and supports:
+* **MIME types**: `['image/jpeg', 'application/pdf']`
+* **Wildcards**: `['image/*', 'video/*']`
+* **File extensions**: `['.jpg', '.png', '.docx']`
+* **Mixed types**: `['image/*', '.pdf']`
+
+### File Type Presets
+
+For convenience, the library exports `FileTypePresets` that you can use to quickly define accepted types:
+
+<CodeBlock>
+```typescript
+import { FileTypePresets } from '@verbpatch/headless-uploader';
+
+const uploader = useUploader({
+  acceptedTypes: FileTypePresets.IMAGES_COMMON, // ['.jpg', '.jpeg', '.png', '.gif', '.webp']
+});
+```
+</CodeBlock>
+
+## Custom Validation
+
+If the built-in rules aren't enough, you can provide a `customValidator` function for more complex logic. This function is called for each file before it's added to the queue.
+
+<CodeBlock>
+```typescript
+const uploader = useUploader({
+  customValidator: async (file) => {
+    const errors = [];
+
+    // Example: Check if file name contains "draft"
+    if (file.name.toLowerCase().includes('draft')) {
+      errors.push({
+        code: 'INVALID_FILENAME',
+        message: 'Draft files are not allowed',
+        file,
+      });
+    }
+
+    // Example: Image dimension validation
+    if (file.type.startsWith('image/')) {
+        // You can use browser APIs to check dimensions
+    }
+
+    return {
+      valid: errors.length === 0,
+      errors,
+    };
+  },
+});
+```
+</CodeBlock>
+
+
+## Handling Validation Results
+
+When files are added, Headless Uploader automatically validates them and triggers the following events:
+
+* `onValidationStart`: Called when the validation process begins.
+* `onValidationComplete`: Called when all files have been validated.
+* `onFilesRejected`: Called if one or more files fail validation.

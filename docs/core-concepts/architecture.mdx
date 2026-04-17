@@ -1,0 +1,48 @@
+---
+title: "Architecture"
+description: "Understand the internal design and core components of Headless Uploader."
+---
+
+# Architecture
+
+Headless Uploader is designed with a clear separation of concerns, ensuring high performance, reliability, and easy extensibility across different frameworks and upload protocols.
+
+## Core Components
+
+The library is built around several key internal systems:
+
+### 1. The State Engine
+At the heart of Headless Uploader is a centralized state engine that tracks every file in the upload queue. It manages:
+* **File Lifecycle**: From validation and pending status to uploading, completion, or failure.
+* **Progress Tracking**: Aggregating progress from individual chunks or files into a unified state.
+* **Reactive Updates**: Notifying framework wrappers (React, Vue, etc.) whenever the state changes.
+
+### 2. Protocol Adapters
+Headless Uploader supports multiple transfer protocols through a flexible adapter pattern.
+* **HTTP Adapter**: For standard multi-part or binary uploads.
+* **Tus Adapter**: For resumable, reliable uploads (built on the Tus protocol).
+* **WebSocket Adapter**: For real-time, low-latency data streaming.
+* **WebTransport Adapter**: For high-performance, QUIC-based transfers in modern browsers.
+* **Cloud Adapters**: Specialized adapters for direct-to-cloud uploads (AWS S3, Azure Blob, Google Cloud Storage).
+
+### 3. The Scheduler
+The scheduler manages the concurrency and order of uploads. It handles:
+* **Max Concurrent Uploads**: Ensuring you don't overwhelm the user's connection or the server.
+* **Retry Logic**: Automatically handling temporary network failures with exponential backoff.
+* **Queue Management**: Prioritizing and ordering file transfers.
+
+### 4. Utilities and Helpers
+A set of dedicated processors for common file-related tasks:
+* **Preview Processor**: Generates browser-optimized previews for images and videos.
+* **Metadata Processor**: Extracts technical metadata (dimensions, duration) before upload.
+* **Validation Engine**: A customizable rules engine for checking file constraints.
+
+## Data Flow
+
+1. **User Input**: Files are added via `addFiles`, `handleDrop`, or `handleFileSelect`.
+2. **Validation**: Files are passed through the Validation Engine.
+3. **Queueing**: Valid files are converted into `UploadFile` objects and added to the State Engine.
+4. **Processing**: Optional pre-upload steps like preview generation and metadata extraction are performed.
+5. **Transfer**: The Scheduler picks up files and passes them to the configured Protocol Adapter.
+6. **Updates**: As chunks are sent, the Adapter updates the State Engine, which triggers UI updates in the framework wrappers.
+7. **Completion**: Once the server acknowledges the transfer, the file status is updated to `completed`.

@@ -1,0 +1,81 @@
+---
+title: "Custom Previews"
+description: "How to generate and handle custom file previews in Headless Uploader."
+---
+
+# Custom Previews
+
+While Headless Uploader automatically generates previews for standard image and video formats, you may want to customize this process or add support for other file types (like PDFs).
+
+## Default Behavior
+
+By default, the uploader generates data URLs for:
+* **Images**: Using a hidden canvas to resize and optimize the preview.
+* **Videos**: Capturing a frame from the start of the video.
+
+## Customizing Preview Generation
+
+You can use the `onPreviewGenerated` callback to intercept the default previews or the `onMetadataExtracted` to generate your own.
+
+### Example: PDF Previews
+
+To generate previews for PDF files, you might use a library like `pdf.js`:
+
+<CodeBlock>
+```typescript
+const uploader = useUploader({
+  onFilesAdded: async (files) => {
+    for (const file of files) {
+      if (file.metadata.type === 'application/pdf') {
+        const previewUrl = await generatePdfThumbnail(file.file);
+        // You can store this in your application state alongside the file.id
+      }
+    }
+  }
+});
+```
+</CodeBlock>
+
+### Example: Custom Canvas Processing
+
+You can control the dimensions and quality of the built-in image previews:
+
+<CodeBlock>
+```typescript
+const uploader = useUploader({
+  enablePreviews: true,
+  previewMaxWidth: 400, // Default is 200
+  previewMaxHeight: 400,
+  
+  onPreviewGenerated: (file, previewUrl) => {
+    console.log(`Preview generated for ${file.id}: ${previewUrl.substring(0, 30)}...`);
+  }
+});
+```
+</CodeBlock>
+
+## UI Implementation
+
+Since the uploader is headless, you are responsible for rendering the preview. The `UploadFile` object makes this easy:
+
+<CodeBlock>
+```tsx
+// React Example
+function FileItem({ file }) {
+  return (
+    <div className="file-card">
+      {file.preview ? (
+        <img src={file.preview} alt="Preview" />
+      ) : (
+        <div className="file-icon">📄</div>
+      )}
+      <span>{file.metadata.name}</span>
+    </div>
+  );
+}
+```
+</CodeBlock>
+
+## Performance Considerations
+
+Preview generation happens on the client side. For a large number of files, this can be CPU-intensive. Headless Uploader handles this by processing previews sequentially to avoid locking up the main thread.

@@ -1,0 +1,174 @@
+---
+title: "Getting Started"
+description: "A quick guide to integrating Headless Uploader into your JavaScript applications using various frameworks."
+---
+
+# Getting Started
+
+This guide will help you quickly integrate Headless Uploader into your project. While the core library is framework-agnostic, we'll demonstrate a basic setup using each framework we support to illustrate the workflow.
+
+## 1. Installation
+
+First, install the wrapper for your chosen framework.
+
+<MarkdownTabs library="uploader">
+  <Tab active={true} label="React" icon={<SiReact />}>
+    ```bash
+    # Using npm
+    npm install @verbpatch/react-uploader
+
+    # Using yarn
+    yarn add @verbpatch/react-uploader
+
+    # Using pnpm
+    pnpm add @verbpatch/react-uploader
+    ```
+  </Tab>
+  <Tab active={false} label="Vue.js" icon={<SiVuedotjs />}>
+    ```bash
+    # Using npm
+    npm install @verbpatch/vue-uploader
+
+    # Using yarn
+    yarn add @verbpatch/vue-uploader
+
+    # Using pnpm
+    pnpm add @verbpatch/vue-uploader
+    ```
+  </Tab>
+  <Tab active={false} label="Svelte" icon={<SiSvelte />}>
+    ```bash
+    # Using npm
+    npm install @verbpatch/svelte-uploader
+
+    # Using yarn
+    yarn add @verbpatch/svelte-uploader
+
+    # Using pnpm
+    pnpm add @verbpatch/svelte-uploader
+    ```
+  </Tab>
+  <Tab active={false} label="Angular" icon={<SiAngular />}>
+    ```bash
+    # Using npm
+    npm install @verbpatch/angular-uploader
+
+    # Using yarn
+    yarn add @verbpatch/angular-uploader
+
+    # Using pnpm
+    pnpm add @verbpatch/angular-uploader
+    ```
+  </Tab>
+  <Tab active={false} label="JQuery" icon={<SiJquery />}>
+    ```bash
+    # Using npm
+    npm install @verbpatch/jquery-uploader
+
+    # Using yarn
+    yarn add @verbpatch/jquery-uploader
+
+    # Using pnpm
+    pnpm add @verbpatch/jquery-uploader
+    ```
+  </Tab>
+  <Tab active={false} label="Lit" icon={<SiLit />}>
+    ```bash
+    # Using npm
+    npm install @verbpatch/lit-uploader
+
+    # Using yarn
+    yarn add @verbpatch/lit-uploader
+
+    # Using pnpm
+    pnpm add @verbpatch/lit-uploader
+    ```
+  </Tab>
+  <Tab active={false} label="Preact" icon={<SiPreact />}>
+    ```bash
+    # Using npm
+    npm install @verbpatch/preact-uploader
+
+    # Using yarn
+    yarn add @verbpatch/preact-uploader
+
+    # Using pnpm
+    pnpm add @verbpatch/preact-uploader
+    ```
+  </Tab>
+  <Tab active={false} label="Qwik" icon={<SiQwik />}>
+    ```bash
+    # Using npm
+    npm install @verbpatch/qwik-uploader
+
+    # Using yarn
+    yarn add @verbpatch/qwik-uploader
+
+    # Using pnpm
+    pnpm add @verbpatch/qwik-uploader
+    ```
+  </Tab>
+  <Tab active={false} label="SolidJS" icon={<SiSolid />}>
+    ```bash
+    # Using npm
+    npm install @verbpatch/solid-uploader
+
+    # Using yarn
+    yarn add @verbpatch/solid-uploader
+
+    # Using pnpm
+    pnpm add @verbpatch/solid-uploader
+    ```
+  </Tab>
+  <Tab active={false} label="Vanilla" icon={<SiJavascript />}>
+    ```bash
+    # Using npm
+    npm install @verbpatch/headless-uploader
+
+    # Using yarn
+    yarn add @verbpatch/headless-uploader
+
+    # Using pnpm
+    pnpm add @verbpatch/headless-uploader
+    ```
+  </Tab>
+</MarkdownTabs>
+
+## 2. Http Protocol Usage
+
+Here's a minimal example of how to set up a http protocol file uploader using different framework wrappers. These examples demonstrate how the framework-specific `useUploader` hook integrates with the core `headless-uploader` logic.
+
+<MarkdownTabs library="uploader">
+  <Tab active={true} label="React" icon={<SiReact />} examplePath="React/http-example" sourcePath="src/App.tsx">
+    &nbsp;
+  </Tab>
+  <Tab active={false} label="Vue.js" icon={<SiVuedotjs />} examplePath="Vue/http-example" sourcePath="src/App.vue">
+    &nbsp;
+  </Tab>
+  <Tab active={false} label="Svelte" icon={<SiSvelte />} examplePath="Svelte/http-example" sourcePath="src/App.svelte">
+    &nbsp;
+  </Tab>
+  <Tab active={false} label="Angular" icon={<SiAngular />} examplePath="Angular/http-example" sourcePath="src/app.component.ts">
+    &nbsp;
+  </Tab>
+  <Tab active={false} label="JQuery" icon={<SiJquery />} examplePath="jQuery/http-example" sourcePath="src/main.js">
+    &nbsp;
+  </Tab>
+  <Tab active={false} label="Lit" icon={<SiLit />} examplePath="Lit/http-example" sourcePath="src/my-uploader.ts">
+    &nbsp;
+  </Tab>
+  <Tab active={false} label="Preact" icon={<SiPreact />} examplePath="Preact/http-example" sourcePath="src/App.tsx">
+    &nbsp;
+  </Tab>
+  <Tab active={false} label="Qwik" icon={<SiQwik />} examplePath="Qwik/http-example" sourcePath="src/app.tsx">
+    &nbsp;
+  </Tab>
+  <Tab active={false} label="SolidJS" icon={<SiSolid />} examplePath="Solid/http-example" sourcePath="src/App.tsx">
+    &nbsp;
+  </Tab>
+  <Tab active={false} label="Vanilla" icon={<SiJavascript />} examplePath="Vanilla/http-example" sourcePath="src/uploader.js">
+    &nbsp;
+  </Tab>
+</MarkdownTabs>
+
+For more detailed examples and specific framework patterns, please refer to the "Frameworks" section.

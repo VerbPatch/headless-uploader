@@ -10,6 +10,7 @@ export const DEFAULT_CONFIG: Required<
     | 'tus'
     | 'websocket'
     | 'webtransport'
+    | 'cloud'
     | 'cloudAdapter'
     | 'customValidator'
     | 'onBeforeRequest'

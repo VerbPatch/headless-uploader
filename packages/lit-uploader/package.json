@@ -1,6 +1,6 @@
 {
   "name": "@verbpatch/lit-uploader",
-  "version": "0.0.1-beta.1",
+  "version": "0.0.1-beta.2",
   "description": "A headless uploader library for Lit applications with full chunked upload and pause-and-resume support.",
   "author": "Rameez Raja <rameezrajapathan@live.com>",
   "license": "GPL-3.0-or-later",

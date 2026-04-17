@@ -1,0 +1,52 @@
+---
+title: "WebSocket Upload"
+description: "How to stream file data in real-time using the WebSocket protocol."
+---
+
+# WebSocket Upload (Real-time)
+
+WebSocket uploads allow you to stream file data over a persistent connection. This is ideal for applications that require low-latency feedback or are already utilizing WebSockets for other features.
+
+## Basic Setup
+
+Set the `protocol` to `'websocket'` and provide the `url` of your WebSocket server.
+
+<CodeBlock>
+```typescript
+import { useUploader } from '@verbpatch/headless-uploader';
+
+const uploader = useUploader({
+  protocol: 'websocket',
+  websocket: {
+    url: 'wss://api.example.com/upload-socket',
+    reconnect: true,
+    maxReconnectAttempts: 5,
+    binaryType: 'blob', // 'blob' or 'arraybuffer'
+  }
+});
+```
+</CodeBlock>
+
+## How it works
+
+1.  **Handshake**: The uploader establishes a WebSocket connection.
+2.  **Initialization**: An `init` message is sent with file metadata.
+3.  **Streaming**: The file is split into binary chunks (default 64KB) and sent as separate socket messages.
+4.  **Completion**: A `complete` message is sent once the last chunk is acknowledged by the server.
+
+## Reconnection Logic
+
+The uploader automatically handles disconnections if `reconnect: true` is set. It will attempt to re-establish the connection and continue the upload from the last acknowledged chunk.
+
+<CodeBlock>
+```typescript
+const uploader = useUploader({
+  protocol: 'websocket',
+  websocket: {
+    url: 'wss://api.example.com/upload',
+    reconnect: true,
+    reconnectDelay: 2000, // 2 seconds between attempts
+  }
+});
+```
+</CodeBlock>

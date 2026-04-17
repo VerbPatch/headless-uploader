@@ -1,8 +1,58 @@
-import type { ProtocolAdapter, ProtocolFactoryConfig, UploadProtocol } from '../types';
+import type { ProtocolAdapter, ProtocolFactoryConfig, UploadProtocol, CloudAdapter } from '../types';
 import { createHttpAdapter } from './http';
 import { createTusAdapter } from './tus';
 import { createWebSocketAdapter } from './websocket';
 import { createWebTransportAdapter, isWebTransportSupported } from './webtransport';
+
+export * from './cloud';
+
+/**
+ * Creates a wrapper that adapts a CloudAdapter to the ProtocolAdapter interface
+ * @internal
+ */
+function createCloudProtocolWrapper(cloudAdapter: CloudAdapter): ProtocolAdapter {
+  return {
+    name: cloudAdapter.name,
+    protocol: 'cloud',
+
+    async initialize() {
+      // Cloud adapters usually don't need explicit initialization at connection level
+    },
+
+    async upload(file, config) {
+      try {
+        const response = await cloudAdapter.upload(file, config);
+        return {
+          success: true,
+          response,
+          bytesUploaded: file.file.size,
+        };
+      } catch (error) {
+        return {
+          success: false,
+          error: error as Error,
+          bytesUploaded: file.progress.loaded,
+        };
+      }
+    },
+
+    async pause(fileId) {
+      if (cloudAdapter.abortUpload) {
+        await cloudAdapter.abortUpload(fileId);
+      }
+    },
+
+    async resume(file, config) {
+      return this.upload(file, config);
+    },
+
+    async cancel(fileId) {
+      if (cloudAdapter.abortUpload) {
+        await cloudAdapter.abortUpload(fileId);
+      }
+    },
+  };
+}
 
 /**
  * Create a protocol adapter based on the provided configuration
@@ -10,7 +60,7 @@ import { createWebTransportAdapter, isWebTransportSupported } from './webtranspo
  * @returns A protocol adapter instance
  * @group protocols
  * @title createProtocolAdapter
- * @description Factory function that instantiates the appropriate adapter (HTTP, TUS, WebSocket, or WebTransport).
+ * @description Factory function that instantiates the appropriate adapter (HTTP, TUS, WebSocket, WebTransport, or Cloud).
  * @internal
  */
 export function createProtocolAdapter(config: ProtocolFactoryConfig): ProtocolAdapter {
@@ -41,6 +91,12 @@ export function createProtocolAdapter(config: ProtocolFactoryConfig): ProtocolAd
         throw new Error('WebTransport configuration is required');
       }
       return createWebTransportAdapter(config.webtransport);
+
+    case 'cloud':
+      if (!config.cloudAdapter) {
+        throw new Error('Cloud adapter is required when protocol is set to "cloud"');
+      }
+      return createCloudProtocolWrapper(config.cloudAdapter);
 
     default:
       throw new Error(`Unknown protocol: ${config.protocol}`);
@@ -98,40 +154,33 @@ export function getRecommendedProtocol(
  * Detailed feature matrix for each supported protocol
  * @group protocols
  * @title PROTOCOL_FEATURES
- * @description Comparison matrix showing capabilities like resumability, streaming, and real-time support.
+ * @description Comparison matrix showing capabilities like resumability and chunking.
  */
 export const PROTOCOL_FEATURES = {
   http: {
-    resumable: false,
-    streaming: false,
-    bidirectional: false,
-    realtime: false,
+    resumable: 'conditional', // Only if chunking is enabled
     chunking: true,
     support: 'universal',
   },
   tus: {
-    resumable: true,
-    streaming: false,
-    bidirectional: false,
-    realtime: false,
+    resumable: 'native',
     chunking: true,
     support: 'universal',
   },
   websocket: {
-    resumable: false,
-    streaming: true,
-    bidirectional: true,
-    realtime: true,
+    resumable: 'native', // Internal chunking supports pause/resume
     chunking: true,
     support: 'modern',
   },
   webtransport: {
-    resumable: false,
-    streaming: true,
-    bidirectional: true,
-    realtime: true,
+    resumable: 'native', // Internal streaming supports pause/resume
     chunking: true,
-    support: 'bleeding-edge', // Chrome 97+, Edge 97+
+    support: 'bleeding-edge', // Chrome 97+, Edge 97+, Firefox 114+
+  },
+  cloud: {
+    resumable: 'no', // Simple PUT uploads, usually not resumable on client side
+    chunking: false,
+    support: 'universal',
   },
 } as const;
 
@@ -147,6 +196,7 @@ export function isProtocolSupported(protocol: UploadProtocol): boolean {
   switch (protocol) {
     case 'http':
     case 'tus':
+    case 'cloud':
       return true;
 
     case 'websocket':
@@ -168,7 +218,7 @@ export function isProtocolSupported(protocol: UploadProtocol): boolean {
  * @description Returns all protocols that can be used in the current browser or environment.
  */
 export function getSupportedProtocols(): UploadProtocol[] {
-  const protocols: UploadProtocol[] = ['http', 'tus'];
+  const protocols: UploadProtocol[] = ['http', 'tus', 'cloud'];
 
   if ('WebSocket' in window) {
     protocols.push('websocket');
@@ -207,12 +257,9 @@ export function compareProtocols(
   fileSize: number,
   requirements: {
     needsResumability?: boolean;
-    needsRealtime?: boolean;
-    needsBidirectional?: boolean;
-    needsStreaming?: boolean;
   } = {},
 ): ProtocolComparison[] {
-  const protocols: UploadProtocol[] = ['http', 'tus', 'websocket', 'webtransport'];
+  const protocols: UploadProtocol[] = ['http', 'tus', 'websocket', 'webtransport', 'cloud'];
 
   const comparisons: ProtocolComparison[] = protocols.map((protocol) => {
     const features = PROTOCOL_FEATURES[protocol];
@@ -235,31 +282,21 @@ export function compareProtocols(
         score += 20;
         reasons.push('Optimized for large files');
       }
-      if (features.resumable) {
+      if (features.resumable === 'native') {
         score += 15;
-        reasons.push('Resumability important for large files');
+        reasons.push('Native resumability important for large files');
       }
     }
 
     // Requirements
-    if (requirements.needsResumability && features.resumable) {
-      score += 20;
-      reasons.push('Supports resumability');
-    }
-
-    if (requirements.needsRealtime && features.realtime) {
-      score += 15;
-      reasons.push('Supports real-time feedback');
-    }
-
-    if (requirements.needsBidirectional && features.bidirectional) {
-      score += 15;
-      reasons.push('Supports bidirectional communication');
-    }
-
-    if (requirements.needsStreaming && features.streaming) {
-      score += 10;
-      reasons.push('Supports streaming');
+    if (requirements.needsResumability) {
+      if (features.resumable === 'native') {
+        score += 20;
+        reasons.push('Supports native resumability');
+      } else if (features.resumable === 'conditional') {
+        score += 10;
+        reasons.push('Supports resumability when chunked');
+      }
     }
 
     // Performance bonuses
@@ -281,19 +318,18 @@ export function compareProtocols(
 export const PROTOCOL_USAGE_EXAMPLES = {
   tus: `
     // TUS - Resumable uploads
-    const adapter = createProtocolAdapter({
+    const uploader = useUploader({
       protocol: 'tus',
       tus: {
         endpoint: 'https://api.example.com/files',
         chunkSize: 1024 * 1024, // 1MB
-        resumable: true
       }
     });
   `,
 
   websocket: `
     // WebSocket - Real-time streaming
-    const adapter = createProtocolAdapter({
+    const uploader = useUploader({
       protocol: 'websocket',
       websocket: {
         url: 'wss://api.example.com/upload',
@@ -305,7 +341,7 @@ export const PROTOCOL_USAGE_EXAMPLES = {
 
   webtransport: `
     // WebTransport - Cutting-edge low-latency
-    const adapter = createProtocolAdapter({
+    const uploader = useUploader({
       protocol: 'webtransport',
       webtransport: {
         url: 'https://api.example.com:4433/upload',
@@ -314,4 +350,16 @@ export const PROTOCOL_USAGE_EXAMPLES = {
       }
     });
   `,
+  
+  cloud: `
+    // Cloud - Direct S3/Azure/GCS
+    const uploader = useUploader({
+      protocol: 'cloud',
+      cloudAdapter: createS3Adapter({
+        getUploadUrl: async (file) => {
+           // ...
+        }
+      })
+    });
+  `
 };

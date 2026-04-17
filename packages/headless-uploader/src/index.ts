@@ -16,6 +16,9 @@ export type {
   UploaderState,
   UploaderInterface,
   DropEventData,
+  S3AdapterOptions,
+  AzureAdapterOptions,
+  GCSAdapterOptions,
 } from './types';
 
 export type {
@@ -28,7 +31,14 @@ export type {
 
 export { DEFAULT_CONFIG, FileTypePresets, ValidationErrorCodes } from './constants';
 
-export { getRecommendedProtocol, compareProtocols, getSupportedProtocols } from './adapters';
+export {
+  getRecommendedProtocol,
+  compareProtocols,
+  getSupportedProtocols,
+  createS3Adapter,
+  createAzureAdapter,
+  createGCSAdapter,
+} from './adapters';
 
 export {
   generateId,
@@ -36,6 +46,5 @@ export {
   formatTime,
   calculateSpeed,
   calculateTimeRemaining,
-  sleep,
   safeBase64,
 } from './utils';

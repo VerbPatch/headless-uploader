@@ -6,6 +6,80 @@ import { buildExamplesNav } from './example-nav-tree.mjs';
 function docNavigation() {
   return [
     {
+      title: 'Cloud Cookbook',
+      group: 'doc',
+      children: [
+        {
+          title: 'S3 Integration',
+          path: '/uploader/docs/cookbook/s3-integration',
+        },
+        {
+          title: 'Azure Integration',
+          path: '/uploader/docs/cookbook/azure-integration',
+        },
+        {
+          title: 'GCS Integration',
+          path: '/uploader/docs/cookbook/gcs-integration',
+        },
+      ],
+    },
+    {
+      title: 'Protocol Cookbook',
+      group: 'doc',
+      children: [
+        {
+          title: 'Direct Uploads (HTTP)',
+          path: '/uploader/docs/cookbook/direct-uploads',
+        },
+        {
+          title: 'Tus Upload',
+          path: '/uploader/docs/cookbook/tus-upload',
+        },
+        {
+          title: 'WebSocket Upload',
+          path: '/uploader/docs/cookbook/websocket-upload',
+        },
+        {
+          title: 'WebTransport Upload',
+          path: '/uploader/docs/cookbook/webtransport-upload',
+        },
+        {
+          title: 'Custom Previews',
+          path: '/uploader/docs/cookbook/custom-previews',
+        },
+      ],
+    },
+    {
+      title: 'Core Concepts',
+      group: 'doc',
+      children: [
+        {
+          title: 'Architecture',
+          path: '/uploader/docs/core-concepts/architecture',
+        },
+        {
+          title: 'Options',
+          path: '/uploader/docs/core-concepts/uploader-options',
+        },
+        {
+          title: 'State',
+          path: '/uploader/docs/core-concepts/uploader-state',
+        },
+        {
+          title: 'Validation',
+          path: '/uploader/docs/core-concepts/validation',
+        },
+        {
+          title: 'Protocols',
+          path: '/uploader/docs/core-concepts/protocols',
+        },
+        {
+          title: 'Cloud Uploads',
+          path: '/uploader/docs/core-concepts/cloud-uploads',
+        },
+      ],
+    },
+    {
       title: 'Introduction',
       group: 'doc',
       children: [
@@ -35,8 +109,8 @@ export function load(app) {
   app.renderer.on('endPage', (page) => {
     if (!page.contents) return;
 
-    // Remove .md and preserve anchors
-    page.contents = page.contents.replace(/(\[[^\]]*]\([^)\s]+?)\.md(#[^)]+)?\)/g, '$1$2)');
+    // Remove .md and .mdx and preserve anchors
+    page.contents = page.contents.replace(/(\[[^\]]*]\([^)\s]+?)\.(md|mdx)(#[^)]+)?\)/g, '$1$3)');
   });
 
   app.renderer.on('endRender', () => {
@@ -50,7 +124,7 @@ export function load(app) {
 
       const processNavItem = (item) => {
         if (item.path) {
-          item.path = item.path.replace(/\.md$/, '');
+          item.path = item.path.replace(/\.(md|mdx)$/, '');
 
           if (publicPath) {
             const normalized = item.path.startsWith('/') ? item.path : '/' + item.path;

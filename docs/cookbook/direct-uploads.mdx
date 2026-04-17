@@ -1,0 +1,88 @@
+---
+title: "Direct Uploads"
+description: "How to perform simple direct-to-server uploads using standard HTTP protocol."
+---
+
+# Direct Uploads (HTTP)
+
+Standard HTTP uploads are the most compatible way to send files to your server. Headless Uploader handles both standard multipart form data and raw binary uploads.
+
+## Basic Setup
+
+By default, the uploader uses the `'http'` protocol. It's good practice to define it explicitly.
+
+<CodeBlock>
+```typescript
+import { useUploader } from '@verbpatch/headless-uploader';
+
+const uploader = useUploader({
+  protocol: 'http',
+  http: {
+    endpoint: 'https://api.example.com/upload',
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer YOUR_TOKEN'
+    }
+  }
+});
+```
+</CodeBlock>
+
+## Chunked HTTP Uploads
+
+For medium-sized files, you can enable chunking. This splits the file into smaller parts and sends them as sequential requests, allowing you to **pause** and **resume** the upload between chunks.
+
+<CodeBlock>
+```typescript
+const uploader = useUploader({
+  protocol: 'http',
+  http: {
+    endpoint: '/api/upload-chunk',
+    enableChunking: true,
+    chunkSize: 2 * 1024 * 1024, // 2MB per chunk
+  }
+});
+```
+</CodeBlock>
+
+## Customizing Requests
+
+Use the `onBeforeRequest` hook to dynamically add file-specific information, such as unique IDs or custom headers.
+
+<CodeBlock>
+```typescript
+const uploader = useUploader({
+  protocol: 'http',
+  http: { endpoint: '/api/upload' },
+  onBeforeRequest: async (file) => {
+    return {
+      headers: {
+        'X-File-ID': file.id,
+        'X-Original-Name': file.metadata.name
+      },
+      params: {
+        type: 'profile-picture'
+      }
+    };
+  }
+});
+```
+</CodeBlock>
+
+## Binary vs. Multipart
+
+*   **Multipart (Default)**: Sends data as `multipart/form-data`. Best for standard backend frameworks (Node/Express, PHP, Python).
+*   **Binary**: If you need to send the raw file buffer, you can change the method to `PUT` and set the `Content-Type` header.
+
+<CodeBlock>
+```typescript
+const uploader = useUploader({
+  protocol: 'http',
+  http: {
+    endpoint: '/api/raw-binary',
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/octet-stream' }
+  }
+});
+```
+</CodeBlock>

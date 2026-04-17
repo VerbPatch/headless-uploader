@@ -72,6 +72,7 @@ export async function uploadFile(
         tus: config.tus,
         websocket: config.websocket,
         webtransport: config.webtransport,
+        cloudAdapter: config.cloudAdapter,
       };
       instance.adapter = createProtocolAdapter(factoryConfig);
     }

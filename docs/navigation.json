@@ -1,4 +1,4 @@
-`[
+[
   {
     "title": "Introduction",
     "group": "doc",
@@ -14,12 +14,128 @@
     ]
   },
   {
+    "title": "Core Concepts",
+    "group": "doc",
+    "children": [
+      {
+        "title": "Architecture",
+        "path": "/uploader/docs/core-concepts/architecture"
+      },
+      {
+        "title": "Options",
+        "path": "/uploader/docs/core-concepts/uploader-options"
+      },
+      {
+        "title": "State",
+        "path": "/uploader/docs/core-concepts/uploader-state"
+      },
+      {
+        "title": "Validation",
+        "path": "/uploader/docs/core-concepts/validation"
+      },
+      {
+        "title": "Protocols",
+        "path": "/uploader/docs/core-concepts/protocols"
+      },
+      {
+        "title": "Cloud Uploads",
+        "path": "/uploader/docs/core-concepts/cloud-uploads"
+      }
+    ]
+  },
+  {
+    "title": "Protocol Cookbook",
+    "group": "doc",
+    "children": [
+      {
+        "title": "Direct Uploads (HTTP)",
+        "path": "/uploader/docs/cookbook/direct-uploads"
+      },
+      {
+        "title": "Tus Upload",
+        "path": "/uploader/docs/cookbook/tus-upload"
+      },
+      {
+        "title": "WebSocket Upload",
+        "path": "/uploader/docs/cookbook/websocket-upload"
+      },
+      {
+        "title": "WebTransport Upload",
+        "path": "/uploader/docs/cookbook/webtransport-upload"
+      },
+      {
+        "title": "Custom Previews",
+        "path": "/uploader/docs/cookbook/custom-previews"
+      }
+    ]
+  },
+  {
+    "title": "Cloud Cookbook",
+    "group": "doc",
+    "children": [
+      {
+        "title": "S3 Integration",
+        "path": "/uploader/docs/cookbook/s3-integration"
+      },
+      {
+        "title": "Azure Integration",
+        "path": "/uploader/docs/cookbook/azure-integration"
+      },
+      {
+        "title": "GCS Integration",
+        "path": "/uploader/docs/cookbook/gcs-integration"
+      }
+    ]
+  },
+  {
     "title": "hooks",
     "children": [
       {
         "title": "useUploader",
         "kind": 64,
         "path": "/uploader/docs/api/hooks/useUploader",
+        "isDeprecated": false
+      }
+    ],
+    "group": "api"
+  },
+  {
+    "title": "cloud",
+    "children": [
+      {
+        "title": "AzureAdapterOptions",
+        "kind": 256,
+        "path": "/uploader/docs/api/cloud/AzureAdapterOptions",
+        "isDeprecated": false
+      },
+      {
+        "title": "GCSAdapterOptions",
+        "kind": 256,
+        "path": "/uploader/docs/api/cloud/GCSAdapterOptions",
+        "isDeprecated": false
+      },
+      {
+        "title": "S3AdapterOptions",
+        "kind": 256,
+        "path": "/uploader/docs/api/cloud/S3AdapterOptions",
+        "isDeprecated": false
+      },
+      {
+        "title": "createAzureAdapter",
+        "kind": 64,
+        "path": "/uploader/docs/api/cloud/createAzureAdapter",
+        "isDeprecated": false
+      },
+      {
+        "title": "createGCSAdapter",
+        "kind": 64,
+        "path": "/uploader/docs/api/cloud/createGCSAdapter",
+        "isDeprecated": false
+      },
+      {
+        "title": "createS3Adapter",
+        "kind": 64,
+        "path": "/uploader/docs/api/cloud/createS3Adapter",
         "isDeprecated": false
       }
     ],
@@ -206,12 +322,6 @@
         "title": "safeBase64",
         "kind": 64,
         "path": "/uploader/docs/api/utils/safeBase64",
-        "isDeprecated": false
-      },
-      {
-        "title": "sleep",
-        "kind": 64,
-        "path": "/uploader/docs/api/utils/sleep",
         "isDeprecated": false
       }
     ],

@@ -435,7 +435,15 @@ export async function handleFileSelect(instance: UploaderInstance, event: Event)
   input.value = '';
 }
 
-function createUploader(config: UploaderConfig = {}): UploaderInterface {
+/**
+ * Internal function to create a new uploader instance
+ * @param config - Optional configuration for the uploader
+ * @returns The UploaderInterface to interact with the uploader
+ * @group hooks
+ * @title createUploader
+ * @internal
+ */
+export function createUploader(config: UploaderConfig = {}): UploaderInterface {
   const instance: UploaderInstance = {
     files: new Map(),
     activeUploads: new Map(),
@@ -476,7 +484,6 @@ function createUploader(config: UploaderConfig = {}): UploaderInterface {
  * @group hooks
  * @title useUploader
  * @description Initializes a new headless uploader instance with the provided configuration.
- * @sortStrategy source-order
  * @example
  * ```typescript
  * function MyComponent() {

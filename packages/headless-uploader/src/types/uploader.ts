@@ -206,7 +206,7 @@ export interface RequestBlueprint {
  * ```
  */
 export interface UploaderConfig {
-  /** The protocol to use for uploading (http, tus, websocket, etc.) */
+  /** The protocol to use for uploading (http, tus, websocket, etc.). Set to 'cloud' to use cloudAdapter. */
   protocol?: UploadProtocol;
   /** Configuration for HTTP protocol */
   http?: HttpConfig;
@@ -263,7 +263,7 @@ export interface UploaderConfig {
   /** Global request timeout in milliseconds */
   timeout?: number;
 
-  /** Custom cloud storage adapter */
+  /** Custom cloud storage adapter. Required when protocol is set to 'cloud'. */
   cloudAdapter?: CloudAdapter;
 
   /** Callback fired when file validation begins */

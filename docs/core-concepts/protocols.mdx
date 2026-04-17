@@ -1,0 +1,169 @@
+---
+title: "Protocols Guide"
+description: "A comprehensive guide to supported upload protocols, recommendation logic, and feature comparisons."
+---
+
+# Protocols Guide
+
+Headless Uploader supports a wide range of transfer protocols, each optimized for different use cases. This guide helps you understand which protocol to choose and how they compare in terms of features and browser support.
+
+## Supported Protocols
+
+### 1. Standard HTTP
+The universal standard for web transfers.
+*   **How it works**: Uses standard `POST`, `PUT`, or `PATCH` requests.
+*   **Chunking**: Supports manual chunking (multiple requests) via `http.enableChunking: true`.
+*   **Resumability**: Only available when chunking is enabled; the uploader can pause/resume between chunk requests.
+*   **Best for**: Small to medium files, simple server-side implementations.
+
+### 2. Tus (Resumable)
+An open protocol for resumable file uploads designed for reliability.
+*   **How it works**: Breaks files into chunks and tracks progress on the server.
+*   **Requirements**: Requires `tus-js-client` on the client and a Tus-compatible server (like `tusd`).
+*   **Resumability**: Native and robust. Can resume even after a network failure or browser crash.
+*   **Best for**: Large files, unstable connections, and mobile users.
+
+### 3. WebSockets
+Streaming file data over a persistent, bidirectional connection.
+*   **How it works**: Establishes a socket and sends binary chunks (default 64KB) as messages.
+*   **Chunking**: Inherently message-based.
+*   **Resumability**: Native pause/resume within the uploader lifecycle.
+*   **Best for**: Real-time feedback and applications already using WebSockets.
+
+### 4. WebTransport
+A cutting-edge protocol built on HTTP/3 and QUIC for high performance.
+*   **How it works**: Uses unidirectional or bidirectional streams for low-latency data transfer.
+*   **Browser Support**: Chrome/Edge 97+, Firefox 114+. Not supported in Safari.
+*   **Resumability**: Native pause/resume supported via the stream lifecycle.
+*   **Best for**: Maximum performance and ultra-low latency in modern browsers.
+
+### 5. Cloud
+Direct-to-storage uploads for AWS S3, Azure, and GCS.
+*   **How it works**: Uses a pre-signed URL to `PUT` the file directly to a cloud bucket.
+*   **Chunking**: Usually handled as a single large request (standard adapter).
+*   **Resumability**: Not natively supported on the client-side for simple `PUT` adapters.
+*   **Best for**: Scalability, bypassing application server bottlenecks.
+
+---
+
+## Comparison Matrix
+
+<table>
+  <thead>
+    <tr>
+      <th>Protocol</th>
+      <th>Chunking</th>
+      <th>Resumability</th>
+      <th>Support</th>
+      <th>Best Use Case</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**HTTP**</td>
+      <td>Optional</td>
+      <td>Conditional*</td>
+      <td>Universal</td>
+      <td>Simple uploads</td>
+    </tr>
+    <tr>
+      <td>**Tus**</td>
+      <td>Native</td>
+      <td>Native</td>
+      <td>Universal</td>
+      <td>Large/Huge files</td>
+    </tr>
+    <tr>
+      <td>**WebSocket**</td>
+      <td>Native</td>
+      <td>Native</td>
+      <td>Modern</td>
+      <td>Real-time apps</td>
+    </tr>
+    <tr>
+      <td>**WebTransport**</td>
+      <td>Native</td>
+      <td>Native</td>
+      <td>Modern (No Safari)</td>
+      <td>Max Performance</td>
+    </tr>
+    <tr>
+      <td>**Cloud**</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Universal</td>
+      <td>Scalable Storage</td>
+    </tr>
+  </tbody>
+</table>
+> *HTTP resumability requires `enableChunking: true`.
+
+---
+
+## Protocol Recommendation
+
+Headless Uploader includes an intelligent recommendation engine (`getRecommendedProtocol`) that suggests the best protocol based on file size and browser capabilities.
+
+### Logic Summary:
+1.  **Huge Files (>100MB)**: Always recommends **Tus** for guaranteed reliability.
+2.  **Medium Files (10MB - 100MB)**:
+    *   Recommends **WebTransport** if supported (best performance).
+    *   Fallback to **Tus** if WebTransport is unavailable.
+3.  **Small Files (\<10MB)**:
+    *   Recommends **WebTransport** for speed.
+    *   Recommends **WebSocket** if WebTransport is unavailable.
+    *   Fallback to **HTTP** as the universal baseline.
+
+### Usage:
+<CodeBlock>
+```typescript
+import { getRecommendedProtocol } from '@verbpatch/headless-uploader';
+
+const file = myInput.files[0];
+const protocol = getRecommendedProtocol(file.size);
+
+const uploader = useUploader({
+  protocol: protocol,
+  // ... configure the protocol-specific options
+});
+```
+</CodeBlock>
+
+---
+
+## Comparing Protocols Manually
+
+You can also use the `compareProtocols` utility to get a scored list of protocols based on your specific requirements.
+
+<CodeBlock>
+```typescript
+import { compareProtocols } from '@verbpatch/headless-uploader';
+
+const comparisons = compareProtocols(file.size, {
+  needsResumability: true
+});
+
+// Returns an array sorted by suitability score:
+// [
+//   { protocol: 'tus', score: 55, reasons: ['Optimized for large files', ...], supported: true },
+//   { protocol: 'webtransport', score: 35, ... },
+//   ...
+// ]
+```
+</CodeBlock>
+
+## Configuration Example
+
+Each protocol has its own configuration block within the uploader options:
+
+<CodeBlock>
+```typescript
+const uploader = useUploader({
+  protocol: 'tus', // The active protocol
+  tus: {
+    endpoint: 'https://tus.example.com/files',
+    chunkSize: 5 * 1024 * 1024
+  }
+});
+```
+</CodeBlock>

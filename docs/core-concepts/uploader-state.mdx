@@ -1,0 +1,137 @@
+---
+title: "Uploader State"
+description: "Understanding the reactive state provided by Headless Uploader."
+---
+
+# Uploader State
+
+Headless Uploader maintains a reactive state that allows you to easily build informative UIs. This state is updated automatically as files move through the upload lifecycle.
+
+## Accessing State
+
+You can access the current state using the `getState()` method from the uploader instance:
+
+<CodeBlock>
+```typescript
+const state = uploader.getState();
+```
+</CodeBlock>
+
+In framework-specific wrappers like React or Vue, this state is automatically reactive, so your UI will re-render whenever it changes.
+
+## State Properties
+
+The `UploaderState` object contains the following properties:
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`files`</td>
+      <td>`UploadFile[]`</td>
+      <td>A list of all files currently in the uploader.</td>
+    </tr>
+    <tr>
+      <td>`uploadingFiles`</td>
+      <td>`UploadFile[]`</td>
+      <td>Files that are currently being transferred.</td>
+    </tr>
+    <tr>
+      <td>`completedFiles`</td>
+      <td>`UploadFile[]`</td>
+      <td>Files that have successfully finished uploading.</td>
+    </tr>
+    <tr>
+      <td>`failedFiles`</td>
+      <td>`UploadFile[]`</td>
+      <td>Files that encountered an error during upload.</td>
+    </tr>
+    <tr>
+      <td>`queuedFiles`</td>
+      <td>`UploadFile[]`</td>
+      <td>Files waiting to be uploaded.</td>
+    </tr>
+    <tr>
+      <td>`totalProgress`</td>
+      <td>`Object`</td>
+      <td>Aggregate progress metrics for all files.</td>
+    </tr>
+    <tr>
+      <td>`isUploading`</td>
+      <td>`boolean`</td>
+      <td>True if at least one file is currently uploading.</td>
+    </tr>
+    <tr>
+      <td>`isPaused`</td>
+      <td>`boolean`</td>
+      <td>True if at least one active upload is paused.</td>
+    </tr>
+  </tbody>
+</table>
+
+## The UploadFile Object
+
+Each file in the `files` array is represented by an `UploadFile` object, which provides detailed information:
+
+<table>
+  <thead>
+    <tr>
+      <th>Property</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`id`</td>
+      <td>`string`</td>
+      <td>A unique identifier for the file.</td>
+    </tr>
+    <tr>
+      <td>`file`</td>
+      <td>`File`</td>
+      <td>The native browser `File` object.</td>
+    </tr>
+    <tr>
+      <td>`metadata`</td>
+      <td>`FileMetadata`</td>
+      <td>Extracted or provided metadata (name, size, type, etc.).</td>
+    </tr>
+    <tr>
+      <td>`status`</td>
+      <td>`UploadStatus`</td>
+      <td>The current state (`pending`, `uploading`, `completed`, `failed`, etc.).</td>
+    </tr>
+    <tr>
+      <td>`progress`</td>
+      <td>`UploadProgress`</td>
+      <td>Real-time progress stats for this specific file.</td>
+    </tr>
+    <tr>
+      <td>`preview`</td>
+      <td>`string`</td>
+      <td>A data URL or blob URL for the file's preview (if enabled).</td>
+    </tr>
+    <tr>
+      <td>`error`</td>
+      <td>`Error`</td>
+      <td>The error object if the upload failed.</td>
+    </tr>
+  </tbody>
+</table>
+
+## Progress Metrics
+
+The `totalProgress` and `file.progress` objects provide several useful metrics:
+
+* `percentage`: The current completion percentage (0-100).
+* `loaded`: The number of bytes transferred so far.
+* `total`: The total size of the file(s) in bytes.
+* `speed`: Current transfer speed in bytes per second.
+* `timeRemaining`: Estimated seconds until completion.

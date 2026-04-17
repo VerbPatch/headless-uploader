@@ -1,0 +1,191 @@
+---
+title: "Uploader Options"
+description: "A comprehensive guide to all configuration options available in Headless Uploader."
+---
+
+# Uploader Options
+
+Headless Uploader is highly configurable. You can pass an options object to `useUploader` to customize its behavior.
+
+## Core Options
+
+<table>
+    <thead>
+        <tr>
+            <th>Option</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>`autoUpload`</th>
+            <th>`boolean`</th>
+            <th>`false`</th>
+            <th>Automatically start uploading as soon as files are added.</th>
+        </tr>
+        <tr>
+            <th>`maxConcurrent`</th>
+            <th>`number`</th>
+            <th>`3`</th>
+            <th>Maximum number of files to upload simultaneously.</th>
+        </tr>
+    </tbody>
+</table>
+
+## Network & Protocol
+
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`protocol`</td>
+      <td>`'http' | 'tus' | 'websocket' | 'webtransport' | 'cloud'`</td>
+      <td>`'http'`</td>
+      <td>The communication protocol to use. Set to `'cloud'` to use a custom cloud adapter.</td>
+    </tr>
+    <tr>
+      <td>`http`</td>
+      <td>`HttpConfig`</td>
+      <td>`undefined`</td>
+      <td>Configuration for standard HTTP uploads.</td>
+    </tr>
+    <tr>
+      <td>`tus`</td>
+      <td>`TusConfig`</td>
+      <td>`undefined`</td>
+      <td>Configuration for Tus resumable uploads.</td>
+    </tr>
+    <tr>
+      <td>`websocket`</td>
+      <td>`WebSocketConfig`</td>
+      <td>`undefined`</td>
+      <td>Configuration for WebSocket streaming.</td>
+    </tr>
+    <tr>
+      <td>`webtransport`</td>
+      <td>`WebTransportConfig`</td>
+      <td>`undefined`</td>
+      <td>Configuration for WebTransport transfers.</td>
+    </tr>
+    <tr>
+      <td>`cloudAdapter`</td>
+      <td>`CloudAdapter`</td>
+      <td>`undefined`</td>
+      <td>Custom cloud storage adapter (S3, Azure, GCS). **Required** when `protocol` is set to `'cloud'`.</td>
+    </tr>
+  </tbody>
+</table>
+
+## File Constraints
+
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`maxFiles`</td>
+      <td>`number`</td>
+      <td>`10`</td>
+      <td>Maximum number of files allowed in the queue.</td>
+    </tr>
+    <tr>
+      <td>`maxFileSize`</td>
+      <td>`number`</td>
+      <td>`10 * 1024 * 1024`</td>
+      <td>Maximum size for a single file (in bytes).</td>
+    </tr>
+    <tr>
+      <td>`acceptedTypes`</td>
+      <td>`string[]`</td>
+      <td>`[]`</td>
+      <td>Allowed MIME types or file extensions.</td>
+    </tr>
+    <tr>
+      <td>`allowDuplicates`</td>
+      <td>`boolean`</td>
+      <td>`true`</td>
+      <td>Whether to allow adding the same file multiple times.</td>
+    </tr>
+  </tbody>
+</table>
+
+## Preview & Metadata
+
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`enablePreviews`</td>
+      <td>`boolean`</td>
+      <td>`true`</td>
+      <td>Generate data URLs for image and video previews.</td>
+    </tr>
+    <tr>
+      <td>`previewMaxWidth`</td>
+      <td>`number`</td>
+      <td>`200`</td>
+      <td>Maximum width of generated previews.</td>
+    </tr>
+    <tr>
+      <td>`extractMetadata`</td>
+      <td>`boolean`</td>
+      <td>`true`</td>
+      <td>Automatically extract dimensions, duration, etc.</td>
+    </tr>
+  </tbody>
+</table>
+
+## Validation
+
+<table>
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th>Type</th>
+      <th>Default</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>`customValidator`</td>
+      <td>`Function`</td>
+      <td>`undefined`</td>
+      <td>An async function for custom validation logic.</td>
+    </tr>
+  </tbody>
+</table>
+
+## Events
+
+Headless Uploader provides a rich set of lifecycle callbacks:
+
+* `onFilesAdded`: Fired when files are successfully added.
+* `onFilesRejected`: Fired when files fail validation.
+* `onUploadStart`: Fired when an individual file starts uploading.
+* `onUploadProgress`: Fired periodically with progress updates.
+* `onUploadSuccess`: Fired when an upload completes successfully.
+* `onUploadError`: Fired when an upload fails.
+* `onAllComplete`: Fired when the entire queue is processed.

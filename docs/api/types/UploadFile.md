@@ -5,7 +5,7 @@ description: The internal object representing a file in the uploader, including 
 
 # UploadFile
 
-Defined in: packages/headless-uploader/src/types/uploader.ts:128
+Defined in: [packages/headless-uploader/src/types/uploader.ts:128](https://github.com/VerbPatch/headless-uploader/blob/f38e759ac298841ab72a7b52e9b46bf3740f2af7/packages/headless-uploader/src/types/uploader.ts#L128)
 
 Upload file representation
 
@@ -15,7 +15,7 @@ Upload file representation
 
 > `optional` **abortController?**: `AbortController`
 
-Defined in: packages/headless-uploader/src/types/uploader.ts:140
+Defined in: [packages/headless-uploader/src/types/uploader.ts:140](https://github.com/VerbPatch/headless-uploader/blob/f38e759ac298841ab72a7b52e9b46bf3740f2af7/packages/headless-uploader/src/types/uploader.ts#L140)
 
 ***
 
@@ -23,7 +23,7 @@ Defined in: packages/headless-uploader/src/types/uploader.ts:140
 
 > `optional` **chunks?**: [`ChunkInfo`](/uploader/docs/api/types/ChunkInfo)[]
 
-Defined in: packages/headless-uploader/src/types/uploader.ts:135
+Defined in: [packages/headless-uploader/src/types/uploader.ts:135](https://github.com/VerbPatch/headless-uploader/blob/f38e759ac298841ab72a7b52e9b46bf3740f2af7/packages/headless-uploader/src/types/uploader.ts#L135)
 
 ***
 
@@ -31,7 +31,7 @@ Defined in: packages/headless-uploader/src/types/uploader.ts:135
 
 > `optional` **error?**: `Error`
 
-Defined in: packages/headless-uploader/src/types/uploader.ts:137
+Defined in: [packages/headless-uploader/src/types/uploader.ts:137](https://github.com/VerbPatch/headless-uploader/blob/f38e759ac298841ab72a7b52e9b46bf3740f2af7/packages/headless-uploader/src/types/uploader.ts#L137)
 
 ***
 
@@ -39,7 +39,7 @@ Defined in: packages/headless-uploader/src/types/uploader.ts:137
 
 > **file**: `File`
 
-Defined in: packages/headless-uploader/src/types/uploader.ts:130
+Defined in: [packages/headless-uploader/src/types/uploader.ts:130](https://github.com/VerbPatch/headless-uploader/blob/f38e759ac298841ab72a7b52e9b46bf3740f2af7/packages/headless-uploader/src/types/uploader.ts#L130)
 
 ***
 
@@ -47,7 +47,7 @@ Defined in: packages/headless-uploader/src/types/uploader.ts:130
 
 > **id**: `string`
 
-Defined in: packages/headless-uploader/src/types/uploader.ts:129
+Defined in: [packages/headless-uploader/src/types/uploader.ts:129](https://github.com/VerbPatch/headless-uploader/blob/f38e759ac298841ab72a7b52e9b46bf3740f2af7/packages/headless-uploader/src/types/uploader.ts#L129)
 
 ***
 
@@ -55,7 +55,7 @@ Defined in: packages/headless-uploader/src/types/uploader.ts:129
 
 > **metadata**: [`FileMetadata`](/uploader/docs/api/types/FileMetadata)
 
-Defined in: packages/headless-uploader/src/types/uploader.ts:131
+Defined in: [packages/headless-uploader/src/types/uploader.ts:131](https://github.com/VerbPatch/headless-uploader/blob/f38e759ac298841ab72a7b52e9b46bf3740f2af7/packages/headless-uploader/src/types/uploader.ts#L131)
 
 ***
 
@@ -63,7 +63,7 @@ Defined in: packages/headless-uploader/src/types/uploader.ts:131
 
 > `optional` **preview?**: `string`
 
-Defined in: packages/headless-uploader/src/types/uploader.ts:134
+Defined in: [packages/headless-uploader/src/types/uploader.ts:134](https://github.com/VerbPatch/headless-uploader/blob/f38e759ac298841ab72a7b52e9b46bf3740f2af7/packages/headless-uploader/src/types/uploader.ts#L134)
 
 ***
 
@@ -71,7 +71,7 @@ Defined in: packages/headless-uploader/src/types/uploader.ts:134
 
 > `optional` **processedFile?**: `File` \| `Blob`
 
-Defined in: packages/headless-uploader/src/types/uploader.ts:136
+Defined in: [packages/headless-uploader/src/types/uploader.ts:136](https://github.com/VerbPatch/headless-uploader/blob/f38e759ac298841ab72a7b52e9b46bf3740f2af7/packages/headless-uploader/src/types/uploader.ts#L136)
 
 ***
 
@@ -79,7 +79,7 @@ Defined in: packages/headless-uploader/src/types/uploader.ts:136
 
 > **progress**: [`UploadProgress`](/uploader/docs/api/types/UploadProgress)
 
-Defined in: packages/headless-uploader/src/types/uploader.ts:133
+Defined in: [packages/headless-uploader/src/types/uploader.ts:133](https://github.com/VerbPatch/headless-uploader/blob/f38e759ac298841ab72a7b52e9b46bf3740f2af7/packages/headless-uploader/src/types/uploader.ts#L133)
 
 ***
 
@@ -87,7 +87,7 @@ Defined in: packages/headless-uploader/src/types/uploader.ts:133
 
 > `optional` **response?**: `unknown`
 
-Defined in: packages/headless-uploader/src/types/uploader.ts:139
+Defined in: [packages/headless-uploader/src/types/uploader.ts:139](https://github.com/VerbPatch/headless-uploader/blob/f38e759ac298841ab72a7b52e9b46bf3740f2af7/packages/headless-uploader/src/types/uploader.ts#L139)
 
 ***
 
@@ -95,7 +95,7 @@ Defined in: packages/headless-uploader/src/types/uploader.ts:139
 
 > **retries**: `number`
 
-Defined in: packages/headless-uploader/src/types/uploader.ts:138
+Defined in: [packages/headless-uploader/src/types/uploader.ts:138](https://github.com/VerbPatch/headless-uploader/blob/f38e759ac298841ab72a7b52e9b46bf3740f2af7/packages/headless-uploader/src/types/uploader.ts#L138)
 
 ***
 
@@ -103,4 +103,4 @@ Defined in: packages/headless-uploader/src/types/uploader.ts:138
 
 > **status**: [`UploadStatus`](/uploader/docs/api/types/UploadStatus)
 
-Defined in: packages/headless-uploader/src/types/uploader.ts:132
+Defined in: [packages/headless-uploader/src/types/uploader.ts:132](https://github.com/VerbPatch/headless-uploader/blob/f38e759ac298841ab72a7b52e9b46bf3740f2af7/packages/headless-uploader/src/types/uploader.ts#L132)
