@@ -1,367 +1,363 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>jQuery UMD-Only Uploader Example</title>
-    <style>
-      body {
-        font-family: monospace;
-        padding: 20px;
-        line-height: 1.5;
-        color: #333;
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jQuery UMD-Only Uploader Example</title>
+  <style>
+    body {
+      font-family: monospace;
+      padding: 20px;
+      line-height: 1.5;
+      color: #333;
+    }
+
+    h1,
+    h2 {
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 5px;
+    }
+
+    section {
+      margin-bottom: 30px;
+      border: 1px solid #eee;
+      padding: 15px;
+    }
+
+    .file-item {
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .progress-bg {
+      background: #eee;
+      width: 100%;
+      height: 10px;
+      margin: 5px 0;
+    }
+
+    .progress-fg {
+      background: #4caf50;
+      height: 100%;
+      transition: width 0.2s;
+    }
+
+    .controls {
+      margin: 10px 0;
+      display: flex;
+      gap: 10px;
+    }
+
+    pre {
+      background: #f4f4f4;
+      padding: 10px;
+      overflow: auto;
+      font-size: 12px;
+    }
+
+    .notifications-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 1000;
+    }
+
+    .notification {
+      background: #fff;
+      padding: 12px 20px;
+      border: 0 none;
+      border-bottom: 2px solid;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-width: 250px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      animation: slideIn 0.3s ease-out;
+      max-width: 300px;
+    }
+
+    .notification.success {
+      border-color: #4caf50;
+    }
+
+    .notification.error {
+      border-color: #f44336;
+    }
+
+    .notification.info {
+      border-color: #333;
+    }
+
+    .notification .close-btn {
+      margin-left: 15px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 18px;
+      border: 0 none;
+      background: transparent;
+    }
+
+    .notification .close-btn:hover {
+      background: #000;
+      color: #fff;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
       }
 
-      h1,
-      h2 {
-        border-bottom: 1px solid #ccc;
-        padding-bottom: 5px;
+      to {
+        transform: translateX(0);
+        opacity: 1;
       }
+    }
 
-      section {
-        margin-bottom: 30px;
-        border: 1px solid #eee;
-        padding: 15px;
-      }
+    #drop-zone {
+      border: 2px dashed #ccc;
+      padding: 40px;
+      text-align: center;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
 
-      .file-item {
-        border: 1px solid #ddd;
-        padding: 10px;
-        margin-bottom: 10px;
-      }
+    #drop-zone.drag-over {
+      background: #e1f5fe;
+      border-color: #03a9f4;
+    }
+  </style>
+</head>
 
-      .progress-bg {
-        background: #eee;
-        width: 100%;
-        height: 10px;
-        margin: 5px 0;
-      }
+<body>
+  <header>
+    <h1>jQuery Uploader - UMD example</h1>
+    <p>
+      This example uses the <strong>UMD bundle</strong> directly via a script tag. No NPM
+      installation or bundling required.
+    </p>
+  </header>
 
-      .progress-fg {
-        background: #4caf50;
-        height: 100%;
-        transition: width 0.2s;
-      }
-
-      .controls {
-        margin: 10px 0;
-        display: flex;
-        gap: 10px;
-      }
-
-      pre {
-        background: #f4f4f4;
-        padding: 10px;
-        overflow: auto;
-        font-size: 12px;
-      }
-
-      .notifications-container {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        z-index: 1000;
-      }
-
-      .notification {
-        background: #fff;
-        padding: 12px 20px;
-        border: 0 none;
-        border-bottom: 2px solid;
-        font-size: 14px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        min-width: 250px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        animation: slideIn 0.3s ease-out;
-        max-width: 300px;
-      }
-
-      .notification.success {
-        border-color: #4caf50;
-      }
-
-      .notification.error {
-        border-color: #f44336;
-      }
-
-      .notification.info {
-        border-color: #333;
-      }
-
-      .notification .close-btn {
-        margin-left: 15px;
-        cursor: pointer;
-        font-weight: bold;
-        font-size: 18px;
-        border: 0 none;
-        background: transparent;
-      }
-
-      .notification .close-btn:hover {
-        background: #000;
-        color: #fff;
-      }
-
-      @keyframes slideIn {
-        from {
-          transform: translateX(100%);
-          opacity: 0;
-        }
-
-        to {
-          transform: translateX(0);
-          opacity: 1;
-        }
-      }
-
-      #drop-zone {
-        border: 2px dashed #ccc;
-        padding: 40px;
-        text-align: center;
-        cursor: pointer;
-        margin-bottom: 10px;
-      }
-
-      #drop-zone.drag-over {
-        background: #e1f5fe;
-        border-color: #03a9f4;
-      }
-    </style>
-  </head>
-
-  <body>
-    <header>
-      <h1>jQuery Uploader - UMD example</h1>
-      <p>
-        This example uses the <strong>UMD bundle</strong> directly via a script tag. No NPM
-        installation or bundling required.
-      </p>
-    </header>
-
-    <section id="configuration">
-      <h2>1. Input</h2>
-      <div>
-        <label>Authorization Token:</label>
-        <input
-          type="text"
-          id="auth-token"
-          value="verbpatch-secret-token"
-          style="
+  <section id="configuration">
+    <h2>1. Input</h2>
+    <div>
+      <label>Authorization Token:</label>
+      <input type="text" id="auth-token" value="verbpatch-secret-token" style="
             width: 100%;
             padding: 8px;
             box-sizing: border-box;
             border: 1px solid #ccc;
             border-radius: 4px;
-          "
-        />
-      </div>
+          " />
+    </div>
 
-      <div id="drop-zone"><strong>Drop files here</strong> or click to select</div>
-      <input type="file" id="file-input" multiple style="display: none" accept="application/pdf" />
+    <div id="drop-zone"><strong>Drop files here</strong> or click to select</div>
+    <input type="file" id="file-input" multiple style="display: none" accept="application/pdf" />
 
-      <div>
-        <button id="upload-all">Upload All</button>
-        <button id="clear-all">Clear Queue</button>
-      </div>
-    </section>
+    <div>
+      <button id="upload-all">Upload All</button>
+      <button id="clear-all">Clear Queue</button>
+    </div>
+  </section>
 
-    <section id="file-queue">
-      <h2>2. File Queue & Progress</h2>
-      <div id="file-list">
-        <p>Queue is empty.</p>
-      </div>
-    </section>
+  <section id="file-queue">
+    <h2>2. File Queue & Progress</h2>
+    <div id="file-list">
+      <p>Queue is empty.</p>
+    </div>
+  </section>
 
-    <section id="uploader-state">
-      <h2>3. Internal State</h2>
-      <pre id="stats-raw">{}</pre>
-    </section>
-    <div id="notification-container" class="notifications-container"></div>
-    <!-- Load jQuery first -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <section id="uploader-state">
+    <h2>3. Internal State</h2>
+    <pre id="stats-raw">{}</pre>
+  </section>
+  <div id="notification-container" class="notifications-container"></div>
+  <!-- Load jQuery first -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-    <!-- Load the UMD bundle from the package - In a real app this would be your CDN link -->
-    <script src="index.umd.js"></script>
+  <!-- Load the UMD bundle from the package - In a real app this would be your CDN link -->
+  <script src="https://cdn.jsdelivr.net/npm/@verbpatch/jquery-uploader/dist/index.umd.js"></script>
 
-    <script>
-      $(function () {
-        const $fileInput = $('#file-input');
-        const $dropZone = $('#drop-zone');
-        const $fileList = $('#file-list');
-        const $statsRaw = $('#stats-raw');
-        const $authToken = $('#auth-token');
-        const $notificationContainer = $('#notification-container');
+  <script>
+    $(function () {
+      const $fileInput = $('#file-input');
+      const $dropZone = $('#drop-zone');
+      const $fileList = $('#file-list');
+      const $statsRaw = $('#stats-raw');
+      const $authToken = $('#auth-token');
+      const $notificationContainer = $('#notification-container');
 
-        // Notification logic
-        function showNotification(message, type = 'info') {
-          const id = Date.now();
-          const $notification = $(`
+      // Notification logic
+      function showNotification(message, type = 'info') {
+        const id = Date.now();
+        const $notification = $(`
           <div class="notification ${type}" data-id="${id}">
             <span>${message}</span>
             <span class="close-btn">&times;</span>
           </div>
         `);
 
-          $notificationContainer.append($notification);
+        $notificationContainer.append($notification);
 
-          $notification.find('.close-btn').on('click', () => removeNotification(id));
+        $notification.find('.close-btn').on('click', () => removeNotification(id));
 
-          setTimeout(() => removeNotification(id), 5000);
-        }
+        setTimeout(() => removeNotification(id), 5000);
+      }
 
-        function removeNotification(id) {
-          const $n = $notificationContainer.find(`.notification[data-id="${id}"]`);
-          $n.fadeOut(300, function () {
-            $(this).remove();
+      function removeNotification(id) {
+        const $n = $notificationContainer.find(`.notification[data-id="${id}"]`);
+        $n.fadeOut(300, function () {
+          $(this).remove();
+        });
+      }
+
+      // Initialize using the global jQuery plugin
+      $fileInput.headlessUploader({
+        protocol: 'http',
+        http: {
+          endpoint: 'http://localhost:3000/upload',
+          method: 'POST',
+          enableChunking: true,
+        },
+
+        maxFiles: 10,
+        maxFileSize: 50 * 1024 * 1024, // 50MB
+        acceptedTypes: ['application/pdf'],
+        chunkSize: 500 * 1024,
+        maxConcurrent: 2,
+        autoRetry: true,
+        enablePreviews: false,
+
+        onBeforeRequest: async (file, chunk) => {
+          console.log(
+            '[Auth] Preparing request for ' +
+            file.file.name +
+            (chunk ? ' (Chunk ' + chunk.index + ')' : ''),
+          );
+          return {
+            headers: {
+              Authorization: 'Bearer ' + $authToken.val(),
+            },
+          };
+        },
+
+        onFilesAdded: () => {
+          render();
+          showNotification(`${$fileInput.headlessUploader('getState').files.length} files added`);
+        },
+        onFilesRejected: (errors) => {
+          errors.forEach((err) => {
+            showNotification(`${err.file.name}: ${err.message}`, 'error');
           });
+        },
+        onUploadProgress: render,
+        onUploadSuccess: (file) => {
+          showNotification(`Uploaded: ${file.metadata.name}`, 'success');
+          render();
+        },
+        onUploadError: (file, error) => {
+          showNotification(`Failed: ${file.metadata.name} - ${error.message}`, 'error');
+          render();
+        },
+        onUploadPause: render,
+        onUploadResume: render,
+        onUploadCancel: render,
+        onAllComplete: (files) => {
+          showNotification('[Complete] All ' + files.length + ' uploads finished!', 'success');
+          render();
+        },
+      });
+
+      // Actions
+      $('#upload-all').on('click', () => $fileInput.headlessUploader('uploadAll'));
+      $('#clear-all').on('click', () => {
+        $fileInput.headlessUploader('clearAll');
+        render();
+      });
+
+      // Drag & Drop
+      $dropZone.on('dragover', (e) => {
+        e.preventDefault();
+        $dropZone.addClass('drag-over');
+      });
+      $dropZone.on('dragleave', () => $dropZone.removeClass('drag-over'));
+      $dropZone.on('drop', async (e) => {
+        e.preventDefault();
+        $dropZone.removeClass('drag-over');
+        await $fileInput.headlessUploader('handleDrop', e.originalEvent);
+        render();
+      });
+      $dropZone.on('click', () => $fileInput.click());
+
+      $fileInput.on('change', (e) => {
+        if (e.target.files) {
+          $fileInput.headlessUploader('addFiles', e.target.files);
+          render();
         }
+      });
 
-        // Initialize using the global jQuery plugin
-        $fileInput.headlessUploader({
-          protocol: 'http',
-          http: {
-            endpoint: 'http://localhost:3000/upload',
-            method: 'POST',
-            enableChunking: true,
-          },
+      // Delegation for action buttons
+      $fileList.on('click', '.btn-pause', function () {
+        $fileInput.headlessUploader('pauseUpload', $(this).attr('data-id'));
+      });
+      $fileList.on('click', '.btn-resume', function () {
+        $fileInput.headlessUploader('resumeUpload', $(this).attr('data-id'));
+      });
+      $fileList.on('click', '.btn-cancel', function () {
+        $fileInput.headlessUploader('cancelUpload', $(this).attr('data-id'));
+      });
+      $fileList.on('click', '.btn-upload', function () {
+        $fileInput.headlessUploader('uploadFile', $(this).attr('data-id'));
+      });
+      $fileList.on('click', '.btn-remove', function () {
+        $fileInput.headlessUploader('removeFile', $(this).attr('data-id'));
+        render();
+      });
 
-          maxFiles: 10,
-          maxFileSize: 50 * 1024 * 1024, // 50MB
-          acceptedTypes: ['application/pdf'],
-          chunkSize: 500 * 1024,
-          maxConcurrent: 2,
-          autoRetry: true,
-          enablePreviews: false,
+      let renderPending = false;
+      function render() {
+        if (renderPending) return;
+        renderPending = true;
 
-          onBeforeRequest: async (file, chunk) => {
-            console.log(
-              '[Auth] Preparing request for ' +
-                file.file.name +
-                (chunk ? ' (Chunk ' + chunk.index + ')' : ''),
-            );
-            return {
-              headers: {
-                Authorization: 'Bearer ' + $authToken.val(),
+        requestAnimationFrame(() => {
+          renderPending = false;
+          const state = $fileInput.headlessUploader('getState');
+
+          // 1. Update Global Stats
+          $statsRaw.text(
+            JSON.stringify(
+              {
+                protocol: 'TUS',
+                isUploading: state.isUploading,
+                totalProgress: state.totalProgress.percentage.toFixed(2) + '%',
+                filesCount: state.files.length,
               },
-            };
-          },
+              null,
+              2,
+            ),
+          );
 
-          onFilesAdded: () => {
-            render();
-            showNotification(`${$fileInput.headlessUploader('getState').files.length} files added`);
-          },
-          onFilesRejected: (errors) => {
-            errors.forEach((err) => {
-              showNotification(`${err.file.name}: ${err.message}`, 'error');
-            });
-          },
-          onUploadProgress: render,
-          onUploadSuccess: (file) => {
-            showNotification(`Uploaded: ${file.metadata.name}`, 'success');
-            render();
-          },
-          onUploadError: (file, error) => {
-            showNotification(`Failed: ${file.metadata.name} - ${error.message}`, 'error');
-            render();
-          },
-          onUploadPause: render,
-          onUploadResume: render,
-          onUploadCancel: render,
-          onAllComplete: (files) => {
-            showNotification('[Complete] All ' + files.length + ' uploads finished!', 'success');
-            render();
-          },
-        });
-
-        // Actions
-        $('#upload-all').on('click', () => $fileInput.headlessUploader('uploadAll'));
-        $('#clear-all').on('click', () => {
-          $fileInput.headlessUploader('clearAll');
-          render();
-        });
-
-        // Drag & Drop
-        $dropZone.on('dragover', (e) => {
-          e.preventDefault();
-          $dropZone.addClass('drag-over');
-        });
-        $dropZone.on('dragleave', () => $dropZone.removeClass('drag-over'));
-        $dropZone.on('drop', async (e) => {
-          e.preventDefault();
-          $dropZone.removeClass('drag-over');
-          await $fileInput.headlessUploader('handleDrop', e.originalEvent);
-          render();
-        });
-        $dropZone.on('click', () => $fileInput.click());
-
-        $fileInput.on('change', (e) => {
-          if (e.target.files) {
-            $fileInput.headlessUploader('addFiles', e.target.files);
-            render();
+          // 2. Handle Empty State
+          if (state.files.length === 0) {
+            $fileList.html('<p>Queue is empty.</p>');
+            return;
+          } else if ($fileList.find('> p').length > 0) {
+            $fileList.empty();
           }
-        });
 
-        // Delegation for action buttons
-        $fileList.on('click', '.btn-pause', function () {
-          $fileInput.headlessUploader('pauseUpload', $(this).attr('data-id'));
-        });
-        $fileList.on('click', '.btn-resume', function () {
-          $fileInput.headlessUploader('resumeUpload', $(this).attr('data-id'));
-        });
-        $fileList.on('click', '.btn-cancel', function () {
-          $fileInput.headlessUploader('cancelUpload', $(this).attr('data-id'));
-        });
-        $fileList.on('click', '.btn-upload', function () {
-          $fileInput.headlessUploader('uploadFile', $(this).attr('data-id'));
-        });
-        $fileList.on('click', '.btn-remove', function () {
-          $fileInput.headlessUploader('removeFile', $(this).attr('data-id'));
-          render();
-        });
+          // 3. Selective Sync of File Items
+          state.files.forEach((file) => {
+            let $item = $fileList.find(`.file-item[data-id="${file.id}"]`);
 
-        let renderPending = false;
-        function render() {
-          if (renderPending) return;
-          renderPending = true;
-
-          requestAnimationFrame(() => {
-            renderPending = false;
-            const state = $fileInput.headlessUploader('getState');
-
-            // 1. Update Global Stats
-            $statsRaw.text(
-              JSON.stringify(
-                {
-                  protocol: 'TUS',
-                  isUploading: state.isUploading,
-                  totalProgress: state.totalProgress.percentage.toFixed(2) + '%',
-                  filesCount: state.files.length,
-                },
-                null,
-                2,
-              ),
-            );
-
-            // 2. Handle Empty State
-            if (state.files.length === 0) {
-              $fileList.html('<p>Queue is empty.</p>');
-              return;
-            } else if ($fileList.find('> p').length > 0) {
-              $fileList.empty();
-            }
-
-            // 3. Selective Sync of File Items
-            state.files.forEach((file) => {
-              let $item = $fileList.find(`.file-item[data-id="${file.id}"]`);
-
-              // Create item if it doesn't exist
-              if ($item.length === 0) {
-                $item = $(`
+            // Create item if it doesn't exist
+            if ($item.length === 0) {
+              $item = $(`
             <div class="file-item" data-id="${file.id}">
               <div class="file-info"><strong>${file.metadata.name}</strong> (${HeadlessUploaderJQuery.formatBytes(file.metadata.size)})</div>
               <div class="status-text"></div>
@@ -370,66 +366,67 @@
               <div class="actions"></div>
             </div>
           `);
-                $fileList.append($item);
-              }
+              $fileList.append($item);
+            }
 
-              // Update Dynamic Parts
-              $item.find('.status-text').text(`Status: [${file.status.toUpperCase()}]`);
-              // $item.find('.progress-fg').css('width', `${file.progress.percentage}%`);
+            // Update Dynamic Parts
+            $item.find('.status-text').text(`Status: [${file.status.toUpperCase()}]`);
+            // $item.find('.progress-fg').css('width', `${file.progress.percentage}%`);
 
-              let info = `${file.progress.percentage.toFixed(1)}%`;
+            let info = `${file.progress.percentage.toFixed(1)}%`;
+            if (file.status === 'uploading') {
+              info += ` • ${HeadlessUploaderJQuery.formatBytes(file.progress.speed)}/s • ${HeadlessUploaderJQuery.formatTime(file.progress.timeRemaining)} left`;
+            }
+            $item.find('.progress-info').text(info);
+
+            // Sync Buttons (only if status changed or empty)
+            const currentStatus = $item.attr('data-status');
+            if (currentStatus !== file.status) {
+              $item.attr('data-status', file.status);
+              const $actions = $item.find('.actions').empty();
+
               if (file.status === 'uploading') {
-                info += ` • ${HeadlessUploaderJQuery.formatBytes(file.progress.speed)}/s • ${HeadlessUploaderJQuery.formatTime(file.progress.timeRemaining)} left`;
-              }
-              $item.find('.progress-info').text(info);
-
-              // Sync Buttons (only if status changed or empty)
-              const currentStatus = $item.attr('data-status');
-              if (currentStatus !== file.status) {
-                $item.attr('data-status', file.status);
-                const $actions = $item.find('.actions').empty();
-
-                if (file.status === 'uploading') {
-                  $('<button class="btn-pause">Pause</button>')
-                    .attr('data-id', file.id)
-                    .appendTo($actions);
-                  $('<button class="btn-cancel">Cancel</button>')
-                    .attr('data-id', file.id)
-                    .appendTo($actions);
-                } else if (file.status === 'paused') {
-                  $('<button class="btn-resume">Resume</button>')
-                    .attr('data-id', file.id)
-                    .appendTo($actions);
-                  $('<button class="btn-cancel">Cancel</button>')
-                    .attr('data-id', file.id)
-                    .appendTo($actions);
-                } else if (file.status === 'failed') {
-                  $('<button class="btn-retry">Retry</button>')
-                    .attr('data-id', file.id)
-                    .appendTo($actions);
-                } else if (file.status === 'pending' || file.status === 'queued') {
-                  $('<button class="btn-upload">Upload</button>')
-                    .attr('data-id', file.id)
-                    .appendTo($actions);
-                }
-                $('<button class="btn-remove">Remove</button>')
+                $('<button class="btn-pause">Pause</button>')
+                  .attr('data-id', file.id)
+                  .appendTo($actions);
+                $('<button class="btn-cancel">Cancel</button>')
+                  .attr('data-id', file.id)
+                  .appendTo($actions);
+              } else if (file.status === 'paused') {
+                $('<button class="btn-resume">Resume</button>')
+                  .attr('data-id', file.id)
+                  .appendTo($actions);
+                $('<button class="btn-cancel">Cancel</button>')
+                  .attr('data-id', file.id)
+                  .appendTo($actions);
+              } else if (file.status === 'failed') {
+                $('<button class="btn-retry">Retry</button>')
+                  .attr('data-id', file.id)
+                  .appendTo($actions);
+              } else if (file.status === 'pending' || file.status === 'queued') {
+                $('<button class="btn-upload">Upload</button>')
                   .attr('data-id', file.id)
                   .appendTo($actions);
               }
-            });
-
-            // 4. Remove deleted files from DOM
-            $fileList.find('.file-item').each(function () {
-              const id = $(this).attr('data-id');
-              if (!state.files.find((f) => f.id === id)) {
-                $(this).remove();
-              }
-            });
+              $('<button class="btn-remove">Remove</button>')
+                .attr('data-id', file.id)
+                .appendTo($actions);
+            }
           });
-        }
 
-        render();
-      });
-    </script>
-  </body>
+          // 4. Remove deleted files from DOM
+          $fileList.find('.file-item').each(function () {
+            const id = $(this).attr('data-id');
+            if (!state.files.find((f) => f.id === id)) {
+              $(this).remove();
+            }
+          });
+        });
+      }
+
+      render();
+    });
+  </script>
+</body>
+
 </html>
