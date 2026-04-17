@@ -5,7 +5,7 @@ description: Configuration options for standard HTTP-based uploads.
 
 # HttpConfig
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:62](https://github.com/VerbPatch/headless-uploader/blob/f38e759ac298841ab72a7b52e9b46bf3740f2af7/packages/headless-uploader/src/types/protocolTypes.ts#L62)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:62](https://github.com/VerbPatch/headless-uploader/blob/24e7558f0c45149fa75d59a07ac324f7e3fbff0d/packages/headless-uploader/src/types/protocolTypes.ts#L62)
 
 HTTP Protocol Configuration
 
@@ -15,7 +15,7 @@ HTTP Protocol Configuration
 
 > `optional` **enableChunking?**: `boolean`
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:72](https://github.com/VerbPatch/headless-uploader/blob/f38e759ac298841ab72a7b52e9b46bf3740f2af7/packages/headless-uploader/src/types/protocolTypes.ts#L72)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:72](https://github.com/VerbPatch/headless-uploader/blob/24e7558f0c45149fa75d59a07ac324f7e3fbff0d/packages/headless-uploader/src/types/protocolTypes.ts#L72)
 
 Whether to enable file chunking for large files
 
@@ -25,7 +25,7 @@ Whether to enable file chunking for large files
 
 > `optional` **endpoint?**: `string`
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:64](https://github.com/VerbPatch/headless-uploader/blob/f38e759ac298841ab72a7b52e9b46bf3740f2af7/packages/headless-uploader/src/types/protocolTypes.ts#L64)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:64](https://github.com/VerbPatch/headless-uploader/blob/24e7558f0c45149fa75d59a07ac324f7e3fbff0d/packages/headless-uploader/src/types/protocolTypes.ts#L64)
 
 The server endpoint for uploads
 
@@ -35,7 +35,7 @@ The server endpoint for uploads
 
 > `optional` **headers?**: `Record`\<`string`, `string`\>
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:68](https://github.com/VerbPatch/headless-uploader/blob/f38e759ac298841ab72a7b52e9b46bf3740f2af7/packages/headless-uploader/src/types/protocolTypes.ts#L68)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:68](https://github.com/VerbPatch/headless-uploader/blob/24e7558f0c45149fa75d59a07ac324f7e3fbff0d/packages/headless-uploader/src/types/protocolTypes.ts#L68)
 
 Custom headers for the request
 
@@ -45,7 +45,7 @@ Custom headers for the request
 
 > `optional` **maxConcurrentChunks?**: `number`
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:74](https://github.com/VerbPatch/headless-uploader/blob/f38e759ac298841ab72a7b52e9b46bf3740f2af7/packages/headless-uploader/src/types/protocolTypes.ts#L74)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:74](https://github.com/VerbPatch/headless-uploader/blob/24e7558f0c45149fa75d59a07ac324f7e3fbff0d/packages/headless-uploader/src/types/protocolTypes.ts#L74)
 
 Maximum number of concurrent chunk uploads
 
@@ -55,7 +55,7 @@ Maximum number of concurrent chunk uploads
 
 > `optional` **method?**: [`HttpMethod`](/uploader/docs/api/types/HttpMethod)
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:66](https://github.com/VerbPatch/headless-uploader/blob/f38e759ac298841ab72a7b52e9b46bf3740f2af7/packages/headless-uploader/src/types/protocolTypes.ts#L66)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:66](https://github.com/VerbPatch/headless-uploader/blob/24e7558f0c45149fa75d59a07ac324f7e3fbff0d/packages/headless-uploader/src/types/protocolTypes.ts#L66)
 
 The HTTP method to use (POST, PUT, PATCH)
 
@@ -65,6 +65,6 @@ The HTTP method to use (POST, PUT, PATCH)
 
 > `optional` **withCredentials?**: `boolean`
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:70](https://github.com/VerbPatch/headless-uploader/blob/f38e759ac298841ab72a7b52e9b46bf3740f2af7/packages/headless-uploader/src/types/protocolTypes.ts#L70)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:70](https://github.com/VerbPatch/headless-uploader/blob/24e7558f0c45149fa75d59a07ac324f7e3fbff0d/packages/headless-uploader/src/types/protocolTypes.ts#L70)
 
 Whether to send credentials with the request

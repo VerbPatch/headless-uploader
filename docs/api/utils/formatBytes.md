@@ -7,7 +7,7 @@ description: Converts a byte count into a readable format (KB, MB, GB, etc.).
 
 > **formatBytes**(`bytes`, `decimals?`): `string`
 
-Defined in: [packages/headless-uploader/src/utils/helpers.ts:26](https://github.com/VerbPatch/headless-uploader/blob/f38e759ac298841ab72a7b52e9b46bf3740f2af7/packages/headless-uploader/src/utils/helpers.ts#L26)
+Defined in: [packages/headless-uploader/src/utils/helpers.ts:26](https://github.com/VerbPatch/headless-uploader/blob/24e7558f0c45149fa75d59a07ac324f7e3fbff0d/packages/headless-uploader/src/utils/helpers.ts#L26)
 
 Format bytes into a human-readable string
 

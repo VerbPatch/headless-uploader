@@ -350,6 +350,11 @@
     "group": "example",
     "children": [
       {
+        "title": "cloud-example",
+        "group": "example",
+        "path": "/uploader/examples/Angular/cloud-example"
+      },
+      {
         "title": "http-example",
         "group": "example",
         "path": "/uploader/examples/Angular/http-example"
@@ -375,6 +380,11 @@
     "title": "jQuery",
     "group": "example",
     "children": [
+      {
+        "title": "cloud-example",
+        "group": "example",
+        "path": "/uploader/examples/jQuery/cloud-example"
+      },
       {
         "title": "http-example",
         "group": "example",
@@ -407,6 +417,11 @@
     "group": "example",
     "children": [
       {
+        "title": "cloud-example",
+        "group": "example",
+        "path": "/uploader/examples/Lit/cloud-example"
+      },
+      {
         "title": "http-example",
         "group": "example",
         "path": "/uploader/examples/Lit/http-example"
@@ -432,6 +447,11 @@
     "title": "Preact",
     "group": "example",
     "children": [
+      {
+        "title": "cloud-example",
+        "group": "example",
+        "path": "/uploader/examples/Preact/cloud-example"
+      },
       {
         "title": "http-example",
         "group": "example",
@@ -459,6 +479,11 @@
     "group": "example",
     "children": [
       {
+        "title": "cloud-example",
+        "group": "example",
+        "path": "/uploader/examples/Qwik/cloud-example"
+      },
+      {
         "title": "http-example",
         "group": "example",
         "path": "/uploader/examples/Qwik/http-example"
@@ -484,6 +509,11 @@
     "title": "React",
     "group": "example",
     "children": [
+      {
+        "title": "cloud-example",
+        "group": "example",
+        "path": "/uploader/examples/React/cloud-example"
+      },
       {
         "title": "http-example",
         "group": "example",
@@ -511,6 +541,11 @@
     "group": "example",
     "children": [
       {
+        "title": "cloud-example",
+        "group": "example",
+        "path": "/uploader/examples/Solid/cloud-example"
+      },
+      {
         "title": "http-example",
         "group": "example",
         "path": "/uploader/examples/Solid/http-example"
@@ -537,6 +572,11 @@
     "group": "example",
     "children": [
       {
+        "title": "cloud-example",
+        "group": "example",
+        "path": "/uploader/examples/Svelte/cloud-example"
+      },
+      {
         "title": "http-example",
         "group": "example",
         "path": "/uploader/examples/Svelte/http-example"
@@ -559,101 +599,14 @@
     ]
   },
   {
-    "title": "uploader-server",
-    "group": "example",
-    "path": "/uploader/examples/examples/uploader-server"
-  },
-  {
-    "title": "uploader-server-csharp",
-    "group": "example",
-    "children": [
-      {
-        "title": ".vscode",
-        "group": "example",
-        "children": []
-      },
-      {
-        "title": "bin",
-        "group": "example",
-        "children": [
-          {
-            "title": "Debug",
-            "group": "example",
-            "children": [
-              {
-                "title": "net10.0",
-                "group": "example",
-                "children": []
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "title": "obj",
-        "group": "example",
-        "children": [
-          {
-            "title": "Debug",
-            "group": "example",
-            "children": [
-              {
-                "title": "net10.0",
-                "group": "example",
-                "children": [
-                  {
-                    "title": "compressed",
-                    "group": "example",
-                    "children": []
-                  },
-                  {
-                    "title": "ref",
-                    "group": "example",
-                    "children": []
-                  },
-                  {
-                    "title": "refint",
-                    "group": "example",
-                    "children": []
-                  },
-                  {
-                    "title": "staticwebassets",
-                    "group": "example",
-                    "children": []
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Protocols",
-        "group": "example",
-        "children": []
-      },
-      {
-        "title": "wwwroot",
-        "group": "example",
-        "children": [
-          {
-            "title": "chunks",
-            "group": "example",
-            "children": []
-          },
-          {
-            "title": "uploads",
-            "group": "example",
-            "children": []
-          }
-        ]
-      }
-    ]
-  },
-  {
     "title": "Vanilla",
     "group": "example",
     "children": [
+      {
+        "title": "cloud-example",
+        "group": "example",
+        "path": "/uploader/examples/Vanilla/cloud-example"
+      },
       {
         "title": "dynamic-example",
         "group": "example",
@@ -685,6 +638,11 @@
     "title": "Vue",
     "group": "example",
     "children": [
+      {
+        "title": "cloud-example",
+        "group": "example",
+        "path": "/uploader/examples/Vue/cloud-example"
+      },
       {
         "title": "http-example",
         "group": "example",

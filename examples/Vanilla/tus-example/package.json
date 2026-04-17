@@ -1,5 +1,5 @@
 {
-  "name": "vanilla-uploader-tus-example",
+  "name": "vanilla-tus-example",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -12,7 +12,7 @@
     "vite": "^7.2.2"
   },
   "dependencies": {
-    "@verbpatch/headless-uploader": "workspace:^",
+    "@verbpatch/headless-uploader": "latest",
     "tus-js-client": "^4.3.1"
   }
 }

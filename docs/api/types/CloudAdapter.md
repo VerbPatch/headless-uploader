@@ -5,7 +5,7 @@ description: Interface for implementing custom cloud storage providers (e.g., S3
 
 # CloudAdapter
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:149](https://github.com/VerbPatch/headless-uploader/blob/f38e759ac298841ab72a7b52e9b46bf3740f2af7/packages/headless-uploader/src/types/uploader.ts#L149)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:149](https://github.com/VerbPatch/headless-uploader/blob/24e7558f0c45149fa75d59a07ac324f7e3fbff0d/packages/headless-uploader/src/types/uploader.ts#L149)
 
 Cloud storage adapter interface
 
@@ -15,7 +15,7 @@ Cloud storage adapter interface
 
 > `optional` **abortUpload?**: (`uploadId`) => `Promise`\<`void`\>
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:153](https://github.com/VerbPatch/headless-uploader/blob/f38e759ac298841ab72a7b52e9b46bf3740f2af7/packages/headless-uploader/src/types/uploader.ts#L153)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:153](https://github.com/VerbPatch/headless-uploader/blob/24e7558f0c45149fa75d59a07ac324f7e3fbff0d/packages/headless-uploader/src/types/uploader.ts#L153)
 
 #### Parameters
 
@@ -33,7 +33,7 @@ Defined in: [packages/headless-uploader/src/types/uploader.ts:153](https://githu
 
 > `optional` **getUploadUrl?**: (`file`) => `Promise`\<`string`\>
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:152](https://github.com/VerbPatch/headless-uploader/blob/f38e759ac298841ab72a7b52e9b46bf3740f2af7/packages/headless-uploader/src/types/uploader.ts#L152)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:152](https://github.com/VerbPatch/headless-uploader/blob/24e7558f0c45149fa75d59a07ac324f7e3fbff0d/packages/headless-uploader/src/types/uploader.ts#L152)
 
 #### Parameters
 
@@ -51,7 +51,7 @@ Defined in: [packages/headless-uploader/src/types/uploader.ts:152](https://githu
 
 > **name**: `string`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:150](https://github.com/VerbPatch/headless-uploader/blob/f38e759ac298841ab72a7b52e9b46bf3740f2af7/packages/headless-uploader/src/types/uploader.ts#L150)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:150](https://github.com/VerbPatch/headless-uploader/blob/24e7558f0c45149fa75d59a07ac324f7e3fbff0d/packages/headless-uploader/src/types/uploader.ts#L150)
 
 ***
 
@@ -59,7 +59,7 @@ Defined in: [packages/headless-uploader/src/types/uploader.ts:150](https://githu
 
 > **upload**: (`file`, `config`) => `Promise`\<`unknown`\>
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:151](https://github.com/VerbPatch/headless-uploader/blob/f38e759ac298841ab72a7b52e9b46bf3740f2af7/packages/headless-uploader/src/types/uploader.ts#L151)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:151](https://github.com/VerbPatch/headless-uploader/blob/24e7558f0c45149fa75d59a07ac324f7e3fbff0d/packages/headless-uploader/src/types/uploader.ts#L151)
 
 #### Parameters
 

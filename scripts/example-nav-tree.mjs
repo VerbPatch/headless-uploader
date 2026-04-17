@@ -14,7 +14,6 @@ export function buildExamplesNav(pathPrefix) {
 
 function scan(dirPath, pathPrefix) {
   const packageJsonPath = path.join(dirPath, 'package.json');
-
   const packageExists = fs.existsSync(packageJsonPath);
   if (packageExists) {
     const name = path.basename(dirPath);
@@ -27,7 +26,7 @@ function scan(dirPath, pathPrefix) {
 
   const entries = fs
     .readdirSync(dirPath, { withFileTypes: true })
-    .filter((f) => f.isDirectory() && !IGNORED_DIRS.has(f.name));
+    .filter((f) => f.isDirectory() && !IGNORED_DIRS.has(f.name) && !f.name.startsWith('uploader-server'));
 
   return entries.map((item) => {
     const child = scan(item.path + '\\' + item.name, pathPrefix);

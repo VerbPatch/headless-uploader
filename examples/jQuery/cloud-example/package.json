@@ -1,0 +1,17 @@
+{
+  "name": "jquery-cloud-example",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "jquery": "^3.0.0",
+    "@verbpatch/jquery-uploader": "latest"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0"
+  }
+}

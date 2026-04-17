@@ -7,6 +7,7 @@ import { ensureDirSync } from './utils.js';
 import { startCleanupJob } from './cleanup.js';
 import { setupHTTP } from './protocols/http.js';
 import { setupTUS } from './protocols/tus.js';
+import { setupCloud } from './protocols/cloud.js';
 import { setupWebSocket } from './protocols/websocket.js';
 import { setupWebTransport, getWebTransportFingerprint } from './protocols/webtransport.js';
 
@@ -26,6 +27,9 @@ setupHTTP(app);
 
 // --- TUS Implementation ---
 setupTUS(app);
+
+// --- Cloud Implementation ---
+setupCloud(app);
 
 // --- WebSocket Implementation ---
 const server = http.createServer(app);
@@ -56,6 +60,9 @@ server.listen(config.APP_PORT, () => {
   console.log(`\n📍 Available Endpoints:`);
   console.log(`   - HTTP Upload: ${protocol}://localhost:${config.APP_PORT}/upload`);
   console.log(`   - TUS Upload: ${protocol}://localhost:${config.APP_PORT}/tus/`);
+  console.log(`   - Cloud (S3): ${protocol}://localhost:${config.APP_PORT}/generate-s3-url`);
+  console.log(`   - Cloud (Azure): ${protocol}://localhost:${config.APP_PORT}/generate-azure-sas`);
+  console.log(`   - Cloud (GCS): ${protocol}://localhost:${config.APP_PORT}/generate-gcs-url`);
   console.log(
     `   - WebSocket: ${protocol === 'https' ? 'wss' : 'ws'}://localhost:${config.APP_PORT}/ws-upload`,
   );
