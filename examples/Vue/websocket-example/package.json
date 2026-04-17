@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "vue": "^3.5.0",
-    "@verbpatch/vue-uploader": "workspace:*"
+    "@verbpatch/vue-uploader": "latest"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.2.1",

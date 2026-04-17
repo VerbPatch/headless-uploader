@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "preact": "^10.0.0",
-    "@verbpatch/preact-uploader": "workspace:*"
+    "@verbpatch/preact-uploader": "latest"
   },
   "devDependencies": {
     "vite": "^6.0.0",

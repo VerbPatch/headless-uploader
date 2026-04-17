@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "preact": "^10.0.0",
-    "@verbpatch/preact-uploader": "workspace:*",
+    "@verbpatch/preact-uploader": "latest",
     "tus-js-client": "^4.3.1"
   },
   "devDependencies": {

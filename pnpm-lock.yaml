@@ -129,7 +129,7 @@ importers:
         specifier: ^20.3.12
         version: 20.3.18(@angular/common@20.3.18(@angular/core@20.3.18(@angular/compiler@20.3.18)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.3.18(@angular/compiler@20.3.18)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/platform-browser@20.3.18(@angular/common@20.3.18(@angular/core@20.3.18(@angular/compiler@20.3.18)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.3.18(@angular/compiler@20.3.18)(rxjs@7.8.2)(zone.js@0.15.1)))(rxjs@7.8.2)
       '@verbpatch/angular-uploader':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../../packages/angular-uploader
       rxjs:
         specifier: ~7.8.2
@@ -196,7 +196,7 @@ importers:
         specifier: ^20.3.12
         version: 20.3.18(@angular/common@20.3.18(@angular/core@20.3.18(@angular/compiler@20.3.18)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.3.18(@angular/compiler@20.3.18)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/platform-browser@20.3.18(@angular/common@20.3.18(@angular/core@20.3.18(@angular/compiler@20.3.18)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.3.18(@angular/compiler@20.3.18)(rxjs@7.8.2)(zone.js@0.15.1)))(rxjs@7.8.2)
       '@verbpatch/angular-uploader':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../../packages/angular-uploader
       rxjs:
         specifier: ~7.8.2
@@ -266,7 +266,7 @@ importers:
         specifier: ^20.3.12
         version: 20.3.18(@angular/common@20.3.18(@angular/core@20.3.18(@angular/compiler@20.3.18)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.3.18(@angular/compiler@20.3.18)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/platform-browser@20.3.18(@angular/common@20.3.18(@angular/core@20.3.18(@angular/compiler@20.3.18)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.3.18(@angular/compiler@20.3.18)(rxjs@7.8.2)(zone.js@0.15.1)))(rxjs@7.8.2)
       '@verbpatch/angular-uploader':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../../packages/angular-uploader
       rxjs:
         specifier: ~7.8.2
@@ -333,7 +333,7 @@ importers:
         specifier: ^20.3.12
         version: 20.3.18(@angular/common@20.3.18(@angular/core@20.3.18(@angular/compiler@20.3.18)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.3.18(@angular/compiler@20.3.18)(rxjs@7.8.2)(zone.js@0.15.1))(@angular/platform-browser@20.3.18(@angular/common@20.3.18(@angular/core@20.3.18(@angular/compiler@20.3.18)(rxjs@7.8.2)(zone.js@0.15.1))(rxjs@7.8.2))(@angular/core@20.3.18(@angular/compiler@20.3.18)(rxjs@7.8.2)(zone.js@0.15.1)))(rxjs@7.8.2)
       '@verbpatch/angular-uploader':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../../packages/angular-uploader
       rxjs:
         specifier: ~7.8.2
@@ -382,7 +382,7 @@ importers:
   examples/Lit/http-example:
     dependencies:
       '@verbpatch/lit-uploader':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../../packages/lit-uploader
       lit:
         specifier: ^3.0.0
@@ -395,7 +395,7 @@ importers:
   examples/Lit/tus-example:
     dependencies:
       '@verbpatch/lit-uploader':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../../packages/lit-uploader
       lit:
         specifier: ^3.0.0
@@ -411,7 +411,7 @@ importers:
   examples/Lit/websocket-example:
     dependencies:
       '@verbpatch/lit-uploader':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../../packages/lit-uploader
       lit:
         specifier: ^3.0.0
@@ -424,7 +424,7 @@ importers:
   examples/Lit/webtransport-example:
     dependencies:
       '@verbpatch/lit-uploader':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../../packages/lit-uploader
       lit:
         specifier: ^3.0.0
@@ -437,7 +437,7 @@ importers:
   examples/Preact/http-example:
     dependencies:
       '@verbpatch/preact-uploader':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../../packages/preact-uploader
       preact:
         specifier: ^10.0.0
@@ -453,7 +453,7 @@ importers:
   examples/Preact/tus-example:
     dependencies:
       '@verbpatch/preact-uploader':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../../packages/preact-uploader
       preact:
         specifier: ^10.0.0
@@ -472,7 +472,7 @@ importers:
   examples/Preact/websocket-example:
     dependencies:
       '@verbpatch/preact-uploader':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../../packages/preact-uploader
       preact:
         specifier: ^10.0.0
@@ -488,7 +488,7 @@ importers:
   examples/Preact/webtransport-example:
     dependencies:
       '@verbpatch/preact-uploader':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../../packages/preact-uploader
       preact:
         specifier: ^10.0.0
@@ -507,7 +507,7 @@ importers:
         specifier: ^1.17.2
         version: 1.19.2(vite@7.3.1(@types/node@24.12.2)(jiti@2.6.1)(less@4.6.4)(sass@1.99.0)(terser@5.46.1)(yaml@2.8.3))
       '@verbpatch/qwik-uploader':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../../packages/qwik-uploader
     devDependencies:
       '@types/node':
@@ -529,7 +529,7 @@ importers:
         specifier: ^1.0.0
         version: 1.19.2(vite@6.4.1(@types/node@24.12.2)(jiti@2.6.1)(less@4.6.4)(sass@1.99.0)(terser@5.46.1)(yaml@2.8.3))
       '@verbpatch/qwik-uploader':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../../packages/qwik-uploader
       tus-js-client:
         specifier: ^4.3.1
@@ -548,7 +548,7 @@ importers:
         specifier: ^1.0.0
         version: 1.19.2(vite@6.4.1(@types/node@24.12.2)(jiti@2.6.1)(less@4.6.4)(sass@1.99.0)(terser@5.46.1)(yaml@2.8.3))
       '@verbpatch/qwik-uploader':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../../packages/qwik-uploader
     devDependencies:
       '@builder.io/qwik-city':
@@ -564,7 +564,7 @@ importers:
         specifier: ^1.0.0
         version: 1.19.2(vite@6.4.1(@types/node@24.12.2)(jiti@2.6.1)(less@4.6.4)(sass@1.99.0)(terser@5.46.1)(yaml@2.8.3))
       '@verbpatch/qwik-uploader':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../../packages/qwik-uploader
     devDependencies:
       '@builder.io/qwik-city':
@@ -577,7 +577,7 @@ importers:
   examples/React/http-example:
     dependencies:
       '@verbpatch/react-uploader':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../../packages/react-uploader
       react:
         specifier: ^19.0.0
@@ -602,7 +602,7 @@ importers:
   examples/React/tus-example:
     dependencies:
       '@verbpatch/react-uploader':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../../packages/react-uploader
       react:
         specifier: ^19.0.0
@@ -630,7 +630,7 @@ importers:
   examples/React/websocket-example:
     dependencies:
       '@verbpatch/react-uploader':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../../packages/react-uploader
       react:
         specifier: ^19.0.0
@@ -655,7 +655,7 @@ importers:
   examples/React/webtransport-example:
     dependencies:
       '@verbpatch/react-uploader':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../../packages/react-uploader
       react:
         specifier: ^19.0.0
@@ -680,7 +680,7 @@ importers:
   examples/Solid/http-example:
     dependencies:
       '@verbpatch/solid-uploader':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../../packages/solid-uploader
       solid-js:
         specifier: ^1.9.0
@@ -696,7 +696,7 @@ importers:
   examples/Solid/tus-example:
     dependencies:
       '@verbpatch/solid-uploader':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../../packages/solid-uploader
       solid-js:
         specifier: ^1.9.0
@@ -715,7 +715,7 @@ importers:
   examples/Solid/websocket-example:
     dependencies:
       '@verbpatch/solid-uploader':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../../packages/solid-uploader
       solid-js:
         specifier: ^1.9.0
@@ -731,7 +731,7 @@ importers:
   examples/Solid/webtransport-example:
     dependencies:
       '@verbpatch/solid-uploader':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../../packages/solid-uploader
       solid-js:
         specifier: ^1.9.0
@@ -747,7 +747,7 @@ importers:
   examples/Svelte/http-example:
     dependencies:
       '@verbpatch/svelte-uploader':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../../packages/svelte-uploader
       svelte:
         specifier: ^5.0.0
@@ -763,7 +763,7 @@ importers:
   examples/Svelte/tus-example:
     dependencies:
       '@verbpatch/svelte-uploader':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../../packages/svelte-uploader
       svelte:
         specifier: ^5.0.0
@@ -779,7 +779,7 @@ importers:
   examples/Svelte/websocket-example:
     dependencies:
       '@verbpatch/svelte-uploader':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../../packages/svelte-uploader
       svelte:
         specifier: ^5.0.0
@@ -795,7 +795,7 @@ importers:
   examples/Svelte/webtransport-example:
     dependencies:
       '@verbpatch/svelte-uploader':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../../packages/svelte-uploader
       svelte:
         specifier: ^5.0.0
@@ -864,7 +864,7 @@ importers:
   examples/Vue/http-example:
     dependencies:
       '@verbpatch/vue-uploader':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../../packages/vue-uploader
       vue:
         specifier: ^3.5.0
@@ -880,7 +880,7 @@ importers:
   examples/Vue/tus-example:
     dependencies:
       '@verbpatch/vue-uploader':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../../packages/vue-uploader
       vue:
         specifier: ^3.5.0
@@ -896,7 +896,7 @@ importers:
   examples/Vue/websocket-example:
     dependencies:
       '@verbpatch/vue-uploader':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../../packages/vue-uploader
       vue:
         specifier: ^3.5.0
@@ -912,7 +912,7 @@ importers:
   examples/Vue/webtransport-example:
     dependencies:
       '@verbpatch/vue-uploader':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../../packages/vue-uploader
       vue:
         specifier: ^3.5.0
@@ -928,7 +928,7 @@ importers:
   examples/jQuery/http-example:
     dependencies:
       '@verbpatch/jquery-uploader':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../../packages/jquery-uploader
       jquery:
         specifier: ^3.0.0
@@ -941,7 +941,7 @@ importers:
   examples/jQuery/tus-example:
     dependencies:
       '@verbpatch/jquery-uploader':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../../packages/jquery-uploader
       jquery:
         specifier: ^3.0.0
@@ -951,10 +951,16 @@ importers:
         specifier: ^6.0.0
         version: 6.4.1(@types/node@24.12.2)(jiti@2.6.1)(less@4.6.4)(sass@1.99.0)(terser@5.46.1)(yaml@2.8.3)
 
+  examples/jQuery/umd-only-example:
+    devDependencies:
+      vite:
+        specifier: ^6.0.0
+        version: 6.4.1(@types/node@24.12.2)(jiti@2.6.1)(less@4.6.4)(sass@1.99.0)(terser@5.46.1)(yaml@2.8.3)
+
   examples/jQuery/websocket-example:
     dependencies:
       '@verbpatch/jquery-uploader':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../../packages/jquery-uploader
       jquery:
         specifier: ^3.0.0
@@ -967,7 +973,7 @@ importers:
   examples/jQuery/webtransport-example:
     dependencies:
       '@verbpatch/jquery-uploader':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../../packages/jquery-uploader
       jquery:
         specifier: ^3.0.0

@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "jquery": "^3.0.0",
-    "@verbpatch/jquery-uploader": "workspace:*"
+    "@verbpatch/jquery-uploader": "latest"
   },
   "devDependencies": {
     "vite": "^6.0.0"

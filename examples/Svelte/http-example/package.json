@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "svelte": "^5.0.0",
-    "@verbpatch/svelte-uploader": "workspace:*"
+    "@verbpatch/svelte-uploader": "latest"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^4.0.0",
