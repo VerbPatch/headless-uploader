@@ -67,7 +67,7 @@ export const App = component$(() => {
       showNotification(`Cloud Success: ${file.metadata.name}`, 'success');
     }),
     onUploadError: $((file: UploadFile, error: Error) => {
-      showNotification(`Note: Mocked URL caused expected error, but flow is correct.`, 'info');
+      showNotification(`Upload error for ${file.metadata.name}: ${error.message}`, 'error');
     }),
     onAllComplete: $((files: UploadFile[]) => {
       showNotification('[Complete] All cloud transfers finished!', 'success');
@@ -87,7 +87,7 @@ export const App = component$(() => {
 
       <section>
         <h2>1. Cloud Upload</h2>
-        <p>Configured with <code>S3Adapter</code> using mocked backend signing.</p>
+        <p>Configured with <code>S3Adapter</code>. It requests a signed URL from the <code>uploader-server</code> and then uploads the file directly.</p>
 
         <div
           id="drop-zone"

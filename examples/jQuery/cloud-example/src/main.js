@@ -62,7 +62,7 @@ $(function () {
       render();
     },
     onUploadError: (file, error) => {
-      showNotification(`Note: Actual upload failed (expected with mock), but flow is correct.`, 'info');
+      showNotification(`Upload error for ${file.metadata.name}: ${error.message}`, 'error');
       render();
     },
     onAllComplete: (files) => {

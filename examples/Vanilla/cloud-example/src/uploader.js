@@ -160,8 +160,8 @@ export function setupUploader() {
       showNotification(`Cloud Success: ${file.metadata.name}`, 'success');
       renderFileList(); updateStats();
     },
-    onUploadError: (file) => {
-      showNotification(`Note: Mocked URL caused expected fetch error, but flow is correct.`, 'info');
+    onUploadError: (file, error) => {
+      showNotification(`Upload error for ${file.metadata.name}: ${error.message}`, 'error');
       renderFileList(); updateStats();
     },
     onAllComplete: () => {

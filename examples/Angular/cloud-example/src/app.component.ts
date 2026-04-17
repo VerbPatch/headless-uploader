@@ -62,7 +62,7 @@ export class AppComponent {
       this.showNotification(`Cloud Success: ${file.metadata.name}`, 'success');
     },
     onUploadError: (file: UploadFile, error: Error) => {
-      this.showNotification(`Note: Mocked URL caused expected error, but flow is correct.`, 'info');
+      this.showNotification(`Upload error for ${file.metadata.name}: ${error.message}`, 'error');
     },
     onAllComplete: (files: UploadFile[]) => {
       this.showNotification('[Complete] All cloud transfers finished!', 'success');

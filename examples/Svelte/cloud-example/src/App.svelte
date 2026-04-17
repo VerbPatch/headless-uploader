@@ -55,7 +55,7 @@
     },
 
     onUploadError: (file, error) => {
-      showNotification(`Note: Actual upload failed (expected with mock), but the flow is correct.`, 'info');
+      showNotification(`Upload error for ${file.metadata.name}: ${error.message}`, 'error');
     },
 
     onAllComplete: (files) => {
@@ -92,7 +92,7 @@
 <section id="configuration">
   <h2>1. Cloud Upload</h2>
   <p>
-      Configured with <code>S3Adapter</code>. Uses mocked backend signing logic.
+      Configured with <code>S3Adapter</code>. It requests a signed URL from the <code>uploader-server</code> and then uploads the file directly.
   </p>
 
   <div

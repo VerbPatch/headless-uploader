@@ -8,7 +8,7 @@ document.querySelector('#app').innerHTML = `
 
   <section id="configuration">
     <h2>1. Cloud Upload</h2>
-    <p>Configured with <code>S3Adapter</code>. Uses mocked backend signing logic.</p>
+    <p>Configured with <code>S3Adapter</code>. It requests a signed URL from the <code>uploader-server</code> and then uploads the file directly.</p>
 
     <div id="drop-zone">
       <strong>Drop files here</strong> or click to select

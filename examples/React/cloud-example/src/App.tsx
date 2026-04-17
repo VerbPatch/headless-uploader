@@ -81,8 +81,7 @@ export default function App() {
       showNotification(`Cloud Upload Success: ${file.metadata.name}`, 'success');
     },
     onUploadError: (file: UploadFile, error: Error) => {
-      // Since we are using mocked URLs, actual fetch will fail
-      showNotification(`Note: Actual upload failed (as expected with mocked URLs), but the flow is correct.`, 'info');
+      showNotification(`Upload error for ${file.metadata.name}: ${error.message}`, 'error');
       console.error(`Upload error for ${file.metadata.name}:`, error);
     },
     onAllComplete: (files: UploadFile[]) => {
@@ -108,7 +107,7 @@ export default function App() {
         <h2>1. Cloud Upload</h2>
         <p>
             The uploader is configured to use the <code>S3Adapter</code>. 
-            It requests a signed URL from the backend (mocked) and then uploads the file directly.
+            It requests a signed URL from the <code>uploader-server</code> and then uploads the file directly.
         </p>
 
         <div

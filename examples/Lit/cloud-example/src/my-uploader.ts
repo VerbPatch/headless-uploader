@@ -60,7 +60,7 @@ export class MyUploader extends LitElement {
     },
 
     onUploadError: (file: UploadFile, error: Error) => {
-      this.showNotification(`Note: Actual upload failed (expected with mock), but flow is correct.`, 'info');
+      this.showNotification(`Upload error for ${file.metadata.name}: ${error.message}`, 'error');
     },
 
     onAllComplete: (files: UploadFile[]) => {
@@ -219,7 +219,7 @@ export class MyUploader extends LitElement {
 
       <section id="configuration">
         <h2>1. Cloud Upload</h2>
-        <p>Configured with <code>S3Adapter</code> using mocked backend signing.</p>
+        <p>Configured with <code>S3Adapter</code>. It requests a signed URL from the <code>uploader-server</code> and then uploads the file directly.</p>
 
         <div
           id="drop-zone"
