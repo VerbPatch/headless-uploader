@@ -1,0 +1,63 @@
+{
+  "name": "@verbpatch/svelte-uploader",
+  "version": "0.0.1-beta.1",
+  "description": "A headless uploader library for svelte applications with full chunked upload and pause-and-resume support.",
+  "author": "Rameez Raja <rameezrajapathan@live.com>",
+  "license": "GPL-3.0-or-later",
+  "homepage": "https://github.com/verbpatch/headless-uploader",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/verbpatch/headless-uploader.git",
+    "directory": "packages/svelte-uploader"
+  },
+  "bugs": {
+    "url": "https://github.com/verbpatch/headless-uploader/issues"
+  },
+  "scripts": {
+    "clean": "rimraf dist",
+    "dev": "rollup -c -w",
+    "build": "rollup -c"
+  },
+  "files": [
+    "dist",
+    "!dist/**/*.test.*",
+    "!dist/**/*.spec.*"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "type": "module",
+  "main": "dist/index.esm.js",
+  "module": "dist/index.esm.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "browser": "./dist/index.esm.js",
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.cjs.js"
+    }
+  },
+  "dependencies": {
+    "@verbpatch/headless-uploader": "workspace:*"
+  },
+  "devDependencies": {
+    "svelte": "^5.43.6"
+  },
+  "peerDependencies": {
+    "svelte": "^3.0.0 || ^4.0.0 || ^5.0.0"
+  },
+  "keywords": [
+    "verbpatch",
+    "svelte",
+    "uploader",
+    "headless",
+    "resumable-upload",
+    "chunked-upload",
+    "http",
+    "tus",
+    "websocket",
+    "webtransport",
+    "typescript"
+  ]
+}

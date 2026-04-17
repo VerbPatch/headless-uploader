@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>jQuery WebSocket Uploader Example</title>
+    <style>
+      body {
+        font-family: monospace;
+        padding: 20px;
+        line-height: 1.5;
+        color: #333;
+      }
+
+      h1,
+      h2 {
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 5px;
+      }
+
+      section {
+        margin-bottom: 30px;
+        border: 1px solid #eee;
+        padding: 15px;
+      }
+
+      .file-item {
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin-bottom: 10px;
+      }
+
+      .progress-bg {
+        background: #eee;
+        width: 100%;
+        height: 10px;
+        margin: 5px 0;
+      }
+
+      .progress-fg {
+        background: #4caf50;
+        height: 100%;
+        transition: width 0.2s;
+      }
+
+      .controls {
+        margin: 10px 0;
+        display: flex;
+        gap: 10px;
+      }
+
+      pre {
+        background: #f4f4f4;
+        padding: 10px;
+        overflow: auto;
+        font-size: 12px;
+      }
+
+      .notifications-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        z-index: 1000;
+      }
+
+      .notification {
+        background: #fff;
+        padding: 12px 20px;
+        border: 0 none;
+        border-bottom: 2px solid;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-width: 250px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        animation: slideIn 0.3s ease-out;
+        max-width: 300px;
+      }
+
+      .notification.success {
+        border-color: #4caf50;
+      }
+
+      .notification.error {
+        border-color: #f44336;
+      }
+
+      .notification.info {
+        border-color: #333;
+      }
+
+      .notification .close-btn {
+        margin-left: 15px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 18px;
+        border: 0 none;
+        background: transparent;
+      }
+
+      .notification .close-btn:hover {
+        background: #000;
+        color: #fff;
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      #drop-zone {
+        border: 2px dashed #ccc;
+        padding: 40px;
+        text-align: center;
+        cursor: pointer;
+        margin-bottom: 10px;
+      }
+
+      #drop-zone.drag-over {
+        background: #e1f5fe;
+        border-color: #03a9f4;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>jQuery Uploader - WEBSOCKET example</h1>
+      <p>
+        This example demonstrates using the library as a jQuery plugin for
+        <strong>WebSocket</strong> uploads.
+      </p>
+    </header>
+
+    <section id="configuration">
+      <h2>1. Input</h2>
+      <div style="margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 8px">
+        <label for="auth-token" style="display: block; margin-bottom: 5px; font-weight: bold"
+          >Authorization Token:</label
+        >
+        <input
+          type="text"
+          id="auth-token"
+          value="verbpatch-secret-token"
+          placeholder="Enter 'verbpatch-secret-token'"
+          style="
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+          "
+        />
+        <p style="margin-top: 5px; font-size: 0.85em; color: #666">
+          The server requires 'verbpatch-secret-token' to allow uploads.
+        </p>
+      </div>
+
+      <div id="drop-zone"><strong>Drop files here</strong> or click to select</div>
+      <input type="file" id="file-input" multiple style="display: none" accept="application/pdf" />
+
+      <div class="controls">
+        <button id="upload-all">Upload All</button>
+        <button id="clear-all">Clear Queue</button>
+      </div>
+    </section>
+
+    <section id="file-queue">
+      <h2>2. File Queue & Progress</h2>
+      <div id="file-list">
+        <p>Queue is empty.</p>
+      </div>
+    </section>
+
+    <section id="uploader-state">
+      <h2>3. Internal State (Reactive)</h2>
+      <pre id="stats-raw">{}</pre>
+    </section>
+
+    <div id="notifications" class="notifications-container"></div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

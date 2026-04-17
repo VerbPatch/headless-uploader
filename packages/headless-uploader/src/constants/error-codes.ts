@@ -1,0 +1,12 @@
+/**
+ * Common validation error codes
+ * @ignore
+ */
+export const ValidationErrorCodes = {
+  FILE_TOO_LARGE: 'FILE_TOO_LARGE',
+  FILE_TOO_SMALL: 'FILE_TOO_SMALL',
+  INVALID_FILE_TYPE: 'INVALID_FILE_TYPE',
+  DUPLICATE_FILE: 'DUPLICATE_FILE',
+  TOO_MANY_FILES: 'TOO_MANY_FILES',
+  CUSTOM_VALIDATION_ERROR: 'CUSTOM_VALIDATION_ERROR',
+} as const;

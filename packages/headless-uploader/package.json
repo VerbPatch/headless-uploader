@@ -1,0 +1,95 @@
+{
+  "name": "@verbpatch/headless-uploader",
+  "version": "0.0.1-beta.1",
+  "description": "A headless uploader library for JavaScript applications with full chunked upload and pause-and-resume support.",
+  "author": "Rameez Raja <rameezrajapathan@live.com>",
+  "license": "GPL-3.0-or-later",
+  "homepage": "https://github.com/verbpatch/headless-uploader",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/verbpatch/headless-uploader.git",
+    "directory": "packages/headless-uploader"
+  },
+  "bugs": {
+    "url": "https://github.com/verbpatch/headless-uploader/issues"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "browser": "dist/index.umd.js",
+  "types": "dist/index.d.ts",
+  "source": "src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.js",
+      "browser": "./dist/index.umd.js"
+    },
+    "./constants": {
+      "types": "./dist/constants/index.d.ts",
+      "import": "./dist/constants/index.js",
+      "require": "./dist/constants/index.js"
+    },
+    "./types": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/types/index.js",
+      "require": "./dist/types/index.js"
+    },
+    "./utils": {
+      "types": "./dist/utils/index.d.ts",
+      "import": "./dist/utils/index.js",
+      "require": "./dist/utils/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE.md"
+  ],
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "docs": "typedoc",
+    "lint": "eslint src --ext .ts,.tsx",
+    "lint:fix": "eslint src --ext .ts,.tsx --fix",
+    "prepublishOnly": "pnpm run clean && pnpm run build",
+    "size": "pnpm run build && size-limit",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [
+    "verbpatch",
+    "vanilla",
+    "uploader",
+    "headless",
+    "resumable-upload",
+    "chunked-upload",
+    "http",
+    "tus",
+    "websocket",
+    "webtransport",
+    "typescript"
+  ],
+  "size-limit": [
+    {
+      "path": "dist/*.js"
+    }
+  ],
+  "peerDependencies": {
+    "tus-js-client": "^4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "tus-js-client": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^29.0.0",
+    "tus-js-client": "^4.3.1"
+  }
+}

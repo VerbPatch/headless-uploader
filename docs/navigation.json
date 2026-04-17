@@ -1,0 +1,600 @@
+`[
+  {
+    "title": "Introduction",
+    "group": "doc",
+    "children": [
+      {
+        "title": "Headless Uploader?",
+        "path": "/uploader/docs/introduction"
+      },
+      {
+        "title": "Getting Started",
+        "path": "/uploader/docs/getting-started"
+      }
+    ]
+  },
+  {
+    "title": "hooks",
+    "children": [
+      {
+        "title": "useUploader",
+        "kind": 64,
+        "path": "/uploader/docs/api/hooks/useUploader",
+        "isDeprecated": false
+      }
+    ],
+    "group": "api"
+  },
+  {
+    "title": "protocols",
+    "children": [
+      {
+        "title": "HttpConfig",
+        "kind": 256,
+        "path": "/uploader/docs/api/protocols/HttpConfig",
+        "isDeprecated": false
+      },
+      {
+        "title": "TusConfig",
+        "kind": 256,
+        "path": "/uploader/docs/api/protocols/TusConfig",
+        "isDeprecated": false
+      },
+      {
+        "title": "WebSocketConfig",
+        "kind": 256,
+        "path": "/uploader/docs/api/protocols/WebSocketConfig",
+        "isDeprecated": false
+      },
+      {
+        "title": "WebTransportConfig",
+        "kind": 256,
+        "path": "/uploader/docs/api/protocols/WebTransportConfig",
+        "isDeprecated": false
+      },
+      {
+        "title": "compareProtocols",
+        "kind": 64,
+        "path": "/uploader/docs/api/protocols/compareProtocols",
+        "isDeprecated": false
+      },
+      {
+        "title": "getRecommendedProtocol",
+        "kind": 64,
+        "path": "/uploader/docs/api/protocols/getRecommendedProtocol",
+        "isDeprecated": false
+      },
+      {
+        "title": "getSupportedProtocols",
+        "kind": 64,
+        "path": "/uploader/docs/api/protocols/getSupportedProtocols",
+        "isDeprecated": false
+      }
+    ],
+    "group": "api"
+  },
+  {
+    "title": "types",
+    "children": [
+      {
+        "title": "ChunkInfo",
+        "kind": 256,
+        "path": "/uploader/docs/api/types/ChunkInfo",
+        "isDeprecated": false
+      },
+      {
+        "title": "CloudAdapter",
+        "kind": 256,
+        "path": "/uploader/docs/api/types/CloudAdapter",
+        "isDeprecated": false
+      },
+      {
+        "title": "CompressionOptions",
+        "kind": 256,
+        "path": "/uploader/docs/api/types/CompressionOptions",
+        "isDeprecated": false
+      },
+      {
+        "title": "DropEventData",
+        "kind": 256,
+        "path": "/uploader/docs/api/types/DropEventData",
+        "isDeprecated": false
+      },
+      {
+        "title": "FileMetadata",
+        "kind": 256,
+        "path": "/uploader/docs/api/types/FileMetadata",
+        "isDeprecated": false
+      },
+      {
+        "title": "RetryConfig",
+        "kind": 256,
+        "path": "/uploader/docs/api/types/RetryConfig",
+        "isDeprecated": false
+      },
+      {
+        "title": "UploaderConfig",
+        "kind": 256,
+        "path": "/uploader/docs/api/types/UploaderConfig",
+        "isDeprecated": false
+      },
+      {
+        "title": "UploaderInterface",
+        "kind": 256,
+        "path": "/uploader/docs/api/types/UploaderInterface",
+        "isDeprecated": false
+      },
+      {
+        "title": "UploaderState",
+        "kind": 256,
+        "path": "/uploader/docs/api/types/UploaderState",
+        "isDeprecated": false
+      },
+      {
+        "title": "UploadFile",
+        "kind": 256,
+        "path": "/uploader/docs/api/types/UploadFile",
+        "isDeprecated": false
+      },
+      {
+        "title": "UploadProgress",
+        "kind": 256,
+        "path": "/uploader/docs/api/types/UploadProgress",
+        "isDeprecated": false
+      },
+      {
+        "title": "ChunkStatus",
+        "kind": 2097152,
+        "path": "/uploader/docs/api/types/ChunkStatus",
+        "isDeprecated": false
+      },
+      {
+        "title": "HttpMethod",
+        "kind": 2097152,
+        "path": "/uploader/docs/api/types/HttpMethod",
+        "isDeprecated": false
+      },
+      {
+        "title": "UploadProtocol",
+        "kind": 2097152,
+        "path": "/uploader/docs/api/types/UploadProtocol",
+        "isDeprecated": false
+      },
+      {
+        "title": "UploadStatus",
+        "kind": 2097152,
+        "path": "/uploader/docs/api/types/UploadStatus",
+        "isDeprecated": false
+      }
+    ],
+    "group": "api"
+  },
+  {
+    "title": "utils",
+    "children": [
+      {
+        "title": "calculateSpeed",
+        "kind": 64,
+        "path": "/uploader/docs/api/utils/calculateSpeed",
+        "isDeprecated": false
+      },
+      {
+        "title": "calculateTimeRemaining",
+        "kind": 64,
+        "path": "/uploader/docs/api/utils/calculateTimeRemaining",
+        "isDeprecated": false
+      },
+      {
+        "title": "formatBytes",
+        "kind": 64,
+        "path": "/uploader/docs/api/utils/formatBytes",
+        "isDeprecated": false
+      },
+      {
+        "title": "formatTime",
+        "kind": 64,
+        "path": "/uploader/docs/api/utils/formatTime",
+        "isDeprecated": false
+      },
+      {
+        "title": "generateId",
+        "kind": 64,
+        "path": "/uploader/docs/api/utils/generateId",
+        "isDeprecated": false
+      },
+      {
+        "title": "safeBase64",
+        "kind": 64,
+        "path": "/uploader/docs/api/utils/safeBase64",
+        "isDeprecated": false
+      },
+      {
+        "title": "sleep",
+        "kind": 64,
+        "path": "/uploader/docs/api/utils/sleep",
+        "isDeprecated": false
+      }
+    ],
+    "group": "api"
+  },
+  {
+    "title": "validation",
+    "children": [
+      {
+        "title": "ValidationError",
+        "kind": 256,
+        "path": "/uploader/docs/api/validation/ValidationError",
+        "isDeprecated": false
+      },
+      {
+        "title": "ValidationResult",
+        "kind": 256,
+        "path": "/uploader/docs/api/validation/ValidationResult",
+        "isDeprecated": false
+      }
+    ],
+    "group": "api"
+  },
+  {
+    "title": "Angular",
+    "group": "example",
+    "children": [
+      {
+        "title": "http-example",
+        "group": "example",
+        "path": "/uploader/examples/Angular/http-example"
+      },
+      {
+        "title": "tus-example",
+        "group": "example",
+        "path": "/uploader/examples/Angular/tus-example"
+      },
+      {
+        "title": "websocket-example",
+        "group": "example",
+        "path": "/uploader/examples/Angular/websocket-example"
+      },
+      {
+        "title": "webtransport-example",
+        "group": "example",
+        "path": "/uploader/examples/Angular/webtransport-example"
+      }
+    ]
+  },
+  {
+    "title": "jQuery",
+    "group": "example",
+    "children": [
+      {
+        "title": "http-example",
+        "group": "example",
+        "path": "/uploader/examples/jQuery/http-example"
+      },
+      {
+        "title": "tus-example",
+        "group": "example",
+        "path": "/uploader/examples/jQuery/tus-example"
+      },
+      {
+        "title": "umd-only-example",
+        "group": "example",
+        "path": "/uploader/examples/jQuery/umd-only-example"
+      },
+      {
+        "title": "websocket-example",
+        "group": "example",
+        "path": "/uploader/examples/jQuery/websocket-example"
+      },
+      {
+        "title": "webtransport-example",
+        "group": "example",
+        "path": "/uploader/examples/jQuery/webtransport-example"
+      }
+    ]
+  },
+  {
+    "title": "Lit",
+    "group": "example",
+    "children": [
+      {
+        "title": "http-example",
+        "group": "example",
+        "path": "/uploader/examples/Lit/http-example"
+      },
+      {
+        "title": "tus-example",
+        "group": "example",
+        "path": "/uploader/examples/Lit/tus-example"
+      },
+      {
+        "title": "websocket-example",
+        "group": "example",
+        "path": "/uploader/examples/Lit/websocket-example"
+      },
+      {
+        "title": "webtransport-example",
+        "group": "example",
+        "path": "/uploader/examples/Lit/webtransport-example"
+      }
+    ]
+  },
+  {
+    "title": "Preact",
+    "group": "example",
+    "children": [
+      {
+        "title": "http-example",
+        "group": "example",
+        "path": "/uploader/examples/Preact/http-example"
+      },
+      {
+        "title": "tus-example",
+        "group": "example",
+        "path": "/uploader/examples/Preact/tus-example"
+      },
+      {
+        "title": "websocket-example",
+        "group": "example",
+        "path": "/uploader/examples/Preact/websocket-example"
+      },
+      {
+        "title": "webtransport-example",
+        "group": "example",
+        "path": "/uploader/examples/Preact/webtransport-example"
+      }
+    ]
+  },
+  {
+    "title": "Qwik",
+    "group": "example",
+    "children": [
+      {
+        "title": "http-example",
+        "group": "example",
+        "path": "/uploader/examples/Qwik/http-example"
+      },
+      {
+        "title": "tus-example",
+        "group": "example",
+        "path": "/uploader/examples/Qwik/tus-example"
+      },
+      {
+        "title": "websocket-example",
+        "group": "example",
+        "path": "/uploader/examples/Qwik/websocket-example"
+      },
+      {
+        "title": "webtransport-example",
+        "group": "example",
+        "path": "/uploader/examples/Qwik/webtransport-example"
+      }
+    ]
+  },
+  {
+    "title": "React",
+    "group": "example",
+    "children": [
+      {
+        "title": "http-example",
+        "group": "example",
+        "path": "/uploader/examples/React/http-example"
+      },
+      {
+        "title": "tus-example",
+        "group": "example",
+        "path": "/uploader/examples/React/tus-example"
+      },
+      {
+        "title": "websocket-example",
+        "group": "example",
+        "path": "/uploader/examples/React/websocket-example"
+      },
+      {
+        "title": "webtransport-example",
+        "group": "example",
+        "path": "/uploader/examples/React/webtransport-example"
+      }
+    ]
+  },
+  {
+    "title": "Solid",
+    "group": "example",
+    "children": [
+      {
+        "title": "http-example",
+        "group": "example",
+        "path": "/uploader/examples/Solid/http-example"
+      },
+      {
+        "title": "tus-example",
+        "group": "example",
+        "path": "/uploader/examples/Solid/tus-example"
+      },
+      {
+        "title": "websocket-example",
+        "group": "example",
+        "path": "/uploader/examples/Solid/websocket-example"
+      },
+      {
+        "title": "webtransport-example",
+        "group": "example",
+        "path": "/uploader/examples/Solid/webtransport-example"
+      }
+    ]
+  },
+  {
+    "title": "Svelte",
+    "group": "example",
+    "children": [
+      {
+        "title": "http-example",
+        "group": "example",
+        "path": "/uploader/examples/Svelte/http-example"
+      },
+      {
+        "title": "tus-example",
+        "group": "example",
+        "path": "/uploader/examples/Svelte/tus-example"
+      },
+      {
+        "title": "websocket-example",
+        "group": "example",
+        "path": "/uploader/examples/Svelte/websocket-example"
+      },
+      {
+        "title": "webtransport-example",
+        "group": "example",
+        "path": "/uploader/examples/Svelte/webtransport-example"
+      }
+    ]
+  },
+  {
+    "title": "uploader-server",
+    "group": "example",
+    "path": "/uploader/examples/examples/uploader-server"
+  },
+  {
+    "title": "uploader-server-csharp",
+    "group": "example",
+    "children": [
+      {
+        "title": ".vscode",
+        "group": "example",
+        "children": []
+      },
+      {
+        "title": "bin",
+        "group": "example",
+        "children": [
+          {
+            "title": "Debug",
+            "group": "example",
+            "children": [
+              {
+                "title": "net10.0",
+                "group": "example",
+                "children": []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "obj",
+        "group": "example",
+        "children": [
+          {
+            "title": "Debug",
+            "group": "example",
+            "children": [
+              {
+                "title": "net10.0",
+                "group": "example",
+                "children": [
+                  {
+                    "title": "compressed",
+                    "group": "example",
+                    "children": []
+                  },
+                  {
+                    "title": "ref",
+                    "group": "example",
+                    "children": []
+                  },
+                  {
+                    "title": "refint",
+                    "group": "example",
+                    "children": []
+                  },
+                  {
+                    "title": "staticwebassets",
+                    "group": "example",
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Protocols",
+        "group": "example",
+        "children": []
+      },
+      {
+        "title": "wwwroot",
+        "group": "example",
+        "children": [
+          {
+            "title": "chunks",
+            "group": "example",
+            "children": []
+          },
+          {
+            "title": "uploads",
+            "group": "example",
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Vanilla",
+    "group": "example",
+    "children": [
+      {
+        "title": "dynamic-example",
+        "group": "example",
+        "path": "/uploader/examples/Vanilla/dynamic-example"
+      },
+      {
+        "title": "http-example",
+        "group": "example",
+        "path": "/uploader/examples/Vanilla/http-example"
+      },
+      {
+        "title": "tus-example",
+        "group": "example",
+        "path": "/uploader/examples/Vanilla/tus-example"
+      },
+      {
+        "title": "websocket-example",
+        "group": "example",
+        "path": "/uploader/examples/Vanilla/websocket-example"
+      },
+      {
+        "title": "webtransport-example",
+        "group": "example",
+        "path": "/uploader/examples/Vanilla/webtransport-example"
+      }
+    ]
+  },
+  {
+    "title": "Vue",
+    "group": "example",
+    "children": [
+      {
+        "title": "http-example",
+        "group": "example",
+        "path": "/uploader/examples/Vue/http-example"
+      },
+      {
+        "title": "tus-example",
+        "group": "example",
+        "path": "/uploader/examples/Vue/tus-example"
+      },
+      {
+        "title": "websocket-example",
+        "group": "example",
+        "path": "/uploader/examples/Vue/websocket-example"
+      },
+      {
+        "title": "webtransport-example",
+        "group": "example",
+        "path": "/uploader/examples/Vue/webtransport-example"
+      }
+    ]
+  }
+]

@@ -1,0 +1,19 @@
+{
+  "name": "qwik-tus-example",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@builder.io/qwik": "^1.0.0",
+    "@verbpatch/qwik-uploader": "workspace:*",
+    "tus-js-client": "^4.3.1"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0",
+    "@builder.io/qwik-city": "^1.11.0"
+  }
+}

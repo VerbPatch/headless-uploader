@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Headless Uploader - Dynamic Demo</title>
+    <link rel="stylesheet" href="./src/styles.css" />
+  </head>
+
+  <body>
+    <div id="app">
+      <header>
+        <h1>Headless Uploader - Dynamic Demo</h1>
+        <p>Monochromatic structural workbench for the reactive engine.</p>
+      </header>
+
+      <!-- Row 1: Live Logs -->
+      <section class="log-section section-block">
+        <div class="header-row">
+          <h2>Live Event Logs (Handshakes, Hooks, Errors)</h2>
+          <button id="clear-logs">Clear Logs</button>
+        </div>
+        <div id="log-container" class="log-container"></div>
+      </section>
+
+      <!-- Row 2: 3-Column Workbench -->
+      <div class="main-grid-3-col">
+        <!-- Column 1: Config -->
+        <aside class="col-config section-block">
+          <div class="header-row">
+            <h2>Configuration</h2>
+          </div>
+          <div class="presets">
+            <button class="preset-btn" data-protocol="http">HTTP</button>
+            <button class="preset-btn" data-protocol="tus">TUS</button>
+            <button class="preset-btn" data-protocol="websocket">WS</button>
+            <button class="preset-btn" data-protocol="webtransport">WT</button>
+          </div>
+          <textarea id="config-editor" spellcheck="false"></textarea>
+        </aside>
+
+        <!-- Column 2: Execution (Input + Queue) -->
+        <main class="col-execution">
+          <section class="input-section section-block">
+            <h2>Input Area</h2>
+            <div id="drop-zone" class="drop-zone">
+              <strong>Click or Drop Files</strong>
+              <br /><span>(Reactive event hooks)</span>
+            </div>
+            <input type="file" id="file-input" multiple style="display: none" />
+
+            <div class="global-actions">
+              <button id="upload-all">Upload All</button>
+              <button id="clear-all">Clear All</button>
+            </div>
+          </section>
+
+          <section class="queue-section section-block">
+            <div class="header-row">
+              <h2>Upload Queue</h2>
+              <div id="total-progress-bar" class="progress-bar-mini">
+                <div class="fill"></div>
+              </div>
+            </div>
+            <div id="file-list" class="file-list">
+              <div class="empty">Queue is empty.</div>
+            </div>
+          </section>
+        </main>
+
+        <!-- Column 3: State -->
+        <aside class="col-state section-block">
+          <h2>Reactive State</h2>
+          <pre id="state-view">{}</pre>
+        </aside>
+      </div>
+    </div>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>

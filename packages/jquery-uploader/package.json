@@ -1,0 +1,65 @@
+{
+  "name": "@verbpatch/jquery-uploader",
+  "version": "0.0.1-beta.1",
+  "description": "A headless uploader library for jQuery applications with full chunked upload and pause-and-resume support.",
+  "author": "Rameez Raja <rameezrajapathan@live.com>",
+  "license": "GPL-3.0-or-later",
+  "homepage": "https://github.com/verbpatch/headless-uploader",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/verbpatch/headless-uploader.git",
+    "directory": "packages/jquery-uploader"
+  },
+  "bugs": {
+    "url": "https://github.com/verbpatch/headless-uploader/issues"
+  },
+  "type": "module",
+  "module": "dist/index.esm.js",
+  "main": "dist/index.umd.js",
+  "types": "dist/index.d.ts",
+  "source": "src/index.ts",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md"
+  ],
+  "keywords": [
+    "verbpatch",
+    "jquery",
+    "uploader",
+    "headless",
+    "resumable-upload",
+    "chunked-upload",
+    "http",
+    "tus",
+    "websocket",
+    "webtransport",
+    "typescript"
+  ],
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "rollup -c",
+    "dev": "rollup -c -w"
+  },
+  "dependencies": {
+    "@verbpatch/headless-uploader": "workspace:*"
+  },
+  "peerDependencies": {
+    "jquery": ">=3.0.0"
+  },
+  "packageManager": "pnpm@10.18.3",
+  "devDependencies": {
+    "@rollup/plugin-replace": "^6.0.3",
+    "@types/jquery": "^3.0.0"
+  }
+}

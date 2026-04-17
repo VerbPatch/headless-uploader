@@ -1,0 +1,61 @@
+{
+  "name": "@verbpatch/lit-uploader",
+  "version": "0.0.1-beta.1",
+  "description": "A headless uploader library for Lit applications with full chunked upload and pause-and-resume support.",
+  "author": "Rameez Raja <rameezrajapathan@live.com>",
+  "license": "GPL-3.0-or-later",
+  "homepage": "https://github.com/verbpatch/headless-uploader",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/verbpatch/headless-uploader.git",
+    "directory": "packages/lit-uploader"
+  },
+  "bugs": {
+    "url": "https://github.com/verbpatch/headless-uploader/issues"
+  },
+  "type": "module",
+  "module": "dist/index.esm.js",
+  "main": "dist/index.cjs.js",
+  "types": "dist/index.d.ts",
+  "source": "src/index.ts",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.cjs.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md"
+  ],
+  "keywords": [
+    "verbpatch",
+    "lit",
+    "uploader",
+    "headless",
+    "resumable-upload",
+    "chunked-upload",
+    "http",
+    "tus",
+    "websocket",
+    "webtransport",
+    "typescript"
+  ],
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "rollup -c",
+    "dev": "rollup -c -w"
+  },
+  "dependencies": {
+    "@verbpatch/headless-uploader": "workspace:*"
+  },
+  "peerDependencies": {
+    "lit": ">=2.0.0"
+  },
+  "packageManager": "pnpm@10.18.3"
+}

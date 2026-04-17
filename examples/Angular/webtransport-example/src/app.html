@@ -1,0 +1,85 @@
+<header>
+  <h1>Angular Uploader - WEBTRANSPORT example</h1>
+  <p>This example demonstrates the <strong>WebTransport protocol</strong> in Angular.</p>
+</header>
+<section id="configuration">
+  <h2>1. Input</h2>
+  <div>
+    <label for="auth-token">Authorization Token:</label>
+    <input
+      type="text"
+      #tokenInput
+      [value]="authToken()"
+      (input)="authToken.set(tokenInput.value)"
+      placeholder="Enter 'verbpatch-secret-token'"
+    />
+    <p>The server requires 'verbpatch-secret-token' to allow uploads.</p>
+  </div>
+
+  <div
+    id="drop-zone"
+    (dragover)="uploader.handleDragOver($event)"
+    (drop)="handleDrop($event)"
+    (click)="fileInput.click()"
+  >
+    <strong>Drop files here</strong> or click to select
+  </div>
+  <input
+    type="file"
+    #fileInput
+    multiple
+    style="display: none"
+    accept="application/pdf"
+    (change)="handleFileSelect($event)"
+  />
+  <div>
+    <button (click)="uploader.uploadAll()">Upload All</button>
+    <button (click)="uploader.clearAll()">Clear Queue</button>
+  </div>
+</section>
+<section id="file-queue">
+  <h2>2. File Queue & Progress</h2>
+  <div id="file-list">
+    @if (uploader.state().files.length === 0) {
+    <p>Queue is empty.</p>
+    } @else { @for (file of uploader.state().files; track file.id) {
+    <div class="file-item">
+      <div><strong>{{ file.metadata.name }}</strong> ({{ formatBytes(file.metadata.size) }})</div>
+      <div>
+        Status: [{{ file.status.toUpperCase() }}] • {{ formatBytes(file.progress.loaded) }} uploaded
+      </div>
+
+      <div>
+        {{ file.progress.percentage.toFixed(1) }}% @if (file.status === 'uploading') { • {{
+        formatBytes(file.progress.speed) }}/s • {{ formatTime(file.progress.timeRemaining) }} left }
+      </div>
+      <div>
+        @if (file.status === 'uploading') {
+        <button (click)="uploader.pauseUpload(file.id)">Pause</button>
+        <button (click)="uploader.cancelUpload(file.id)">Cancel</button>
+        } @else if (file.status === 'paused') {
+        <button (click)="uploader.resumeUpload(file.id)">Resume</button>
+        <button (click)="uploader.cancelUpload(file.id)">Cancel</button>
+        } @else if (file.status === 'failed') {
+        <button (click)="uploader.retryUpload(file.id)">Retry</button>
+        } @else if (file.status === 'pending' || file.status === 'queued') {
+        <button (click)="uploader.uploadFile(file.id)">Upload</button>
+        }
+        <button (click)="uploader.removeFile(file.id)">Remove</button>
+      </div>
+    </div>
+    } }
+  </div>
+</section>
+<section id="uploader-state">
+  <h2>3. Internal State (Reactive)</h2>
+  <pre>{{ stats() }}</pre>
+</section>
+<div class="notifications-container">
+  @for (notification of notifications(); track notification.id) {
+  <div [class]="'notification ' + notification.type">
+    <span>{{ notification.message }}</span>
+    <button class="close-btn" (click)="removeNotification(notification.id)">×</button>
+  </div>
+  }
+</div>
