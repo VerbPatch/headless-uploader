@@ -4,7 +4,7 @@
   "description": "A headless uploader library for Lit applications with full chunked upload and pause-and-resume support.",
   "author": "Rameez Raja <rameezrajapathan@live.com>",
   "license": "GPL-3.0-or-later",
-  "homepage": "https://github.com/verbpatch/headless-uploader",
+  "homepage": "https://www.verbpatch.com/uploader",
   "repository": {
     "type": "git",
     "url": "https://github.com/verbpatch/headless-uploader.git",
