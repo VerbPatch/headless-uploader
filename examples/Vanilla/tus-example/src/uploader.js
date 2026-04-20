@@ -132,7 +132,7 @@ export function setupUploader() {
   uploader = useUploader({
     protocol: 'tus',
     tus: {
-      endpoint: 'http://localhost:3000/tus',
+      endpoint: 'https://nus.verbpatch.com/tus',
       metadata: {
         uploadType: safeBase64('headless-demo'),
       },
