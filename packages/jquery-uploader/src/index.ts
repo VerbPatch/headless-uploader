@@ -7,6 +7,8 @@ import {
   ChunkInfo,
   UploadProgress,
   FileMetadata,
+  UploaderError,
+  UploaderErrorCodes,
 } from '@verbpatch/headless-uploader';
 import jqModule from 'jquery';
 
@@ -117,7 +119,7 @@ declare global {
         options.onUploadSuccess?.(file, response);
         $el.trigger('uploader:uploadSuccess', [file, response]);
       },
-      onUploadError: (file: UploadFile, error: Error) => {
+      onUploadError: (file: UploadFile, error: UploaderError) => {
         refresh();
         options.onUploadError?.(file, error);
         $el.trigger('uploader:uploadError', [file, error]);
@@ -234,7 +236,10 @@ declare global {
 
       if (!state) {
         if (typeof optionsOrMethod === 'string') {
-          throw new Error(`Cannot call method '${optionsOrMethod}' before initialization.`);
+          throw new UploaderError(
+            `Cannot call method '${optionsOrMethod}' before initialization.`,
+            { code: UploaderErrorCodes.CONFIG_ERROR },
+          );
         }
         initInstance(this, optionsOrMethod || {});
         return;
@@ -243,7 +248,10 @@ declare global {
       if (typeof optionsOrMethod === 'string') {
         const method = optionsOrMethod as keyof typeof methods;
         const fn = methods[method];
-        if (!fn) throw new Error(`Method '${method}' does not exist on ${PLUGIN_NAME}`);
+        if (!fn)
+          throw new UploaderError(`Method '${method}' does not exist on ${PLUGIN_NAME}`, {
+            code: UploaderErrorCodes.CONFIG_ERROR,
+          });
 
         const result = (fn as any)(state, ...(args as any[]));
         if (result !== undefined) {

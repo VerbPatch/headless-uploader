@@ -16,7 +16,7 @@ async function runTest() {
 
       const ws = new WebSocket(WS_URL);
       let uploadComplete = false;
-      let totalChunks = Math.ceil(fileData.length / chunkSize);
+      const totalChunks = Math.ceil(fileData.length / chunkSize);
 
       ws.on('open', () => {
         console.log('✅ WebSocket Connected\n');

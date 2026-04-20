@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { formatBytes, formatTime, createS3Adapter } from '@verbpatch/jquery-uploader';
+import { formatBytes, createS3Adapter } from '@verbpatch/jquery-uploader';
 
 $(function () {
   const $fileInput = $('#file-input');
@@ -35,9 +35,9 @@ $(function () {
         contentType: file.metadata.type,
       }),
     });
-    
+
     if (!response.ok) {
-        throw new Error('Failed to get presigned URL from server');
+      throw new Error('Failed to get presigned URL from server');
     }
 
     const { url } = await response.json();
@@ -47,7 +47,7 @@ $(function () {
   $fileInput.headlessUploader({
     protocol: 'cloud',
     cloudAdapter: createS3Adapter({
-        getUploadUrl: getS3PresignedUrl,
+      getUploadUrl: getS3PresignedUrl,
     }),
     maxFiles: 5,
     enablePreviews: true,
@@ -65,7 +65,7 @@ $(function () {
       showNotification(`Upload error for ${file.metadata.name}: ${error.message}`, 'error');
       render();
     },
-    onAllComplete: (files) => {
+    onAllComplete: () => {
       showNotification('[Complete] All cloud transfers finished!', 'success');
       render();
     },
@@ -171,10 +171,12 @@ $(function () {
         }
 
         if (file.preview) {
-            const $prev = $item.find('.preview-container');
-            if ($prev.is(':empty')) {
-                $prev.html(`<img src="${file.preview}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;" />`);
-            }
+          const $prev = $item.find('.preview-container');
+          if ($prev.is(':empty')) {
+            $prev.html(
+              `<img src="${file.preview}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;" />`,
+            );
+          }
         }
 
         $item.find('.status-text').text(`Status: [${file.status.toUpperCase()}]`);
@@ -192,17 +194,31 @@ $(function () {
           const $actions = $item.find('.actions').empty();
 
           if (file.status === 'uploading') {
-            $('<button class="btn-pause">Pause</button>').attr('data-id', file.id).appendTo($actions);
-            $('<button class="btn-cancel">Cancel</button>').attr('data-id', file.id).appendTo($actions);
+            $('<button class="btn-pause">Pause</button>')
+              .attr('data-id', file.id)
+              .appendTo($actions);
+            $('<button class="btn-cancel">Cancel</button>')
+              .attr('data-id', file.id)
+              .appendTo($actions);
           } else if (file.status === 'paused') {
-            $('<button class="btn-resume">Resume</button>').attr('data-id', file.id).appendTo($actions);
-            $('<button class="btn-cancel">Cancel</button>').attr('data-id', file.id).appendTo($actions);
+            $('<button class="btn-resume">Resume</button>')
+              .attr('data-id', file.id)
+              .appendTo($actions);
+            $('<button class="btn-cancel">Cancel</button>')
+              .attr('data-id', file.id)
+              .appendTo($actions);
           } else if (file.status === 'failed') {
-            $('<button class="btn-retry">Retry</button>').attr('data-id', file.id).appendTo($actions);
+            $('<button class="btn-retry">Retry</button>')
+              .attr('data-id', file.id)
+              .appendTo($actions);
           } else if (file.status === 'pending' || file.status === 'queued') {
-            $('<button class="btn-upload">Upload</button>').attr('data-id', file.id).appendTo($actions);
+            $('<button class="btn-upload">Upload</button>')
+              .attr('data-id', file.id)
+              .appendTo($actions);
           }
-          $('<button class="btn-remove">Remove</button>').attr('data-id', file.id).appendTo($actions);
+          $('<button class="btn-remove">Remove</button>')
+            .attr('data-id', file.id)
+            .appendTo($actions);
         }
       });
 

@@ -10,6 +10,8 @@ import type {
   UploadFile,
   UploaderConfig,
 } from '../types';
+import { UploaderError } from '../types/uploader';
+import { UploaderErrorCodes } from '../constants/error-codes';
 
 interface ActiveStream {
   writer: WritableStreamDefaultWriter;
@@ -51,7 +53,9 @@ export function createWebTransportAdapter(wtConfig: WebTransportConfig): Protoco
 
     async initialize(): Promise<void> {
       if (!('WebTransport' in window)) {
-        throw new Error('WebTransport is not supported in this browser');
+        throw new UploaderError('WebTransport is not supported in this browser', {
+          code: UploaderErrorCodes.BROWSER_UNSUPPORTED,
+        });
       }
       return connectWebTransport();
     },
@@ -94,14 +98,20 @@ export function createWebTransportAdapter(wtConfig: WebTransportConfig): Protoco
           console.log(
             `WebTransport stream for ${file.id} is already active. Skipping redundant loop.`,
           );
-          return { success: false, error: new Error('Stream already active') };
+          return {
+            success: false,
+            error: new UploaderError('Stream already active', {
+              fileId: file.id,
+              code: UploaderErrorCodes.CONFIG_ERROR,
+            }),
+          };
         }
 
         const result = await uploadToStream(active, file, config);
 
         if (result.success) {
           await closeStream(file.id, 'Upload completed');
-        } else if (result.error?.name === 'AbortError') {
+        } else if (result.error?.code === UploaderErrorCodes.ABORT_ERROR) {
           // eslint-disable-next-line
           console.log(`WebTransport stream paused for ${file.id}. Keeping stream alive.`);
         } else {
@@ -110,7 +120,13 @@ export function createWebTransportAdapter(wtConfig: WebTransportConfig): Protoco
 
         return result;
       } catch (err) {
-        const error = err instanceof Error ? err : new Error(String(err));
+        const error =
+          err instanceof UploaderError
+            ? err
+            : new UploaderError(err instanceof Error ? err.message : String(err), {
+                fileId: file.id,
+                code: UploaderErrorCodes.UPLOAD_FAILED,
+              });
         await closeStream(file.id, error.message);
         throw error;
       }
@@ -243,8 +259,10 @@ export function createWebTransportAdapter(wtConfig: WebTransportConfig): Protoco
       // 3. Stream chunks
       for (let i = startChunk; i < totalChunks; i++) {
         if (signal?.aborted) {
-          const err = new Error('Upload paused');
-          err.name = 'AbortError';
+          const err = new UploaderError('Upload paused', {
+            fileId: file.id,
+            code: UploaderErrorCodes.ABORT_ERROR,
+          });
           throw err;
         }
 
@@ -303,8 +321,14 @@ export function createWebTransportAdapter(wtConfig: WebTransportConfig): Protoco
       };
     } catch (err) {
       active.isStreaming = false;
-      const error = err instanceof Error ? err : new Error(String(err));
-      if (error.name === 'AbortError') {
+      const error =
+        err instanceof UploaderError
+          ? err
+          : new UploaderError(err instanceof Error ? err.message : String(err), {
+              fileId: file.id,
+              code: UploaderErrorCodes.UPLOAD_FAILED,
+            });
+      if (error.code === UploaderErrorCodes.ABORT_ERROR) {
         return { success: false, error, bytesUploaded: file.progress.loaded };
       }
       throw error;
@@ -323,7 +347,10 @@ export function createWebTransportAdapter(wtConfig: WebTransportConfig): Protoco
 
     while (true) {
       const { done, value } = await reader.read();
-      if (done) throw new Error(`Stream closed while waiting for ${expectedType}`);
+      if (done)
+        throw new UploaderError(`Stream closed while waiting for ${expectedType}`, {
+          code: UploaderErrorCodes.NETWORK_ERROR,
+        });
 
       if (value) {
         buffer += decoder.decode(value, { stream: true });
@@ -342,7 +369,10 @@ export function createWebTransportAdapter(wtConfig: WebTransportConfig): Protoco
             // console.log(`WebTransport message:`, message);
 
             if (message.type === 'error') {
-              throw new Error(message.error || 'Server error');
+              throw new UploaderError(message.error || 'Server error', {
+                code: (message as any).code || UploaderErrorCodes.SERVER_ERROR,
+                response: message,
+              });
             }
 
             if (message.type === expectedType) {
@@ -351,8 +381,16 @@ export function createWebTransportAdapter(wtConfig: WebTransportConfig): Protoco
 
             start = closeBrace + 1;
           } catch (e) {
-            const error = e instanceof Error ? e : new Error(String(e));
-            if (error.message.includes('Server error') || error.message.includes('Unauthorized'))
+            const error =
+              e instanceof UploaderError
+                ? e
+                : new UploaderError(e instanceof Error ? e.message : String(e), {
+                    code: UploaderErrorCodes.SERVER_ERROR,
+                  });
+            if (
+              error.code === UploaderErrorCodes.SERVER_ERROR ||
+              error.message.includes('Unauthorized')
+            )
               throw error;
             start = openBrace + 1;
           }

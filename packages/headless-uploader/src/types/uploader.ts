@@ -1,4 +1,5 @@
 import { ValidationError, ValidationResult } from './validation';
+import { UploaderErrorCode, UploaderErrorCodes } from '../constants/error-codes';
 import {
   HttpConfig,
   TusConfig,
@@ -120,6 +121,36 @@ export interface CompressionOptions {
 }
 
 /**
+ * Custom error object for uploader operations
+ * @group types
+ * @title UploaderError
+ * @description Extends the standard Error with additional fields for machine-readable codes and file identification.
+ */
+export class UploaderError extends Error {
+  /** Machine-readable error code (e.g., 'INVALID_FILE_TYPE', 'FILE_TOO_LARGE') */
+  code?: UploaderErrorCode;
+  /** The unique identifier of the file associated with this error */
+  fileId?: string;
+  /** The raw server response if the error occurred during a network request */
+  response?: unknown;
+
+  constructor(
+    message: string,
+    options?: { code?: UploaderErrorCode; fileId?: string; response?: unknown },
+  ) {
+    super(message);
+    this.name = 'UploaderError';
+    this.code = options?.code || UploaderErrorCodes.UNKNOWN_ERROR;
+    if (options) {
+      this.fileId = options.fileId;
+      this.response = options.response;
+    }
+    // Set the prototype explicitly for built-in classes extension
+    Object.setPrototypeOf(this, UploaderError.prototype);
+  }
+}
+
+/**
  * Upload file representation
  * @group types
  * @title UploadFile
@@ -134,7 +165,7 @@ export interface UploadFile {
   preview?: string;
   chunks?: ChunkInfo[];
   processedFile?: Blob | File;
-  error?: Error;
+  error?: UploaderError;
   retries: number;
   response?: unknown;
   abortController?: AbortController;
@@ -303,7 +334,7 @@ export interface UploaderConfig {
   /** Callback fired when an upload is cancelled */
   onUploadCancel?: (file: UploadFile) => void;
   /** Callback fired when an upload fails with an error */
-  onUploadError?: (file: UploadFile, error: Error) => void;
+  onUploadError?: (file: UploadFile, error: UploaderError) => void;
   /** Callback fired before a retry attempt is made */
   onRetry?: (file: UploadFile, attempt: number) => void;
 }

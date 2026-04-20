@@ -39,9 +39,9 @@ export default function App() {
         contentType: file.metadata.type,
       }),
     });
-    
+
     if (!response.ok) {
-        throw new Error('Failed to get presigned URL from server');
+      throw new Error('Failed to get presigned URL from server');
     }
 
     const { url } = await response.json();
@@ -84,7 +84,7 @@ export default function App() {
       showNotification(`Upload error for ${file.metadata.name}: ${error.message}`, 'error');
       console.error(`Upload error for ${file.metadata.name}:`, error);
     },
-    onAllComplete: (files: UploadFile[]) => {
+    onAllComplete: () => {
       showNotification('[Complete] All cloud transfers finished!', 'success');
     },
   });
@@ -99,15 +99,16 @@ export default function App() {
       <header>
         <h1>React Uploader - Cloud Protocol</h1>
         <p>
-          This example demonstrates direct-to-cloud (S3) uploads using the <strong>protocol: 'cloud'</strong> setting.
+          This example demonstrates direct-to-cloud (S3) uploads using the{' '}
+          <strong>protocol: 'cloud'</strong> setting.
         </p>
       </header>
 
       <section id="configuration">
         <h2>1. Cloud Upload</h2>
         <p>
-            The uploader is configured to use the <code>S3Adapter</code>. 
-            It requests a signed URL from the <code>uploader-server</code> and then uploads the file directly.
+          The uploader is configured to use the <code>S3Adapter</code>. It requests a signed URL
+          from the <code>uploader-server</code> and then uploads the file directly.
         </p>
 
         <div
@@ -140,7 +141,10 @@ export default function App() {
         />
 
         <div className="controls">
-          <button onClick={() => uploadAll()} disabled={state.files.length === 0 || state.isUploading}>
+          <button
+            onClick={() => uploadAll()}
+            disabled={state.files.length === 0 || state.isUploading}
+          >
             {state.isUploading ? 'Uploading...' : 'Start Cloud Upload'}
           </button>
           <button onClick={() => clearAll()}>Clear Queue</button>
@@ -156,24 +160,56 @@ export default function App() {
             state.files.map((file) => (
               <div className="file-item" key={file.id}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                   {file.preview && (
-                       <img src={file.preview} alt="preview" style={{ borderRadius: '4px', border: '1px solid #eee' }} />
-                   )}
-                   <div>
-                        <strong>{file.metadata.name}</strong> ({formatBytes(file.metadata.size)})
-                        <div>Status: <span className={`status-${file.status}`}>{file.status.toUpperCase()}</span></div>
-                   </div>
+                  {file.preview && (
+                    <img
+                      src={file.preview}
+                      alt="preview"
+                      style={{ borderRadius: '4px', border: '1px solid #eee' }}
+                    />
+                  )}
+                  <div>
+                    <strong>{file.metadata.name}</strong> ({formatBytes(file.metadata.size)})
+                    <div>
+                      Status:{' '}
+                      <span className={`status-${file.status}`}>{file.status.toUpperCase()}</span>
+                    </div>
+                  </div>
                 </div>
 
                 <div style={{ marginTop: '10px' }}>
-                  <div className="progress-bar-container" style={{ height: '8px', background: '#eee', borderRadius: '4px', overflow: 'hidden' }}>
-                      <div style={{ width: `${file.progress.percentage}%`, height: '100%', background: '#4caf50', transition: 'width 0.3s' }}></div>
+                  <div
+                    className="progress-bar-container"
+                    style={{
+                      height: '8px',
+                      background: '#eee',
+                      borderRadius: '4px',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: `${file.progress.percentage}%`,
+                        height: '100%',
+                        background: '#4caf50',
+                        transition: 'width 0.3s',
+                      }}
+                    ></div>
                   </div>
-                  <div style={{ fontSize: '12px', marginTop: '4px', display: 'flex', justifyContent: 'space-between' }}>
-                     <span>{file.progress.percentage.toFixed(1)}% uploaded</span>
-                     {file.status === 'uploading' && (
-                         <span>{formatBytes(file.progress.speed)}/s • {formatTime(file.progress.timeRemaining)} left</span>
-                     )}
+                  <div
+                    style={{
+                      fontSize: '12px',
+                      marginTop: '4px',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    <span>{file.progress.percentage.toFixed(1)}% uploaded</span>
+                    {file.status === 'uploading' && (
+                      <span>
+                        {formatBytes(file.progress.speed)}/s •{' '}
+                        {formatTime(file.progress.timeRemaining)} left
+                      </span>
+                    )}
                   </div>
                 </div>
 

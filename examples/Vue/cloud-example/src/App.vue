@@ -30,9 +30,9 @@ const getS3PresignedUrl = async (file) => {
       contentType: file.metadata.type,
     }),
   });
-  
+
   if (!response.ok) {
-      throw new Error('Failed to get presigned URL from server');
+    throw new Error('Failed to get presigned URL from server');
   }
 
   const { url } = await response.json();
@@ -86,14 +86,16 @@ const onDrop = async (e) => {
     <header>
       <h1>Vue Uploader - Cloud Protocol</h1>
       <p>
-        This example demonstrates direct-to-cloud (S3) uploads using the <strong>protocol: 'cloud'</strong> setting in Vue.
+        This example demonstrates direct-to-cloud (S3) uploads using the
+        <strong>protocol: 'cloud'</strong> setting in Vue.
       </p>
     </header>
 
     <section id="configuration">
       <h2>1. Cloud Upload</h2>
       <p>
-          Configured with <code>S3Adapter</code>. It requests a signed URL from the <code>uploader-server</code> and then uploads the file directly.
+        Configured with <code>S3Adapter</code>. It requests a signed URL from the
+        <code>uploader-server</code> and then uploads the file directly.
       </p>
 
       <div
@@ -128,8 +130,11 @@ const onDrop = async (e) => {
       />
 
       <div class="controls">
-        <button @click="uploader.uploadAll()" :disabled="uploader.state.files.length === 0 || uploader.state.isUploading">
-           {{ uploader.state.isUploading ? 'Uploading...' : 'Start Cloud Upload' }}
+        <button
+          @click="uploader.uploadAll()"
+          :disabled="uploader.state.files.length === 0 || uploader.state.isUploading"
+        >
+          {{ uploader.state.isUploading ? 'Uploading...' : 'Start Cloud Upload' }}
         </button>
         <button @click="uploader.clearAll()">Clear Queue</button>
       </div>
@@ -141,22 +146,47 @@ const onDrop = async (e) => {
         <p v-if="uploader.state.files.length === 0">No files selected.</p>
         <div v-for="file in uploader.state.files" :key="file.id" class="file-item">
           <div style="display: flex; align-items: center; gap: 15px">
-             <img v-if="file.preview" :src="file.preview" alt="preview" style="border-radius: 4px; border: 1px solid #eee; width: 60px; height: 60px; object-fit: cover;" />
-             <div>
-                  <strong>{{ file.metadata.name }}</strong> ({{ formatBytes(file.metadata.size) }})
-                  <div>Status: <span :class="'status-' + file.status">{{ file.status.toUpperCase() }}</span></div>
-             </div>
+            <img
+              v-if="file.preview"
+              :src="file.preview"
+              alt="preview"
+              style="
+                border-radius: 4px;
+                border: 1px solid #eee;
+                width: 60px;
+                height: 60px;
+                object-fit: cover;
+              "
+            />
+            <div>
+              <strong>{{ file.metadata.name }}</strong> ({{ formatBytes(file.metadata.size) }})
+              <div>
+                Status:
+                <span :class="'status-' + file.status">{{ file.status.toUpperCase() }}</span>
+              </div>
+            </div>
           </div>
 
           <div style="margin-top: 10px">
             <div style="height: 8px; background: #eee; border-radius: 4px; overflow: hidden">
-                <div :style="{ width: file.progress.percentage + '%' }" style="height: 100%; background: #4caf50; transition: width 0.3s"></div>
+              <div
+                :style="{ width: file.progress.percentage + '%' }"
+                style="height: 100%; background: #4caf50; transition: width 0.3s"
+              ></div>
             </div>
-            <div style="font-size: 12px; margin-top: 4px; display: flex; justify-content: space-between">
-               <span>{{ file.progress.percentage.toFixed(1) }}% uploaded</span>
-               <span v-if="file.status === 'uploading'">
-                   {{ formatBytes(file.progress.speed) }}/s • {{ formatTime(file.progress.timeRemaining) }} left
-               </span>
+            <div
+              style="
+                font-size: 12px;
+                margin-top: 4px;
+                display: flex;
+                justify-content: space-between;
+              "
+            >
+              <span>{{ file.progress.percentage.toFixed(1) }}% uploaded</span>
+              <span v-if="file.status === 'uploading'">
+                {{ formatBytes(file.progress.speed) }}/s •
+                {{ formatTime(file.progress.timeRemaining) }} left
+              </span>
             </div>
           </div>
 

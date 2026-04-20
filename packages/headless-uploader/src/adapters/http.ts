@@ -1,5 +1,7 @@
 import type { ProtocolAdapter, ProtocolUploadResult, HttpConfig } from '../types/protocolTypes';
 import type { UploadFile, UploaderConfig, ChunkInfo, UploadProgress } from '../types';
+import { UploaderError } from '../types/uploader';
+import { UploaderErrorCodes } from '../constants/error-codes';
 import { calculateSpeed, calculateTimeRemaining } from '../utils/helpers';
 import { createChunks } from '../utils/files';
 
@@ -48,7 +50,10 @@ export function createHttpAdapter(httpConfig: HttpConfig = {}): ProtocolAdapter 
         if (file.abortController?.signal.aborted) {
           return {
             success: false,
-            error: new Error('Upload paused'),
+            error: new UploaderError('Upload paused', {
+              fileId: file.id,
+              code: UploaderErrorCodes.ABORT_ERROR,
+            }),
             bytesUploaded: file.progress.loaded,
           };
         }
@@ -61,7 +66,13 @@ export function createHttpAdapter(httpConfig: HttpConfig = {}): ProtocolAdapter 
       } catch (error) {
         return {
           success: false,
-          error: error as Error,
+          error:
+            error instanceof UploaderError
+              ? error
+              : new UploaderError(error instanceof Error ? error.message : String(error), {
+                  fileId: file.id,
+                  code: UploaderErrorCodes.UPLOAD_FAILED,
+                }),
           bytesUploaded: file.progress.loaded,
         };
       }
@@ -71,16 +82,12 @@ export function createHttpAdapter(httpConfig: HttpConfig = {}): ProtocolAdapter 
       return this.upload(file, config);
     },
 
-    async pause(fileId: string): Promise<void> {
+    async pause(_fileId: string): Promise<void> {
       // Logic handled by AbortController in core
-      // eslint-disable-next-line
-      console.log(`${fileId} => Paused called`);
     },
 
-    async cancel(fileId: string): Promise<void> {
+    async cancel(_fileId: string): Promise<void> {
       // Logic handled by AbortController in core
-      // eslint-disable-next-line
-      console.log(`${fileId} => Cancelled called`);
     },
   };
 }
@@ -140,7 +147,19 @@ async function uploadSimple(
         }
         resolve();
       } else {
-        reject(new Error(`Upload failed with status ${xhr.status}`));
+        let responseData;
+        try {
+          responseData = JSON.parse(xhr.responseText);
+        } catch {
+          responseData = xhr.responseText;
+        }
+        reject(
+          new UploaderError(`Upload failed with status ${xhr.status}`, {
+            code: responseData?.code || UploaderErrorCodes.HTTP_ERROR,
+            fileId: uploadFile.id,
+            response: responseData,
+          }),
+        );
       }
     };
 
@@ -150,12 +169,19 @@ async function uploadSimple(
         xhr.status === 0
           ? 'Network error: Likely CORS or connection refused'
           : `Network error: Status ${xhr.status}`;
-      reject(new Error(msg));
+      reject(
+        new UploaderError(msg, { code: UploaderErrorCodes.NETWORK_ERROR, fileId: uploadFile.id }),
+      );
     };
 
     xhr.ontimeout = () => {
       cleanup();
-      reject(new Error('Upload timed out'));
+      reject(
+        new UploaderError('Upload timed out', {
+          code: UploaderErrorCodes.TIMEOUT_ERROR,
+          fileId: uploadFile.id,
+        }),
+      );
     };
 
     xhr.onabort = () => {
@@ -256,7 +282,19 @@ async function uploadChunk(
       if (xhr.status >= 200 && xhr.status < 300) {
         resolve();
       } else {
-        reject(new Error(`Server responded with ${xhr.status}`));
+        let responseData;
+        try {
+          responseData = JSON.parse(xhr.responseText);
+        } catch {
+          responseData = xhr.responseText;
+        }
+        reject(
+          new UploaderError(`Server responded with ${xhr.status}`, {
+            code: responseData?.code || UploaderErrorCodes.HTTP_ERROR,
+            fileId: uploadFile.id,
+            response: responseData,
+          }),
+        );
       }
     };
 
@@ -266,12 +304,19 @@ async function uploadChunk(
         xhr.status === 0
           ? 'Network error: Likely CORS or connection refused'
           : `Network error: Status ${xhr.status}`;
-      reject(new Error(msg));
+      reject(
+        new UploaderError(msg, { code: UploaderErrorCodes.NETWORK_ERROR, fileId: uploadFile.id }),
+      );
     };
 
     xhr.ontimeout = () => {
       cleanup();
-      reject(new Error('Upload timeout exceeded'));
+      reject(
+        new UploaderError('Upload timeout exceeded', {
+          code: UploaderErrorCodes.TIMEOUT_ERROR,
+          fileId: uploadFile.id,
+        }),
+      );
     };
 
     xhr.onabort = () => {

@@ -1,4 +1,4 @@
-import { useUploader, createS3Adapter, formatBytes, formatTime } from '@verbpatch/headless-uploader';
+import { useUploader, createS3Adapter, formatBytes } from '@verbpatch/headless-uploader';
 
 let uploader;
 let dropZone, fileInput, fileList, uploadAllBtn, clearAllBtn, statsRaw;
@@ -50,10 +50,10 @@ function renderFileList() {
     }
 
     if (file.preview) {
-        const previewContainer = fileItem.querySelector('.preview-container');
-        if (!previewContainer.innerHTML) {
-            previewContainer.innerHTML = `<img src="${file.preview}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;" />`;
-        }
+      const previewContainer = fileItem.querySelector('.preview-container');
+      if (!previewContainer.innerHTML) {
+        previewContainer.innerHTML = `<img src="${file.preview}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;" />`;
+      }
     }
 
     const statusEl = fileItem.querySelector('.file-status');
@@ -116,7 +116,6 @@ function showNotification(message, type = 'info') {
   const container = document.getElementById('notification-container');
   if (!container) return;
 
-  const id = Date.now();
   const n = document.createElement('div');
   n.className = `notification ${type}`;
   n.innerHTML = `<span>${message}</span><span class="close-btn">&times;</span>`;
@@ -137,9 +136,9 @@ const getS3PresignedUrl = async (file) => {
       contentType: file.metadata.type,
     }),
   });
-  
+
   if (!response.ok) {
-      throw new Error('Failed to get presigned URL from server');
+    throw new Error('Failed to get presigned URL from server');
   }
 
   const { url } = await response.json();
@@ -150,23 +149,31 @@ export function setupUploader() {
   uploader = useUploader({
     protocol: 'cloud',
     cloudAdapter: createS3Adapter({
-        getUploadUrl: getS3PresignedUrl,
+      getUploadUrl: getS3PresignedUrl,
     }),
     maxFiles: 5,
     enablePreviews: true,
-    onFilesAdded: () => { renderFileList(); updateStats(); },
-    onUploadProgress: () => { renderFileList(); updateStats(); },
+    onFilesAdded: () => {
+      renderFileList();
+      updateStats();
+    },
+    onUploadProgress: () => {
+      renderFileList();
+      updateStats();
+    },
     onUploadSuccess: (file) => {
       showNotification(`Cloud Success: ${file.metadata.name}`, 'success');
-      renderFileList(); updateStats();
+      renderFileList();
+      updateStats();
     },
     onUploadError: (file, error) => {
       showNotification(`Upload error for ${file.metadata.name}: ${error.message}`, 'error');
-      renderFileList(); updateStats();
+      renderFileList();
+      updateStats();
     },
     onAllComplete: () => {
       showNotification('All cloud transfers finished!', 'success');
-    }
+    },
   });
 
   dropZone = document.getElementById('drop-zone');
@@ -191,7 +198,8 @@ export function setupUploader() {
   uploadAllBtn.addEventListener('click', () => uploader.uploadAll());
   clearAllBtn.addEventListener('click', async () => {
     await uploader.clearAll();
-    renderFileList(); updateStats();
+    renderFileList();
+    updateStats();
   });
 
   fileList.addEventListener('click', async (e) => {
@@ -205,7 +213,8 @@ export function setupUploader() {
     else if (action === 'retry') await uploader.retryUpload(id);
     else if (action === 'upload') await uploader.uploadFile(id);
     else if (action === 'remove') await uploader.removeFile(id);
-    renderFileList(); updateStats();
+    renderFileList();
+    updateStats();
   });
 
   renderFileList();

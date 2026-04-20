@@ -1,5 +1,7 @@
 import type { UploaderConfig, ValidationError, ValidationResult } from '../types';
+import { UploaderError } from '../types/uploader';
 import { getFileExtension } from './files';
+import { UploaderErrorCodes } from '../constants/error-codes';
 
 /**
  * Check if a file's type matches the list of accepted types
@@ -59,7 +61,7 @@ async function validateFile(
 
   if (config.maxFileSize && file.size > config.maxFileSize) {
     errors.push({
-      code: 'FILE_TOO_LARGE',
+      code: UploaderErrorCodes.FILE_TOO_LARGE,
       message: `File size exceeds maximum allowed size of ${config.maxFileSize} bytes`,
       file,
     });
@@ -67,7 +69,7 @@ async function validateFile(
 
   if (config.minFileSize && file.size < config.minFileSize) {
     errors.push({
-      code: 'FILE_TOO_SMALL',
+      code: UploaderErrorCodes.FILE_TOO_SMALL,
       message: `File size is below minimum required size of ${config.minFileSize} bytes`,
       file,
     });
@@ -76,7 +78,7 @@ async function validateFile(
   if (config.acceptedTypes && config.acceptedTypes.length > 0) {
     if (!isAcceptedType(file, config.acceptedTypes)) {
       errors.push({
-        code: 'INVALID_FILE_TYPE',
+        code: UploaderErrorCodes.INVALID_FILE_TYPE,
         message: `File type "${file.type}" is not accepted. Accepted types: ${config.acceptedTypes.join(', ')}`,
         file,
       });
@@ -93,7 +95,7 @@ async function validateFile(
 
     if (isDuplicate) {
       errors.push({
-        code: 'DUPLICATE_FILE',
+        code: UploaderErrorCodes.DUPLICATE_FILE,
         message: `File "${file.name}" is already in the upload queue`,
         file,
       });
@@ -108,8 +110,13 @@ async function validateFile(
       }
     } catch (error) {
       errors.push({
-        code: 'CUSTOM_VALIDATION_ERROR',
-        message: error instanceof Error ? error.message : 'Custom validation failed',
+        code: UploaderErrorCodes.CUSTOM_VALIDATION_ERROR,
+        message:
+          error instanceof UploaderError
+            ? error.message
+            : error instanceof Error
+              ? error.message
+              : 'Custom validation failed',
         file,
       });
     }
@@ -144,7 +151,7 @@ export async function validateFiles(
     if (totalFiles > config.maxFiles) {
       const excess = totalFiles - config.maxFiles;
       allErrors.push({
-        code: 'TOO_MANY_FILES',
+        code: UploaderErrorCodes.TOO_MANY_FILES,
         message: `Cannot add ${files.length} files. Maximum allowed is ${config.maxFiles}. Remove ${excess} file(s).`,
         file: files[0],
       });

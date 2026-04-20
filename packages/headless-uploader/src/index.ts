@@ -1,4 +1,6 @@
 export { useUploader } from './core/instance';
+export { UploaderError } from './types/uploader';
+export type { UploaderErrorCode } from './constants/error-codes';
 export type {
   HttpMethod,
   UploadStatus,
@@ -29,7 +31,12 @@ export type {
   UploadProtocol,
 } from './types/protocolTypes';
 
-export { DEFAULT_CONFIG, FileTypePresets, ValidationErrorCodes } from './constants';
+export {
+  DEFAULT_CONFIG,
+  FileTypePresets,
+  UploaderErrorCodes,
+  ValidationErrorCodes,
+} from './constants';
 
 export {
   getRecommendedProtocol,

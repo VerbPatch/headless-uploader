@@ -1,24 +1,22 @@
 import type { CloudAdapter, UploadFile, UploaderConfig, S3AdapterOptions } from '../../types';
+import { UploaderError } from '../../types/uploader';
+import { UploaderErrorCodes } from '../../constants/error-codes';
 
 /**
  * Create an AWS S3 cloud storage adapter
  * @param options - Configuration options for S3
  * @group cloud
  * @title createS3Adapter
- * @description Factory function that creates an adapter for direct-to-S3 uploads using pre-signed URLs.
+ * @description Factory function that creates an adapter for direct uploads to AWS S3 using presigned URLs.
  */
 export function createS3Adapter(options: S3AdapterOptions): CloudAdapter {
   const abortControllers = new Map<string, AbortController>();
 
   return {
     name: 'AWS S3',
-    
-    async getUploadUrl(file: UploadFile): Promise<string> {
-      return options.getUploadUrl(file);
-    },
 
-    async upload(file: UploadFile, config: UploaderConfig): Promise<unknown> {
-      const url = await this.getUploadUrl!(file);
+    async upload(file: UploadFile, _config: UploaderConfig): Promise<unknown> {
+      const url = await options.getUploadUrl(file);
       const controller = new AbortController();
       abortControllers.set(file.id, controller);
 
@@ -35,7 +33,11 @@ export function createS3Adapter(options: S3AdapterOptions): CloudAdapter {
       abortControllers.delete(file.id);
 
       if (!response.ok) {
-        throw new Error(`S3 upload failed: ${response.statusText}`);
+        throw new UploaderError(`S3 upload failed: ${response.statusText}`, {
+          fileId: file.id,
+          code: UploaderErrorCodes.CLOUD_UPLOAD_ERROR,
+          response: response.status,
+        });
       }
 
       return {

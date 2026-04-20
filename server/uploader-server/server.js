@@ -1,4 +1,3 @@
-import fs from 'fs';
 import Fastify from 'fastify';
 import cors from '@fastify/cors';
 import multipart from '@fastify/multipart';
@@ -47,7 +46,7 @@ const start = async () => {
   });
 
   // Health Check
-  fastify.get('/health', async (request, reply) => {
+  fastify.get('/health', async () => {
     return 'OK';
   });
 
@@ -61,7 +60,9 @@ const start = async () => {
   const protocol = 'http';
   const listenTarget = process.env.PORT || config.APP_PORT;
   const isPipe = isNaN(Number(listenTarget));
-  const listenOptions = isPipe ? { path: listenTarget } : { port: Number(listenTarget), host: config.APP_HOST };
+  const listenOptions = isPipe
+    ? { path: listenTarget }
+    : { port: Number(listenTarget), host: config.APP_HOST };
 
   try {
     await fastify.listen(listenOptions);
@@ -74,8 +75,12 @@ const start = async () => {
     console.log(`   - HTTP Upload: ${protocol}://${config.APP_HOST}:${displayPort}/upload`);
     console.log(`   - TUS Upload: ${protocol}://${config.APP_HOST}:${displayPort}/tus/`);
     console.log(`   - Cloud (S3): ${protocol}://${config.APP_HOST}:${displayPort}/generate-s3-url`);
-    console.log(`   - Cloud (Azure): ${protocol}://${config.APP_HOST}:${displayPort}/generate-azure-sas`);
-    console.log(`   - Cloud (GCS): ${protocol}://${config.APP_HOST}:${displayPort}/generate-gcs-url`);
+    console.log(
+      `   - Cloud (Azure): ${protocol}://${config.APP_HOST}:${displayPort}/generate-azure-sas`,
+    );
+    console.log(
+      `   - Cloud (GCS): ${protocol}://${config.APP_HOST}:${displayPort}/generate-gcs-url`,
+    );
     console.log(
       `   - WebSocket: ${protocol === 'https' ? 'wss' : 'ws'}://${config.APP_HOST}:${displayPort}/ws-upload`,
     );

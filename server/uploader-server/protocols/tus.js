@@ -11,6 +11,41 @@ export function initTUS() {
     datastore: new FileStore({
       directory: config.UPLOADS_DIR,
     }),
+    onIncomingRequest: (req, res) => {
+      // Validate PDF only for creation requests
+      if (req.method === 'POST') {
+        const metadataStr = req.headers['upload-metadata'] || '';
+        const metadata = {};
+
+        metadataStr.split(',').forEach((item) => {
+          const [key, value] = item.trim().split(' ');
+          if (key && value) {
+            try {
+              metadata[key] = Buffer.from(value, 'base64').toString();
+            } catch {
+              // Ignore decoding errors
+            }
+          }
+        });
+
+        const filetype = metadata.filetype || '';
+        const filename = metadata.filename || '';
+
+        const isPdf = filetype === 'application/pdf' || filename.toLowerCase().endsWith('.pdf');
+
+        if (!isPdf) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          res.end(
+            JSON.stringify({
+              success: false,
+              code: 'INVALID_FILE_TYPE',
+              message: 'Invalid file type. Only PDF files are allowed.',
+            }),
+          );
+          return;
+        }
+      }
+    },
   });
   return tusServer;
 }

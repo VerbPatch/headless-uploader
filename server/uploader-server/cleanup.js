@@ -30,7 +30,7 @@ async function performCleanup(dirPath) {
         try {
           fs.rmdirSync(fullPath);
           console.log(`[Cleanup] Removed empty directory: ${entry.name}`);
-        } catch (err) {
+        } catch {
           // Ignore errors (e.g. dir not empty anymore)
         }
       }

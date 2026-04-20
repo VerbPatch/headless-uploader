@@ -168,8 +168,7 @@ export async function setupUploader() {
     enablePreviews: false,
     onFilesRejected: (rejections) => {
       rejections.forEach((rejection) => {
-        const errorMessages = rejection.errors.map((e) => e.message).join(', ');
-        showNotification(`Rejected: ${rejection.file.name} - ${errorMessages}`, 'error');
+        showNotification(`Rejected: ${rejection.file.name} - ${rejection.message}`, 'error');
       });
       renderFileList();
       updateStats();

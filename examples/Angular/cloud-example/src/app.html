@@ -1,13 +1,14 @@
 <header>
   <h1>Angular Uploader - Cloud Protocol</h1>
-  <p>
-    Direct-to-cloud (S3) uploads using <strong>protocol: 'cloud'</strong> in Angular.
-  </p>
+  <p>Direct-to-cloud (S3) uploads using <strong>protocol: 'cloud'</strong> in Angular.</p>
 </header>
 
 <section id="configuration">
   <h2>1. Cloud Upload</h2>
-  <p>Configured with <code>S3Adapter</code>. It requests a signed URL from the <code>uploader-server</code> and then uploads the file directly.</p>
+  <p>
+    Configured with <code>S3Adapter</code>. It requests a signed URL from the
+    <code>uploader-server</code> and then uploads the file directly.
+  </p>
 
   <div
     id="drop-zone"
@@ -16,7 +17,13 @@
     (dragleave)="onDragLeave()"
     (drop)="onDrop($event)"
     (click)="fileInput.click()"
-    style="border: 2px dashed #ccc; padding: 40px; text-align: center; cursor: pointer; margin-bottom: 10px;"
+    style="
+      border: 2px dashed #ccc;
+      padding: 40px;
+      text-align: center;
+      cursor: pointer;
+      margin-bottom: 10px;
+    "
     [style.background-color]="isDragOver ? '#f1f8e9' : 'transparent'"
     [style.border-color]="isDragOver ? '#4caf50' : '#ccc'"
   >
@@ -31,7 +38,10 @@
   />
 
   <div class="controls">
-    <button (click)="uploader.uploadAll()" [disabled]="uploader.state().files.length === 0 || uploader.state().isUploading">
+    <button
+      (click)="uploader.uploadAll()"
+      [disabled]="uploader.state().files.length === 0 || uploader.state().isUploading"
+    >
       {{ uploader.state().isUploading ? 'Uploading...' : 'Start Cloud Upload' }}
     </button>
     <button (click)="uploader.clearAll()">Clear Queue</button>
@@ -44,21 +54,40 @@
     <p *ngIf="uploader.state().files.length === 0">No files selected.</p>
     <div *ngFor="let file of uploader.state().files" class="file-item">
       <div style="display: flex; align-items: center; gap: 15px">
-        <img *ngIf="file.preview" [src]="file.preview" alt="preview" style="border-radius: 4px; border: 1px solid #eee; width: 60px; height: 60px; object-fit: cover;" />
+        <img
+          *ngIf="file.preview"
+          [src]="file.preview"
+          alt="preview"
+          style="
+            border-radius: 4px;
+            border: 1px solid #eee;
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+          "
+        />
         <div>
           <strong>{{ file.metadata.name }}</strong> ({{ formatBytes(file.metadata.size) }})
-          <div>Status: <span [class]="'status-' + file.status">{{ file.status.toUpperCase() }}</span></div>
+          <div>
+            Status: <span [class]="'status-' + file.status">{{ file.status.toUpperCase() }}</span>
+          </div>
         </div>
       </div>
 
       <div style="margin-top: 10px">
         <div style="height: 8px; background: #eee; border-radius: 4px; overflow: hidden">
-          <div [style.width.%]="file.progress.percentage" style="height: 100%; background: #4caf50; transition: width 0.3s"></div>
+          <div
+            [style.width.%]="file.progress.percentage"
+            style="height: 100%; background: #4caf50; transition: width 0.3s"
+          ></div>
         </div>
-        <div style="font-size: 12px; margin-top: 4px; display: flex; justify-content: space-between">
+        <div
+          style="font-size: 12px; margin-top: 4px; display: flex; justify-content: space-between"
+        >
           <span>{{ file.progress.percentage.toFixed(1) }}% uploaded</span>
           <span *ngIf="file.status === 'uploading'">
-            {{ formatBytes(file.progress.speed) }}/s • {{ formatTime(file.progress.timeRemaining) }} left
+            {{ formatBytes(file.progress.speed) }}/s •
+            {{ formatTime(file.progress.timeRemaining) }} left
           </span>
         </div>
       </div>
@@ -72,7 +101,9 @@
           <button (click)="uploader.resumeUpload(file.id)">Resume</button>
           <button (click)="uploader.cancelUpload(file.id)">Cancel</button>
         </ng-container>
-        <button *ngIf="file.status === 'failed'" (click)="uploader.retryUpload(file.id)">Retry</button>
+        <button *ngIf="file.status === 'failed'" (click)="uploader.retryUpload(file.id)">
+          Retry
+        </button>
         <button
           *ngIf="file.status === 'pending' || file.status === 'queued'"
           (click)="uploader.uploadFile(file.id)"
@@ -87,13 +118,15 @@
 
 <section id="uploader-state">
   <h2>3. Instance State</h2>
-  <pre>{{ { 
-    activeProtocol: 'cloud',
-    adapter: 'S3Adapter',
-    isUploading: uploader.state().isUploading,
-    totalProgress: uploader.state().totalProgress.percentage.toFixed(2) + '%',
-    filesCount: uploader.state().files.length
-  } | json }}</pre>
+  <pre>{{
+    {
+      activeProtocol: 'cloud',
+      adapter: 'S3Adapter',
+      isUploading: uploader.state().isUploading,
+      totalProgress: uploader.state().totalProgress.percentage.toFixed(2) + '%',
+      filesCount: uploader.state().files.length,
+    } | json
+  }}</pre>
 </section>
 
 <div class="notifications-container">

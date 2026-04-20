@@ -30,14 +30,14 @@ const start = async () => {
   });
 
   // Health Check
-  fastify.get('/health', async (request, reply) => {
+  fastify.get('/health', async () => {
     return 'OK';
   });
 
   // --- WebTransport Setup ---
   setupWebTransport();
 
-  fastify.get('/webtransport-config', async (request, reply) => {
+  fastify.get('/webtransport-config', async () => {
     const certHash = getWebTransportFingerprint();
     return { certHash };
   });

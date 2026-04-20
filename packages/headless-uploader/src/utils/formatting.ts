@@ -1,4 +1,5 @@
-import { FileMetadata } from '../types';
+import { FileMetadata, UploaderError } from '../types';
+import { UploaderErrorCodes } from '../constants/error-codes';
 import { getFileExtension } from './files';
 
 /**
@@ -37,7 +38,9 @@ export function getImageDimensions(file: File): Promise<{ width: number; height:
 
     img.onerror = () => {
       URL.revokeObjectURL(url);
-      reject(new Error('Failed to load image'));
+      reject(
+        new UploaderError('Failed to load image', { code: UploaderErrorCodes.FORMATTING_ERROR }),
+      );
     };
 
     img.src = url;
@@ -68,7 +71,9 @@ export function getVideoMetadata(file: File): Promise<{
 
     video.onerror = () => {
       URL.revokeObjectURL(url);
-      reject(new Error('Failed to load video'));
+      reject(
+        new UploaderError('Failed to load video', { code: UploaderErrorCodes.FORMATTING_ERROR }),
+      );
     };
 
     video.src = url;
@@ -90,7 +95,9 @@ export function getAudioDuration(file: File): Promise<number> {
 
     audio.onerror = () => {
       URL.revokeObjectURL(url);
-      reject(new Error('Failed to load audio'));
+      reject(
+        new UploaderError('Failed to load audio', { code: UploaderErrorCodes.FORMATTING_ERROR }),
+      );
     };
 
     audio.src = url;
@@ -146,7 +153,11 @@ export function generateImagePreview(
 
         const ctx = canvas.getContext('2d');
         if (!ctx) {
-          reject(new Error('Failed to get canvas context'));
+          reject(
+            new UploaderError('Failed to get canvas context', {
+              code: UploaderErrorCodes.FORMATTING_ERROR,
+            }),
+          );
           return;
         }
 
@@ -154,11 +165,19 @@ export function generateImagePreview(
         resolve(canvas.toDataURL());
       };
 
-      img.onerror = () => reject(new Error('Failed to load image for preview'));
+      img.onerror = () =>
+        reject(
+          new UploaderError('Failed to load image for preview', {
+            code: UploaderErrorCodes.FORMATTING_ERROR,
+          }),
+        );
       img.src = e.target?.result as string;
     };
 
-    reader.onerror = () => reject(new Error('Failed to read file'));
+    reader.onerror = () =>
+      reject(
+        new UploaderError('Failed to read file', { code: UploaderErrorCodes.FORMATTING_ERROR }),
+      );
     reader.readAsDataURL(file);
   });
 }
@@ -183,7 +202,11 @@ export function generateVideoPreview(file: File): Promise<string> {
       const ctx = canvas.getContext('2d');
       if (!ctx) {
         URL.revokeObjectURL(url);
-        reject(new Error('Failed to get canvas context'));
+        reject(
+          new UploaderError('Failed to get canvas context', {
+            code: UploaderErrorCodes.FORMATTING_ERROR,
+          }),
+        );
         return;
       }
 
@@ -194,7 +217,9 @@ export function generateVideoPreview(file: File): Promise<string> {
 
     video.onerror = () => {
       URL.revokeObjectURL(url);
-      reject(new Error('Failed to load video'));
+      reject(
+        new UploaderError('Failed to load video', { code: UploaderErrorCodes.FORMATTING_ERROR }),
+      );
     };
 
     video.src = url;
@@ -236,7 +261,11 @@ export async function compressImage(
 
         const ctx = canvas.getContext('2d');
         if (!ctx) {
-          reject(new Error('Failed to get canvas context'));
+          reject(
+            new UploaderError('Failed to get canvas context', {
+              code: UploaderErrorCodes.FORMATTING_ERROR,
+            }),
+          );
           return;
         }
 
@@ -247,7 +276,11 @@ export async function compressImage(
             if (blob) {
               resolve(blob);
             } else {
-              reject(new Error('Failed to compress image'));
+              reject(
+                new UploaderError('Failed to compress image', {
+                  code: UploaderErrorCodes.FORMATTING_ERROR,
+                }),
+              );
             }
           },
           mimeType || file.type,
@@ -255,11 +288,17 @@ export async function compressImage(
         );
       };
 
-      img.onerror = () => reject(new Error('Failed to load image'));
+      img.onerror = () =>
+        reject(
+          new UploaderError('Failed to load image', { code: UploaderErrorCodes.FORMATTING_ERROR }),
+        );
       img.src = e.target?.result as string;
     };
 
-    reader.onerror = () => reject(new Error('Failed to read file'));
+    reader.onerror = () =>
+      reject(
+        new UploaderError('Failed to read file', { code: UploaderErrorCodes.FORMATTING_ERROR }),
+      );
     reader.readAsDataURL(file);
   });
 }

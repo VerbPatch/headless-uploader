@@ -1,4 +1,6 @@
 import type { UploaderInstance } from '../types';
+import { UploaderError } from '../types';
+import { UploaderErrorCodes } from '../constants/error-codes';
 import { uploadFile } from './processor';
 
 /**
@@ -25,7 +27,10 @@ export async function uploadAll(instance: UploaderInstance): Promise<void> {
 export async function uploadSingleFile(instance: UploaderInstance, fileId: string): Promise<void> {
   const uploadFileObj = instance.files.get(fileId);
   if (!uploadFileObj) {
-    throw new Error(`File with id ${fileId} not found`);
+    throw new UploaderError(`File with id ${fileId} not found`, {
+      fileId,
+      code: UploaderErrorCodes.UNKNOWN_ERROR,
+    });
   }
 
   if (uploadFileObj.status === 'uploading') {

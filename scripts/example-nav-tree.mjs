@@ -26,7 +26,7 @@ function scan(dirPath, pathPrefix) {
 
   const entries = fs
     .readdirSync(dirPath, { withFileTypes: true })
-    .filter((f) => f.isDirectory() && !IGNORED_DIRS.has(f.name) && !f.name.startsWith('uploader-server'));
+    .filter((f) => f.isDirectory() && !IGNORED_DIRS.has(f.name));
 
   return entries.map((item) => {
     const child = scan(item.path + '\\' + item.name, pathPrefix);

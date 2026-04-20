@@ -14,7 +14,7 @@ export function setupHTTP(fastify) {
         authHeader !== `Bearer ${config.AUTH_TOKEN}` &&
         authHeader !== config.AUTH_TOKEN
       ) {
-        console.log(`❌ HTTP Auth Failed: Invalid token`);
+        console.log('❌ HTTP Auth Failed: Invalid token');
         return reply.status(401).send({
           success: false,
           message: 'Unauthorized: Invalid or missing token',
@@ -22,20 +22,32 @@ export function setupHTTP(fastify) {
       }
 
       const parts = req.parts();
-      let body = {};
+      const body = {};
       let fileInfo = null;
 
       for await (const part of parts) {
         if (part.file) {
+          // Validate PDF only
+          const isPdf =
+            part.mimetype === 'application/pdf' ||
+            (part.filename && part.filename.toLowerCase().endsWith('.pdf'));
+
+          if (!isPdf) {
+            return reply.status(400).send({
+              success: false,
+              code: 'INVALID_FILE_TYPE',
+              message: 'Invalid file type. Only PDF files are allowed.',
+            });
+          }
+
           // It's a file
           const chunkIndex = body.chunkIndex;
           const totalChunks = body.totalChunks;
           const fileId = body.fileId;
-          const filename = body.filename || part.filename;
 
           let savePath;
           if (fileId && chunkIndex !== undefined && totalChunks) {
-            const chunkDir = path.join(config.CHUNKS_DIR, fileId);
+            const chunkDir = path.join(config.CHUNKS_DIR, String(fileId));
             ensureDirSync(chunkDir);
             savePath = path.join(chunkDir, `chunk-${chunkIndex}`);
           } else {
@@ -69,8 +81,11 @@ export function setupHTTP(fastify) {
         }
 
         if (currentChunkIndex === totalChunksCount - 1) {
-          const chunkDir = path.join(config.CHUNKS_DIR, fileId);
-          const finalFilePath = path.join(config.UPLOADS_DIR, `${Date.now()}-${filename}`);
+          const chunkDir = path.join(config.CHUNKS_DIR, String(fileId));
+          const finalFilePath = path.join(
+            config.UPLOADS_DIR,
+            `${Date.now()}-${filename || 'file'}`,
+          );
 
           try {
             await mergeChunks(chunkDir, finalFilePath, totalChunksCount);

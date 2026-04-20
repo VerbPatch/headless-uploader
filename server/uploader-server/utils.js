@@ -8,6 +8,8 @@ export function ensureDirSync(dirPath) {
   }
 }
 
+export const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export async function mergeChunks(chunkDir, outputPath, totalChunks) {
   const writeStream = fs.createWriteStream(outputPath);
 

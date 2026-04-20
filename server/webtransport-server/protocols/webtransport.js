@@ -3,7 +3,7 @@ import path from 'path';
 import crypto from 'crypto';
 import { fileURLToPath } from 'url';
 import { config } from '../config.js';
-import { ensureDirSync, mergeChunks } from '../utils.js';
+import { ensureDirSync, mergeChunks, sleep } from '../utils.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -21,7 +21,7 @@ export async function setupWebTransport() {
     const keyPath = path.join(__dirname, '..', 'key.pem');
 
     if (!fs.existsSync(certPath) || !fs.existsSync(keyPath)) {
-      console.warn(`⚠️ WebTransport certificates not found. Skipping WebTransport setup.`);
+      console.warn('⚠️ WebTransport certificates not found. Skipping WebTransport setup.');
       return;
     }
 
@@ -37,7 +37,7 @@ export async function setupWebTransport() {
       try {
         await import('@fails-components/webtransport-transport-http3-quiche');
       } catch (e) {
-        throw new Error('WebTransport quiche transport native module not found.');
+        throw new Error('WebTransport quiche transport native module not found.', { cause: e });
       }
       const wt = await import('@fails-components/webtransport');
       Http3Server = wt.Http3Server;
@@ -104,18 +104,16 @@ export async function setupWebTransport() {
  * Helper to read exactly N bytes from a stream reader
  */
 async function readExact(reader, n, leftover = null) {
-  let buffer = Buffer.alloc(n);
+  const buffer = Buffer.alloc(n);
   let offset = 0;
 
   if (leftover && leftover.length > 0) {
     const toCopy = Math.min(leftover.length, n);
-    // Ensure we're working with Buffer
     Buffer.from(leftover).copy(buffer, 0, 0, toCopy);
     offset += toCopy;
     if (toCopy < leftover.length) {
       return { buffer, leftover: leftover.subarray(toCopy) };
     }
-    leftover = null;
   }
 
   while (offset < n) {
@@ -147,38 +145,32 @@ async function handleWTStream(stream, isUni = false) {
 
   try {
     while (true) {
-      // 1. Read message type (1 byte)
       const { buffer: typeBuf, leftover: nextLeftover1 } = await readExact(reader, 1, leftover);
       leftover = nextLeftover1;
       if (!typeBuf) break;
-      const msgType = typeBuf[0]; // 0 = JSON, 1 = Binary
+      const msgType = typeBuf[0];
 
-      // 2. Read message length (4 bytes)
       const { buffer: lenBuf, leftover: nextLeftover2 } = await readExact(reader, 4, leftover);
       leftover = nextLeftover2;
       if (!lenBuf) throw new Error('Stream closed while reading message length');
       const msgLen = lenBuf.readUInt32LE(0);
 
-      // 3. Read message content
       const { buffer: msgBuf, leftover: nextLeftover3 } = await readExact(reader, msgLen, leftover);
       leftover = nextLeftover3;
       if (!msgBuf) throw new Error('Stream closed while reading message content');
 
-      // 4. Process based on type
       if (msgType === 0) {
-        // JSON Message
         const text = new TextDecoder().decode(msgBuf);
         const message = JSON.parse(text);
 
         if (message.type === 'init') {
-          // Simple Auth Check
           const token = message.auth?.headers?.Authorization || message.auth?.params?.token;
           if (
             config.AUTH_TOKEN &&
             token !== `Bearer ${config.AUTH_TOKEN}` &&
             token !== config.AUTH_TOKEN
           ) {
-            console.log(`❌ WT Auth Failed: Invalid token`);
+            console.log('❌ WT Auth Failed: Invalid token');
             if (writer) {
               const response = JSON.stringify({
                 type: 'error',
@@ -186,15 +178,34 @@ async function handleWTStream(stream, isUni = false) {
                 error: 'Unauthorized: Invalid or missing token',
               });
               await writer.write(new TextEncoder().encode(response));
+              await sleep(100);
               await writer.close();
             }
             return;
           }
 
           fileId = message.fileId;
+          const fileName = message.fileName || '';
 
           if (!fileId) {
             console.error('❌ WT Init: No fileId provided by client');
+            return;
+          }
+
+          const isPdf = fileName.toLowerCase().endsWith('.pdf');
+          if (!isPdf) {
+            console.log(`❌ WT Validation Failed: Non-PDF file attempt: ${fileName}`);
+            if (writer) {
+              const response = JSON.stringify({
+                type: 'error',
+                fileId: fileId,
+                code: 'INVALID_FILE_TYPE',
+                error: 'Invalid file type. Only PDF files are allowed.',
+              });
+              await writer.write(new TextEncoder().encode(response));
+              await sleep(100);
+              await writer.close();
+            }
             return;
           }
 
@@ -219,7 +230,6 @@ async function handleWTStream(stream, isUni = false) {
             console.log(`🚀 WT New Session: ${message.fileName} (ID: ${fileId})`);
           }
 
-          // Send Ack to client to start sending chunks
           if (writer) {
             const ackResponse = JSON.stringify({
               type: 'init_ack',
@@ -258,7 +268,6 @@ async function handleWTStream(stream, isUni = false) {
           }
         }
       } else if (msgType === 1) {
-        // Binary Chunk Data
         if (uploadInfo && typeof uploadInfo.nextChunkIndex === 'number') {
           const chunkIndex = uploadInfo.nextChunkIndex;
           const chunkPath = path.join(uploadInfo.chunkDir, `chunk-${chunkIndex}`);
@@ -278,7 +287,9 @@ async function handleWTStream(stream, isUni = false) {
             });
             try {
               await writer.write(new TextEncoder().encode(progressResponse));
-            } catch (e) {}
+            } catch {
+              // Ignore progress write errors
+            }
           }
           delete uploadInfo.nextChunkIndex;
         } else {

@@ -46,7 +46,7 @@ export default function App() {
     });
 
     if (!response.ok) {
-        throw new Error('Failed to get presigned URL from server');
+      throw new Error('Failed to get presigned URL from server');
     }
 
     const { url } = await response.json();
@@ -69,8 +69,9 @@ export default function App() {
   } = useUploader({
     protocol: 'cloud',
     cloudAdapter: createS3Adapter({
-        getUploadUrl: getS3PresignedUrl,
-    }),    maxFiles: 5,
+      getUploadUrl: getS3PresignedUrl,
+    }),
+    maxFiles: 5,
     maxFileSize: 100 * 1024 * 1024,
     autoUpload: false,
     enablePreviews: true,
@@ -85,7 +86,7 @@ export default function App() {
     onUploadError: (file: UploadFile, error: Error) => {
       showNotification(`Upload error for ${file.metadata.name}: ${error.message}`, 'error');
     },
-    onAllComplete: (files: UploadFile[]) => {
+    onAllComplete: () => {
       showNotification('[Complete] All cloud transfers finished!', 'success');
     },
   });
@@ -100,14 +101,16 @@ export default function App() {
       <header>
         <h1>Solid Uploader - Cloud Protocol</h1>
         <p>
-          This example demonstrates direct-to-cloud (S3) uploads using the <strong>protocol: 'cloud'</strong> setting in SolidJS.
+          This example demonstrates direct-to-cloud (S3) uploads using the{' '}
+          <strong>protocol: 'cloud'</strong> setting in SolidJS.
         </p>
       </header>
 
       <section>
         <h2>1. Cloud Upload</h2>
         <p>
-            Configured with <code>S3Adapter</code>. It requests a signed URL from the <code>uploader-server</code> and then uploads the file directly.
+          Configured with <code>S3Adapter</code>. It requests a signed URL from the{' '}
+          <code>uploader-server</code> and then uploads the file directly.
         </p>
 
         <div
@@ -139,7 +142,10 @@ export default function App() {
         />
 
         <div class="controls">
-          <button onClick={() => uploadAll()} disabled={state.files.length === 0 || state.isUploading}>
+          <button
+            onClick={() => uploadAll()}
+            disabled={state.files.length === 0 || state.isUploading}
+          >
             {state.isUploading ? 'Uploading...' : 'Start Cloud Upload'}
           </button>
           <button onClick={() => clearAll()}>Clear Queue</button>
@@ -154,24 +160,61 @@ export default function App() {
               {(file) => (
                 <div class="file-item">
                   <div style={{ display: 'flex', 'align-items': 'center', gap: '15px' }}>
-                     <Show when={file.preview}>
-                         <img src={file.preview} alt="preview" style={{ 'border-radius': '4px', border: '1px solid #eee', width: '60px', height: '60px', 'object-fit': 'cover' }} />
-                     </Show>
-                     <div>
-                          <strong>{file.metadata.name}</strong> ({formatBytes(file.metadata.size)})
-                          <div>Status: <span class={`status-${file.status}`}>{file.status.toUpperCase()}</span></div>
-                     </div>
+                    <Show when={file.preview}>
+                      <img
+                        src={file.preview}
+                        alt="preview"
+                        style={{
+                          'border-radius': '4px',
+                          border: '1px solid #eee',
+                          width: '60px',
+                          height: '60px',
+                          'object-fit': 'cover',
+                        }}
+                      />
+                    </Show>
+                    <div>
+                      <strong>{file.metadata.name}</strong> ({formatBytes(file.metadata.size)})
+                      <div>
+                        Status:{' '}
+                        <span class={`status-${file.status}`}>{file.status.toUpperCase()}</span>
+                      </div>
+                    </div>
                   </div>
 
                   <div style={{ 'margin-top': '10px' }}>
-                    <div style={{ height: '8px', background: '#eee', 'border-radius': '4px', overflow: 'hidden' }}>
-                        <div style={{ width: `${file.progress.percentage}%`, height: '100%', background: '#4caf50', transition: 'width 0.3s' }}></div>
+                    <div
+                      style={{
+                        height: '8px',
+                        background: '#eee',
+                        'border-radius': '4px',
+                        overflow: 'hidden',
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: `${file.progress.percentage}%`,
+                          height: '100%',
+                          background: '#4caf50',
+                          transition: 'width 0.3s',
+                        }}
+                      ></div>
                     </div>
-                    <div style={{ 'font-size': '12px', 'margin-top': '4px', display: 'flex', 'justify-content': 'space-between' }}>
-                       <span>{file.progress.percentage.toFixed(1)}% uploaded</span>
-                       <Show when={file.status === 'uploading'}>
-                           <span>{formatBytes(file.progress.speed)}/s • {formatTime(file.progress.timeRemaining)} left</span>
-                       </Show>
+                    <div
+                      style={{
+                        'font-size': '12px',
+                        'margin-top': '4px',
+                        display: 'flex',
+                        'justify-content': 'space-between',
+                      }}
+                    >
+                      <span>{file.progress.percentage.toFixed(1)}% uploaded</span>
+                      <Show when={file.status === 'uploading'}>
+                        <span>
+                          {formatBytes(file.progress.speed)}/s •{' '}
+                          {formatTime(file.progress.timeRemaining)} left
+                        </span>
+                      </Show>
                     </div>
                   </div>
 

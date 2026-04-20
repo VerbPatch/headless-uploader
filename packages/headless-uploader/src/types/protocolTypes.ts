@@ -1,5 +1,12 @@
-import type { UploadFile, UploaderConfig, HttpMethod, CloudAdapter } from './uploader';
+import type {
+  UploadFile,
+  UploaderConfig,
+  HttpMethod,
+  CloudAdapter,
+  UploaderError,
+} from './uploader';
 import type { UploadOptions } from 'tus-js-client';
+import { UploaderErrorCode } from '../constants/error-codes';
 
 /**
  * Upload protocol types
@@ -49,7 +56,7 @@ export interface ProtocolUploadResult {
   uploadId?: string;
   url?: string;
   response?: unknown;
-  error?: Error;
+  error?: UploaderError;
   bytesUploaded?: number;
 }
 
@@ -197,6 +204,7 @@ export interface WebSocketMessage {
   data?: ArrayBuffer | Blob;
   bytesUploaded?: number;
   error?: string;
+  code?: UploaderErrorCode;
   url?: string;
   auth?: {
     headers?: Record<string, string>;

@@ -1,4 +1,6 @@
 import type { UploaderInstance, UploadFile } from '../types';
+import { UploaderError } from '../types';
+import { UploaderErrorCodes } from '../constants/error-codes';
 import type { ProtocolFactoryConfig } from '../types/protocolTypes';
 import { sleep, compressImage, isImage } from '../utils';
 import { createProtocolAdapter } from '../adapters';
@@ -90,12 +92,26 @@ export async function uploadFile(
       config.onUploadComplete?.(uploadFileData);
       config.onUploadSuccess?.(uploadFileData, uploadFileData.response);
     } else {
-      throw result.error || new Error('Upload failed');
+      throw (
+        result.error ||
+        new UploaderError('Upload failed', { fileId: id, code: UploaderErrorCodes.UPLOAD_FAILED })
+      );
     }
   } catch (err) {
-    const error = err instanceof Error ? err : new Error(String(err));
+    const error =
+      err instanceof UploaderError
+        ? err
+        : new UploaderError(err instanceof Error ? err.message : String(err), {
+            fileId: id,
+            code: UploaderErrorCodes.UPLOAD_FAILED,
+          });
+
     const status = uploadFileData.status as string;
-    if (error.name === 'AbortError' || status === 'paused' || status === 'cancelled') {
+    if (
+      error.code === UploaderErrorCodes.ABORT_ERROR ||
+      status === 'paused' ||
+      status === 'cancelled'
+    ) {
       return;
     }
 

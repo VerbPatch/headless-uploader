@@ -1,4 +1,6 @@
 import type { CloudAdapter, UploadFile, UploaderConfig, AzureAdapterOptions } from '../../types';
+import { UploaderError } from '../../types/uploader';
+import { UploaderErrorCodes } from '../../constants/error-codes';
 
 /**
  * Create an Azure Blob Storage cloud storage adapter
@@ -13,12 +15,8 @@ export function createAzureAdapter(options: AzureAdapterOptions): CloudAdapter {
   return {
     name: 'Azure Blob Storage',
 
-    async getUploadUrl(file: UploadFile): Promise<string> {
-      return options.getUploadUrl(file);
-    },
-
-    async upload(file: UploadFile, config: UploaderConfig): Promise<unknown> {
-      const url = await this.getUploadUrl!(file);
+    async upload(file: UploadFile, _config: UploaderConfig): Promise<unknown> {
+      const url = await options.getUploadUrl(file);
       const controller = new AbortController();
       abortControllers.set(file.id, controller);
 
@@ -36,7 +34,11 @@ export function createAzureAdapter(options: AzureAdapterOptions): CloudAdapter {
       abortControllers.delete(file.id);
 
       if (!response.ok) {
-        throw new Error(`Azure upload failed: ${response.statusText}`);
+        throw new UploaderError(`Azure upload failed: ${response.statusText}`, {
+          fileId: file.id,
+          code: UploaderErrorCodes.CLOUD_UPLOAD_ERROR,
+          response: response.status,
+        });
       }
 
       return {

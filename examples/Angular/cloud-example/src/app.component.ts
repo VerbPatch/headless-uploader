@@ -25,7 +25,7 @@ interface Notification {
 })
 export class AppComponent {
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
-  
+
   isDragOver = false;
   notifications: Notification[] = [];
 
@@ -43,7 +43,7 @@ export class AppComponent {
         });
 
         if (!response.ok) {
-            throw new Error('Failed to get presigned URL from server');
+          throw new Error('Failed to get presigned URL from server');
         }
 
         const { url } = await response.json();
@@ -64,7 +64,7 @@ export class AppComponent {
     onUploadError: (file: UploadFile, error: Error) => {
       this.showNotification(`Upload error for ${file.metadata.name}: ${error.message}`, 'error');
     },
-    onAllComplete: (files: UploadFile[]) => {
+    onAllComplete: () => {
       this.showNotification('[Complete] All cloud transfers finished!', 'success');
     },
   });

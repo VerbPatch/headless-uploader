@@ -27,23 +27,23 @@ export class MyUploader extends LitElement {
   private uploader = useUploader(this, {
     protocol: 'cloud',
     cloudAdapter: createS3Adapter({
-        getUploadUrl: async (file) => {
-            const response = await fetch('http://localhost:3000/generate-s3-url', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                fileName: file.metadata.name,
-                contentType: file.metadata.type,
-              }),
-            });
+      getUploadUrl: async (file) => {
+        const response = await fetch('http://localhost:3000/generate-s3-url', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            fileName: file.metadata.name,
+            contentType: file.metadata.type,
+          }),
+        });
 
-            if (!response.ok) {
-                throw new Error('Failed to get presigned URL from server');
-            }
+        if (!response.ok) {
+          throw new Error('Failed to get presigned URL from server');
+        }
 
-            const { url } = await response.json();
-            return url;
-        },
+        const { url } = await response.json();
+        return url;
+      },
     }),
     maxFiles: 5,
     autoUpload: false,
@@ -63,7 +63,7 @@ export class MyUploader extends LitElement {
       this.showNotification(`Upload error for ${file.metadata.name}: ${error.message}`, 'error');
     },
 
-    onAllComplete: (files: UploadFile[]) => {
+    onAllComplete: () => {
       this.showNotification('[Complete] All cloud transfers finished!', 'success');
     },
   });
@@ -86,7 +86,8 @@ export class MyUploader extends LitElement {
       color: #333;
     }
 
-    h1, h2 {
+    h1,
+    h2 {
       border-bottom: 1px solid #ccc;
       padding-bottom: 5px;
     }
@@ -156,9 +157,15 @@ export class MyUploader extends LitElement {
       max-width: 300px;
     }
 
-    .notification.success { border-color: #4caf50; }
-    .notification.error { border-color: #f44336; }
-    .notification.info { border-color: #333; }
+    .notification.success {
+      border-color: #4caf50;
+    }
+    .notification.error {
+      border-color: #f44336;
+    }
+    .notification.info {
+      border-color: #333;
+    }
 
     .notification .close-btn {
       margin-left: 15px;
@@ -167,8 +174,14 @@ export class MyUploader extends LitElement {
     }
 
     @keyframes slideIn {
-      from { transform: translateX(100%); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
     }
 
     #drop-zone {
@@ -186,15 +199,15 @@ export class MyUploader extends LitElement {
     }
 
     .preview-img {
-        width: 60px;
-        height: 60px;
-        object-fit: cover;
-        border-radius: 4px;
-        border: 1px solid #eee;
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 4px;
+      border: 1px solid #eee;
     }
 
     .status-text {
-        font-weight: bold;
+      font-weight: bold;
     }
   `;
 
@@ -219,7 +232,10 @@ export class MyUploader extends LitElement {
 
       <section id="configuration">
         <h2>1. Cloud Upload</h2>
-        <p>Configured with <code>S3Adapter</code>. It requests a signed URL from the <code>uploader-server</code> and then uploads the file directly.</p>
+        <p>
+          Configured with <code>S3Adapter</code>. It requests a signed URL from the
+          <code>uploader-server</code> and then uploads the file directly.
+        </p>
 
         <div
           id="drop-zone"
@@ -243,8 +259,11 @@ export class MyUploader extends LitElement {
         />
 
         <div class="controls">
-          <button @click=${() => this.uploader.uploader.uploadAll()} ?disabled=${s.files.length === 0 || s.isUploading}>
-             ${s.isUploading ? 'Uploading...' : 'Start Cloud Upload'}
+          <button
+            @click=${() => this.uploader.uploader.uploadAll()}
+            ?disabled=${s.files.length === 0 || s.isUploading}
+          >
+            ${s.isUploading ? 'Uploading...' : 'Start Cloud Upload'}
           </button>
           <button @click=${() => this.uploader.uploader.clearAll()}>Clear Queue</button>
         </div>
@@ -259,43 +278,66 @@ export class MyUploader extends LitElement {
                 (file) => html`
                   <div class="file-item">
                     <div style="display: flex; align-items: center; gap: 15px">
-                       ${file.preview ? html`<img src="${file.preview}" alt="preview" class="preview-img" />` : ''}
-                       <div>
-                            <strong>${file.metadata.name}</strong> (${formatBytes(file.metadata.size)})
-                            <div>Status: <span class="status-text">${file.status.toUpperCase()}</span></div>
-                       </div>
+                      ${file.preview
+                        ? html`<img src="${file.preview}" alt="preview" class="preview-img" />`
+                        : ''}
+                      <div>
+                        <strong>${file.metadata.name}</strong> (${formatBytes(file.metadata.size)})
+                        <div>
+                          Status: <span class="status-text">${file.status.toUpperCase()}</span>
+                        </div>
+                      </div>
                     </div>
 
                     <div class="progress-bar-container">
                       <div class="progress-fg" style="width: ${file.progress.percentage}%"></div>
                     </div>
-                    <div style="font-size: 12px; margin-top: 4px; display: flex; justify-content: space-between">
-                       <span>${file.progress.percentage.toFixed(1)}% uploaded</span>
-                       ${file.status === 'uploading'
-                         ? html`<span>${formatBytes(file.progress.speed)}/s • ${formatTime(file.progress.timeRemaining)} left</span>`
-                         : ''}
+                    <div
+                      style="font-size: 12px; margin-top: 4px; display: flex; justify-content: space-between"
+                    >
+                      <span>${file.progress.percentage.toFixed(1)}% uploaded</span>
+                      ${file.status === 'uploading'
+                        ? html`<span
+                            >${formatBytes(file.progress.speed)}/s •
+                            ${formatTime(file.progress.timeRemaining)} left</span
+                          >`
+                        : ''}
                     </div>
 
                     <div class="controls">
                       ${file.status === 'uploading'
                         ? html`
-                            <button @click=${() => this.uploader.uploader.pauseUpload(file.id)}>Pause</button>
-                            <button @click=${() => this.uploader.uploader.cancelUpload(file.id)}>Cancel</button>
+                            <button @click=${() => this.uploader.uploader.pauseUpload(file.id)}>
+                              Pause
+                            </button>
+                            <button @click=${() => this.uploader.uploader.cancelUpload(file.id)}>
+                              Cancel
+                            </button>
                           `
                         : ''}
                       ${file.status === 'paused'
                         ? html`
-                            <button @click=${() => this.uploader.uploader.resumeUpload(file.id)}>Resume</button>
-                            <button @click=${() => this.uploader.uploader.cancelUpload(file.id)}>Cancel</button>
+                            <button @click=${() => this.uploader.uploader.resumeUpload(file.id)}>
+                              Resume
+                            </button>
+                            <button @click=${() => this.uploader.uploader.cancelUpload(file.id)}>
+                              Cancel
+                            </button>
                           `
                         : ''}
                       ${file.status === 'failed'
-                        ? html`<button @click=${() => this.uploader.uploader.retryUpload(file.id)}>Retry</button>`
+                        ? html`<button @click=${() => this.uploader.uploader.retryUpload(file.id)}>
+                            Retry
+                          </button>`
                         : ''}
                       ${file.status === 'pending' || file.status === 'queued'
-                        ? html`<button @click=${() => this.uploader.uploader.uploadFile(file.id)}>Upload</button>`
+                        ? html`<button @click=${() => this.uploader.uploader.uploadFile(file.id)}>
+                            Upload
+                          </button>`
                         : ''}
-                      <button @click=${() => this.uploader.uploader.removeFile(file.id)}>Remove</button>
+                      <button @click=${() => this.uploader.uploader.removeFile(file.id)}>
+                        Remove
+                      </button>
                     </div>
                   </div>
                 `,
@@ -316,7 +358,8 @@ ${JSON.stringify(
             },
             null,
             2,
-          )}</pre>
+          )}</pre
+        >
       </section>
     `;
   }

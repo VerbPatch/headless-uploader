@@ -40,9 +40,9 @@ export const App = component$(() => {
         contentType: file.metadata.type,
       }),
     });
-    
+
     if (!response.ok) {
-        throw new Error('Failed to get presigned URL from server');
+      throw new Error('Failed to get presigned URL from server');
     }
 
     const { url } = await response.json();
@@ -52,7 +52,7 @@ export const App = component$(() => {
   const uploader = useUploader({
     protocol: 'cloud',
     cloudAdapter: createS3Adapter({
-        getUploadUrl: getS3PresignedUrl,
+      getUploadUrl: getS3PresignedUrl,
     }),
     maxFiles: 5,
     maxFileSize: 100 * 1024 * 1024,
@@ -69,7 +69,7 @@ export const App = component$(() => {
     onUploadError: $((file: UploadFile, error: Error) => {
       showNotification(`Upload error for ${file.metadata.name}: ${error.message}`, 'error');
     }),
-    onAllComplete: $((files: UploadFile[]) => {
+    onAllComplete: $(() => {
       showNotification('[Complete] All cloud transfers finished!', 'success');
     }),
   });
@@ -81,13 +81,17 @@ export const App = component$(() => {
       <header>
         <h1>Qwik Uploader - Cloud Protocol</h1>
         <p>
-          This example demonstrates direct-to-cloud (S3) uploads using the <strong>protocol: 'cloud'</strong> setting in Qwik.
+          This example demonstrates direct-to-cloud (S3) uploads using the{' '}
+          <strong>protocol: 'cloud'</strong> setting in Qwik.
         </p>
       </header>
 
       <section>
         <h2>1. Cloud Upload</h2>
-        <p>Configured with <code>S3Adapter</code>. It requests a signed URL from the <code>uploader-server</code> and then uploads the file directly.</p>
+        <p>
+          Configured with <code>S3Adapter</code>. It requests a signed URL from the{' '}
+          <code>uploader-server</code> and then uploads the file directly.
+        </p>
 
         <div
           id="drop-zone"
@@ -130,8 +134,11 @@ export const App = component$(() => {
         />
 
         <div class="controls">
-          <button onClick$={async () => await uploader.uploadAll()} disabled={state.files.length === 0 || state.isUploading}>
-             {state.isUploading ? 'Uploading...' : 'Start Cloud Upload'}
+          <button
+            onClick$={async () => await uploader.uploadAll()}
+            disabled={state.files.length === 0 || state.isUploading}
+          >
+            {state.isUploading ? 'Uploading...' : 'Start Cloud Upload'}
           </button>
           <button onClick$={async () => await uploader.clearAll()}>Clear Queue</button>
         </div>
@@ -146,24 +153,61 @@ export const App = component$(() => {
             state.files.map((file) => (
               <div class="file-item" key={file.id}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                   {file.preview && (
-                       <img src={file.preview} alt="preview" style={{ borderRadius: '4px', border: '1px solid #eee', width: '60px', height: '60px', objectFit: 'cover' }} />
-                   )}
-                   <div>
-                        <strong>{file.metadata.name}</strong> ({formatBytes(file.metadata.size)})
-                        <div>Status: <span class={`status-${file.status}`}>{file.status.toUpperCase()}</span></div>
-                   </div>
+                  {file.preview && (
+                    <img
+                      src={file.preview}
+                      alt="preview"
+                      style={{
+                        borderRadius: '4px',
+                        border: '1px solid #eee',
+                        width: '60px',
+                        height: '60px',
+                        objectFit: 'cover',
+                      }}
+                    />
+                  )}
+                  <div>
+                    <strong>{file.metadata.name}</strong> ({formatBytes(file.metadata.size)})
+                    <div>
+                      Status:{' '}
+                      <span class={`status-${file.status}`}>{file.status.toUpperCase()}</span>
+                    </div>
+                  </div>
                 </div>
 
                 <div style={{ marginTop: '10px' }}>
-                  <div style={{ height: '8px', background: '#eee', borderRadius: '4px', overflow: 'hidden' }}>
-                      <div style={{ width: `${file.progress.percentage}%`, height: '100%', background: '#4caf50', transition: 'width 0.3s' }}></div>
+                  <div
+                    style={{
+                      height: '8px',
+                      background: '#eee',
+                      borderRadius: '4px',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: `${file.progress.percentage}%`,
+                        height: '100%',
+                        background: '#4caf50',
+                        transition: 'width 0.3s',
+                      }}
+                    ></div>
                   </div>
-                  <div style={{ fontSize: '12px', marginTop: '4px', display: 'flex', justifyContent: 'space-between' }}>
-                     <span>{file.progress.percentage.toFixed(1)}% uploaded</span>
-                     {file.status === 'uploading' && (
-                         <span>{formatBytes(file.progress.speed)}/s • {formatTime(file.progress.timeRemaining)} left</span>
-                     )}
+                  <div
+                    style={{
+                      fontSize: '12px',
+                      marginTop: '4px',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    <span>{file.progress.percentage.toFixed(1)}% uploaded</span>
+                    {file.status === 'uploading' && (
+                      <span>
+                        {formatBytes(file.progress.speed)}/s •{' '}
+                        {formatTime(file.progress.timeRemaining)} left
+                      </span>
+                    )}
                   </div>
                 </div>
 

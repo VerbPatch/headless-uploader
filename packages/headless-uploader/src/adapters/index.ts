@@ -1,4 +1,11 @@
-import type { ProtocolAdapter, ProtocolFactoryConfig, UploadProtocol, CloudAdapter } from '../types';
+import type {
+  ProtocolAdapter,
+  ProtocolFactoryConfig,
+  UploadProtocol,
+  CloudAdapter,
+} from '../types';
+import { UploaderError } from '../types/uploader';
+import { UploaderErrorCodes } from '../constants/error-codes';
 import { createHttpAdapter } from './http';
 import { createTusAdapter } from './tus';
 import { createWebSocketAdapter } from './websocket';
@@ -30,7 +37,13 @@ function createCloudProtocolWrapper(cloudAdapter: CloudAdapter): ProtocolAdapter
       } catch (error) {
         return {
           success: false,
-          error: error as Error,
+          error:
+            error instanceof UploaderError
+              ? error
+              : new UploaderError(String(error), {
+                  fileId: file.id,
+                  code: UploaderErrorCodes.CLOUD_UPLOAD_ERROR,
+                }),
           bytesUploaded: file.progress.loaded,
         };
       }
@@ -67,39 +80,53 @@ export function createProtocolAdapter(config: ProtocolFactoryConfig): ProtocolAd
   switch (config.protocol) {
     case 'http':
       if (!config.http) {
-        throw new Error('HTTP configuration is required');
+        throw new UploaderError('HTTP configuration is required', {
+          code: UploaderErrorCodes.CONFIG_ERROR,
+        });
       }
       return createHttpAdapter(config.http);
 
     case 'tus':
       if (!config.tus) {
-        throw new Error('TUS configuration is required');
+        throw new UploaderError('TUS configuration is required', {
+          code: UploaderErrorCodes.CONFIG_ERROR,
+        });
       }
       return createTusAdapter(config.tus);
 
     case 'websocket':
       if (!config.websocket) {
-        throw new Error('WebSocket configuration is required');
+        throw new UploaderError('WebSocket configuration is required', {
+          code: UploaderErrorCodes.CONFIG_ERROR,
+        });
       }
       return createWebSocketAdapter(config.websocket);
 
     case 'webtransport':
       if (!isWebTransportSupported()) {
-        throw new Error('WebTransport is not supported in this browser');
+        throw new UploaderError('WebTransport is not supported in this browser', {
+          code: UploaderErrorCodes.BROWSER_UNSUPPORTED,
+        });
       }
       if (!config.webtransport) {
-        throw new Error('WebTransport configuration is required');
+        throw new UploaderError('WebTransport configuration is required', {
+          code: UploaderErrorCodes.CONFIG_ERROR,
+        });
       }
       return createWebTransportAdapter(config.webtransport);
 
     case 'cloud':
       if (!config.cloudAdapter) {
-        throw new Error('Cloud adapter is required when protocol is set to "cloud"');
+        throw new UploaderError('Cloud adapter is required when protocol is set to "cloud"', {
+          code: UploaderErrorCodes.CONFIG_ERROR,
+        });
       }
       return createCloudProtocolWrapper(config.cloudAdapter);
 
     default:
-      throw new Error(`Unknown protocol: ${config.protocol}`);
+      throw new UploaderError(`Unknown protocol: ${config.protocol}`, {
+        code: UploaderErrorCodes.CONFIG_ERROR,
+      });
   }
 }
 
@@ -350,7 +377,7 @@ export const PROTOCOL_USAGE_EXAMPLES = {
       }
     });
   `,
-  
+
   cloud: `
     // Cloud - Direct S3/Azure/GCS
     const uploader = useUploader({
@@ -361,5 +388,5 @@ export const PROTOCOL_USAGE_EXAMPLES = {
         }
       })
     });
-  `
+  `,
 };

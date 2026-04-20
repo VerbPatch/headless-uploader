@@ -13,6 +13,8 @@ import type {
   UploadFile,
   ChunkInfo,
 } from '../types';
+import { UploaderError } from '../types/uploader';
+import { UploaderErrorCodes } from '../constants/error-codes';
 import { calculateSpeed, calculateTimeRemaining } from '../utils/helpers';
 
 /**
@@ -46,7 +48,10 @@ export function createTusAdapter(tusConfig: TusConfig): ProtocolAdapter {
           ).default || tusModule;
 
         if (!tus || !tus.Upload) {
-          throw new Error('Failed to load TUS client');
+          throw new UploaderError('Failed to load TUS client', {
+            fileId: file.id,
+            code: UploaderErrorCodes.CONFIG_ERROR,
+          });
         }
 
         return new Promise(async (resolve) => {
@@ -89,9 +94,31 @@ export function createTusAdapter(tusConfig: TusConfig): ProtocolAdapter {
               activeUploads.delete(file.id);
               tusConfig.onError?.(error);
 
+              let responseData;
+              let code = UploaderErrorCodes.TUS_ERROR;
+
+              if ((error as DetailedError).originalResponse) {
+                const response = (error as DetailedError).originalResponse as unknown as {
+                  getUnderlyingRequest: () => XMLHttpRequest;
+                };
+                const xhr = response.getUnderlyingRequest?.();
+                if (xhr) {
+                  try {
+                    responseData = JSON.parse(xhr.responseText);
+                    code = (responseData?.code as any) || code;
+                  } catch {
+                    responseData = xhr.responseText;
+                  }
+                }
+              }
+
               resolve({
                 success: false,
-                error,
+                error: new UploaderError(error.message, {
+                  code,
+                  fileId: file.id,
+                  response: responseData,
+                }),
                 bytesUploaded: currentBytesUploaded,
               });
             },
@@ -189,7 +216,10 @@ export function createTusAdapter(tusConfig: TusConfig): ProtocolAdapter {
         console.error('TUS Adapter Initialization Error:', err);
         return {
           success: false,
-          error: err instanceof Error ? err : new Error('Unknown TUS error'),
+          error: new UploaderError(err instanceof Error ? err.message : 'Unknown TUS error', {
+            fileId: file.id,
+            code: UploaderErrorCodes.TUS_ERROR,
+          }),
           bytesUploaded: 0,
         };
       }
@@ -207,7 +237,10 @@ export function createTusAdapter(tusConfig: TusConfig): ProtocolAdapter {
 
         active.resolve({
           success: false,
-          error: new Error('Upload paused'),
+          error: new UploaderError('Upload paused', {
+            fileId,
+            code: UploaderErrorCodes.ABORT_ERROR,
+          }),
           bytesUploaded: active.currentBytes,
         });
 
@@ -222,7 +255,10 @@ export function createTusAdapter(tusConfig: TusConfig): ProtocolAdapter {
 
         active.resolve({
           success: false,
-          error: new Error('Upload cancelled'),
+          error: new UploaderError('Upload cancelled', {
+            fileId,
+            code: UploaderErrorCodes.ABORT_ERROR,
+          }),
           bytesUploaded: active.currentBytes,
         });
 
