@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebTransport Upload Test</title>
+    <style>
+      body {
+        font-family: monospace;
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 20px;
+        background: #f5f5f5;
+      }
+
+      .container {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        color: #333;
+      }
+
+      .log {
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+        padding: 15px;
+        border-radius: 4px;
+        max-height: 400px;
+        overflow-y: auto;
+        margin: 20px 0;
+      }
+
+      .log-entry {
+        padding: 5px 0;
+        border-bottom: 1px solid #eee;
+      }
+
+      .log-entry:last-child {
+        border-bottom: none;
+      }
+
+      .success {
+        color: green;
+      }
+
+      .error {
+        color: red;
+      }
+
+      .info {
+        color: #666;
+      }
+
+      button {
+        background: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+      }
+
+      button:hover {
+        background: #0056b3;
+      }
+
+      button:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+      }
+
+      .form-group {
+        margin: 15px 0;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+
+      input {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>🚀 WebTransport Upload Test</h1>
+
+      <div class="form-group">
+        <label>Server URL (HTTPS):</label>
+        <input
+          type="text"
+          id="serverUrl"
+          value="https://127.0.0.1:4443/wt-upload"
+          placeholder="https://127.0.0.1:4443/wt-upload"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>File Data:</label>
+        <input
+          type="text"
+          id="fileData"
+          value="Hello WebTransport protocol! This is a test upload using HTTP/3 streams with length-prefixed messages."
+          placeholder="Enter file content"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Chunk Size (bytes):</label>
+        <input type="number" id="chunkSize" value="20" min="1" />
+      </div>
+
+      <button id="startBtn" onclick="startTest()">Start Test</button>
+      <button id="clearBtn" onclick="clearLog()">Clear Log</button>
+
+      <h2>Test Log:</h2>
+      <div class="log" id="log"></div>
+    </div>
+
+    <script>
+      const logDiv = document.getElementById('log');
+
+      function log(message, type = 'info') {
+        const entry = document.createElement('div');
+        entry.className = `log-entry ${type}`;
+        entry.textContent = message;
+        logDiv.appendChild(entry);
+        logDiv.scrollTop = logDiv.scrollHeight;
+      }
+
+      function clearLog() {
+        logDiv.innerHTML = '';
+      }
+
+      /**
+       * Helper to write a length-prefixed message with type flag
+       * type: 0 = JSON, 1 = Binary
+       */
+      async function writeMessage(writer, data, type) {
+        const encoded = typeof data === 'string' ? new TextEncoder().encode(data) : data;
+        const length = encoded.length;
+
+        // 1 byte for type + 4 bytes for length (Uint32LE)
+        const headerBuf = new ArrayBuffer(5);
+        const view = new DataView(headerBuf);
+        view.setUint8(0, type);
+        view.setUint32(1, length, true);
+
+        await writer.write(new Uint8Array(headerBuf));
+        await writer.write(encoded);
+      }
+
+      async function startTest() {
+        const startBtn = document.getElementById('startBtn');
+        startBtn.disabled = true;
+
+        try {
+          const serverUrl = document.getElementById('serverUrl').value;
+          const fileData = document.getElementById('fileData').value;
+          const chunkSize = parseInt(document.getElementById('chunkSize').value);
+
+          clearLog();
+          log('--- WebTransport Protocol Test (V2) ---', 'info');
+          log(`Server URL: ${serverUrl}`, 'info');
+          log(`File Size: ${fileData.length} bytes`, 'info');
+          log(`Chunk Size: ${chunkSize} bytes\n`, 'info');
+
+          // Check browser support
+          if (!globalThis.WebTransport) {
+            throw new Error(
+              'WebTransport is not supported in this browser. Use Chrome 86+ or Edge 86+',
+            );
+          }
+
+          // Fetch certificate hash for self-signed cert support
+          log('Fetching WebTransport configuration...', 'info');
+          let transportOptions = {};
+
+          try {
+            const configUrl = `${window.location.protocol}//${window.location.host}/webtransport-config`;
+            const configRes = await fetch(configUrl);
+            if (configRes.ok) {
+              const config = await configRes.json();
+              if (config.certHash) {
+                log('✅ Received certificate hash from server', 'success');
+                transportOptions.serverCertificateHashes = [
+                  {
+                    algorithm: 'sha-256',
+                    value: new Uint8Array(config.certHash),
+                  },
+                ];
+              }
+            }
+          } catch (err) {
+            console.warn('Failed to fetch WebTransport config:', err);
+            log(
+              '⚠️ Could not fetch cert hash. Connection may fail if using self-signed certs.',
+              'info',
+            );
+          }
+
+          log('Connecting to WebTransport server...', 'info');
+
+          // Create connection
+          const transport = new WebTransport(serverUrl, transportOptions);
+          await transport.ready;
+          log('✅ WebTransport Connected', 'success');
+
+          // Create bidirectional stream
+          const stream = await transport.createBidirectionalStream();
+          const writer = stream.writable.getWriter();
+          const reader = stream.readable.getReader();
+
+          // Send metadata
+          const metadata = {
+            type: 'init',
+            fileName: 'test-file-webtransport.txt',
+            fileSize: fileData.length,
+            totalChunks: Math.ceil(fileData.length / chunkSize),
+          };
+
+          log('Sending metadata (Type 0)...', 'info');
+          await writeMessage(writer, JSON.stringify(metadata), 0);
+          log('✅ Metadata sent\n', 'success');
+
+          // Upload chunks
+          const totalChunks = Math.ceil(fileData.length / chunkSize);
+          log(`--- Uploading ${totalChunks} Chunks ---\n`, 'info');
+
+          for (let i = 0; i < totalChunks; i++) {
+            const start = i * chunkSize;
+            const end = Math.min(start + chunkSize, fileData.length);
+            const chunkData = fileData.slice(start, end);
+
+            // Send chunk header (Type 0)
+            const chunkHeader = {
+              type: 'chunk',
+              chunkIndex: i,
+              chunkSize: chunkData.length,
+            };
+            await writeMessage(writer, JSON.stringify(chunkHeader), 0);
+
+            // Send chunk data (Type 1)
+            await writeMessage(writer, new TextEncoder().encode(chunkData), 1);
+
+            log(`Chunk ${i + 1}/${totalChunks} - ${chunkData.length} bytes sent`, 'success');
+          }
+
+          // Send complete message (Type 0)
+          log('\nSending complete signal...', 'info');
+          const completeMessage = {
+            type: 'complete',
+            fileName: 'test-file-webtransport.txt',
+          };
+          await writeMessage(writer, JSON.stringify(completeMessage), 0);
+
+          // Wait for response
+          log('Waiting for server response...\n', 'info');
+
+          const decoder = new TextDecoder();
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            const responseText = decoder.decode(value);
+            // Minimal multi-JSON parsing
+            const openBrace = responseText.indexOf('{');
+            const closeBrace = responseText.lastIndexOf('}');
+            if (openBrace === -1 || closeBrace === -1) continue;
+
+            const response = JSON.parse(responseText.substring(openBrace, closeBrace + 1));
+
+            if (response.type === 'complete') {
+              log(`Server Response: ${JSON.stringify(response)}`, 'info');
+              if (response.success) {
+                log('✅ Upload Complete!', 'success');
+                log(`File URL: ${response.url}`, 'success');
+                log('\n✅ WebTransport Upload Test Completed Successfully!', 'success');
+              } else {
+                log(`❌ Upload failed: ${response.message}`, 'error');
+              }
+              break;
+            } else if (response.type === 'progress') {
+              console.log('Progress:', response);
+            }
+          }
+
+          // Close connection
+          await transport.close();
+          log('WebTransport Connection Closed', 'info');
+        } catch (error) {
+          log(`❌ Error: ${error.message}`, 'error');
+          console.error(error);
+        } finally {
+          startBtn.disabled = false;
+        }
+      }
+
+      // Log on load
+      window.addEventListener('load', () => {
+        log('WebTransport test page loaded', 'info');
+        log('Click "Start Test" to begin', 'info');
+      });
+    </script>
+  </body>
+</html>
