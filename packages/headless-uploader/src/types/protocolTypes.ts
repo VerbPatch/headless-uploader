@@ -203,7 +203,7 @@ export interface WebSocketMessage {
   totalChunks?: number;
   data?: ArrayBuffer | Blob;
   bytesUploaded?: number;
-  error?: string;
+  message?: string;
   code?: UploaderErrorCode;
   url?: string;
   auth?: {

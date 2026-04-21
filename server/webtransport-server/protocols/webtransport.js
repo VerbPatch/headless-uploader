@@ -197,10 +197,10 @@ async function handleWTStream(stream, isUni = false) {
             console.log(`❌ WT Validation Failed: Non-PDF file attempt: ${fileName}`);
             if (writer) {
               const response = JSON.stringify({
-                type: 'error',
                 fileId: fileId,
+                success: false,
                 code: 'INVALID_FILE_TYPE',
-                error: 'Invalid file type. Only PDF files are allowed.',
+                message: 'Invalid file type. Only PDF files are allowed.',
               });
               await writer.write(new TextEncoder().encode(response));
               await sleep(100);

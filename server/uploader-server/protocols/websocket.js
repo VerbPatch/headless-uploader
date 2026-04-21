@@ -85,10 +85,10 @@ export function setupWebSocket(fastify) {
               console.log(`❌ WS Validation Failed: Non-PDF file attempt: ${fileName}`);
               ws.send(
                 JSON.stringify({
-                  type: 'error',
                   fileId: data.fileId,
+                  success: false,
                   code: 'INVALID_FILE_TYPE',
-                  error: 'Invalid file type. Only PDF files are allowed.',
+                  message: 'Invalid file type. Only PDF files are allowed.',
                 }),
               );
               return;

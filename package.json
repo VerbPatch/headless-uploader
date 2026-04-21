@@ -13,6 +13,7 @@
     "build": "pnpm --filter \"./packages/**\" -r build && size-limit",
     "build:examples": "pnpm --filter \"./examples/**\" -r build",
     "server:node": "pnpm --filter \"./server/uploader-server\" run start",
+    "server-wt:node": "pnpm --filter \"./server/webtransport-server\" run start",
     "dev:examples": "pnpm --filter ",
     "build:all": "pnpm -r build && size-limit",
     "publish": "pnpm --filter \"./packages/**\" -r publish  --no-git-checks --access public --publish-branch main",

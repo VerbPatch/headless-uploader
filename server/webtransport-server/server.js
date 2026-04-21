@@ -56,7 +56,7 @@ const start = async () => {
 
   try {
     console.log({ port: listenOptions });
-    await fastify.listen(listenOptions);
+    fastify.listen(listenOptions);
     console.log(
       `🚀 WebTransport Config Server running on http://${config.APP_HOST}:${listenTarget}`,
     );

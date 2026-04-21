@@ -365,18 +365,17 @@ export function createWebTransportAdapter(wtConfig: WebTransportConfig): Protoco
 
           const jsonStr = buffer.substring(openBrace, closeBrace + 1);
           try {
-            const message = JSON.parse(jsonStr);
-            // console.log(`WebTransport message:`, message);
+            const wtMessage = JSON.parse(jsonStr);
+            // console.log(`WebTransport message:`, resMessage);
 
-            if (message.type === 'error') {
-              throw new UploaderError(message.error || 'Server error', {
-                code: (message as any).code || UploaderErrorCodes.SERVER_ERROR,
-                response: message,
+            if (wtMessage.type === expectedType) {
+              return wtMessage;
+            } else {
+              throw new UploaderError(wtMessage.message || 'Server error', {
+                code: (wtMessage as any).code || UploaderErrorCodes.SERVER_ERROR,
+                fileId: wtMessage.fileId,
+                response: wtMessage,
               });
-            }
-
-            if (message.type === expectedType) {
-              return message;
             }
 
             start = closeBrace + 1;
@@ -389,6 +388,7 @@ export function createWebTransportAdapter(wtConfig: WebTransportConfig): Protoco
                   });
             if (
               error.code === UploaderErrorCodes.SERVER_ERROR ||
+              error.code === UploaderErrorCodes.INVALID_FILE_TYPE ||
               error.message.includes('Unauthorized')
             )
               throw error;

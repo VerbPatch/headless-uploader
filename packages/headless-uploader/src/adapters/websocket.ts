@@ -175,32 +175,33 @@ export function createWebSocketAdapter(wsConfig: WebSocketConfig): ProtocolAdapt
 
           ws.onmessage = (event) => {
             try {
-              const message: WebSocketMessage = JSON.parse(event.data);
+              const wsMessage: WebSocketMessage = JSON.parse(event.data);
               const currentConn = connections.get(file.id);
               if (!currentConn) return;
 
-              if (message.type === 'init_ack') {
+              if (wsMessage.type === 'init_ack') {
                 // console.log(`Received init_ack for ${file.id}`);
                 if (currentConn.onInitAck) currentConn.onInitAck();
-              } else if (message.type === 'complete') {
+              } else if (wsMessage.type === 'complete') {
                 // console.log(`Received complete for ${file.id}`);
                 currentConn.isStreaming = false;
                 const res = {
                   success: true,
-                  uploadId: message.uploadId || file.id,
-                  url: message.url,
-                  bytesUploaded: message.bytesUploaded || file.metadata.size,
-                  response: message,
+                  uploadId: wsMessage.uploadId || file.id,
+                  url: wsMessage.url,
+                  bytesUploaded: wsMessage.bytesUploaded || file.metadata.size,
+                  response: wsMessage,
                 };
                 currentConn.resolve(res);
                 closeConnection(file.id);
-              } else if (message.type === 'error') {
+              } else {
+                //if (message.type === 'error')
                 // eslint-disable-next-line
-                console.error(`Received error for ${file.id}:`, message.error);
-                const err = new UploaderError(message.error || 'Upload failed', {
-                  code: (message as any).code,
-                  fileId: message.fileId || file.id,
-                  response: message,
+                console.error(`Received error for ${file.id}:`, wsMessage.message);
+                const err = new UploaderError(wsMessage.message || 'Upload failed', {
+                  code: (wsMessage as any).code,
+                  fileId: wsMessage.fileId || file.id,
+                  response: wsMessage,
                 });
                 currentConn.isStreaming = false;
 
@@ -208,7 +209,7 @@ export function createWebSocketAdapter(wsConfig: WebSocketConfig): ProtocolAdapt
                   currentConn.onInitError(err);
                 } else {
                   currentConn.reject(err);
-                  closeConnection(file.id, 4000, message.error);
+                  closeConnection(file.id, 4000, wsMessage.message);
                 }
               }
             } catch (err) {
