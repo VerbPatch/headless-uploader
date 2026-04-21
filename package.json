@@ -2,7 +2,7 @@
   "name": "headless-uploader",
   "namesapce": "@verbpatch",
   "type": "module",
-  "version": "0.0.1-beta.2",
+  "version": "0.0.1-beta.3",
   "description": "",
   "author": "Rameez Raja",
   "license": "LGPL-3.0-or-later",
