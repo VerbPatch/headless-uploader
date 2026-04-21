@@ -65,7 +65,7 @@ const start = async () => {
     : { port: Number(listenTarget), host: config.APP_HOST };
 
   try {
-    await fastify.listen(listenOptions);
+    fastify.listen(listenOptions);
 
     const displayPort = isPipe ? '[IIS Named Pipe]' : listenTarget;
     console.log(

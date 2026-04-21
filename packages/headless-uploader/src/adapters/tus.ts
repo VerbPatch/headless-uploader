@@ -95,26 +95,19 @@ export function createTusAdapter(tusConfig: TusConfig): ProtocolAdapter {
               tusConfig.onError?.(error);
 
               let responseData;
+              let message = error.message;
               let code = UploaderErrorCodes.TUS_ERROR;
 
               if ((error as DetailedError).originalResponse) {
-                const response = (error as DetailedError).originalResponse as unknown as {
-                  getUnderlyingRequest: () => XMLHttpRequest;
-                };
-                const xhr = response.getUnderlyingRequest?.();
-                if (xhr) {
-                  try {
-                    responseData = JSON.parse(xhr.responseText);
-                    code = (responseData?.code as any) || code;
-                  } catch {
-                    responseData = xhr.responseText;
-                  }
-                }
+                const response = error as DetailedError;
+                responseData = JSON.parse(response.originalResponse?.getBody() as string);
+                message = responseData.message || message;
+                code = responseData.code || code;
               }
 
               resolve({
                 success: false,
-                error: new UploaderError(error.message, {
+                error: new UploaderError(message, {
                   code,
                   fileId: file.id,
                   response: responseData,

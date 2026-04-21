@@ -148,13 +148,15 @@ async function uploadSimple(
         resolve();
       } else {
         let responseData;
+        let message = `Upload failed with status ${xhr.status}`;
         try {
           responseData = JSON.parse(xhr.responseText);
+          message = responseData.message || message;
         } catch {
           responseData = xhr.responseText;
         }
         reject(
-          new UploaderError(`Upload failed with status ${xhr.status}`, {
+          new UploaderError(message, {
             code: responseData?.code || UploaderErrorCodes.HTTP_ERROR,
             fileId: uploadFile.id,
             response: responseData,
@@ -283,13 +285,15 @@ async function uploadChunk(
         resolve();
       } else {
         let responseData;
+        let message = `Server responded with ${xhr.status}`;
         try {
           responseData = JSON.parse(xhr.responseText);
+          message = responseData.message || message;
         } catch {
           responseData = xhr.responseText;
         }
         reject(
-          new UploaderError(`Server responded with ${xhr.status}`, {
+          new UploaderError(message, {
             code: responseData?.code || UploaderErrorCodes.HTTP_ERROR,
             fileId: uploadFile.id,
             response: responseData,

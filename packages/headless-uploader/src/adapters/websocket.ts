@@ -119,7 +119,7 @@ export function createWebSocketAdapter(wsConfig: WebSocketConfig): ProtocolAdapt
             } else {
               // eslint-disable-next-line
               console.error(`Upload loop error for ${file.id}:`, error);
-              closeConnection(file.id, 1011, error.message);
+              closeConnection(file.id, 4000, error.message);
               reject(error);
             }
           }
@@ -208,7 +208,7 @@ export function createWebSocketAdapter(wsConfig: WebSocketConfig): ProtocolAdapt
                   currentConn.onInitError(err);
                 } else {
                   currentConn.reject(err);
-                  closeConnection(file.id, 1011, message.error);
+                  closeConnection(file.id, 4000, message.error);
                 }
               }
             } catch (err) {
