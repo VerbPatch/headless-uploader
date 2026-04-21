@@ -1,5 +1,13 @@
 # @verbpatch/headless-uploader
 
+## Type Aliases
+
+- [UploaderErrorCode](/uploader/docs/api/Type_Aliases/UploaderErrorCode)
+
+## Variables
+
+- [~~ValidationErrorCodes~~](/uploader/docs/api/Variables/ValidationErrorCodes)
+
 ## cloud
 
 - [AzureAdapterOptions](/uploader/docs/api/cloud/AzureAdapterOptions)
@@ -25,6 +33,7 @@
 
 ## types
 
+- [UploaderError](/uploader/docs/api/types/UploaderError)
 - [ChunkInfo](/uploader/docs/api/types/ChunkInfo)
 - [CloudAdapter](/uploader/docs/api/types/CloudAdapter)
 - [CompressionOptions](/uploader/docs/api/types/CompressionOptions)

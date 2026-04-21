@@ -5,7 +5,7 @@ description: A read-only snapshot of the uploader's current state.
 
 # UploaderState
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:330](https://github.com/VerbPatch/headless-uploader/blob/24e7558f0c45149fa75d59a07ac324f7e3fbff0d/packages/headless-uploader/src/types/uploader.ts#L330)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:361](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/uploader.ts#L361)
 
 UI-friendly representation of the uploader state
 
@@ -15,7 +15,7 @@ UI-friendly representation of the uploader state
 
 > **completedFiles**: [`UploadFile`](/uploader/docs/api/types/UploadFile)[]
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:333](https://github.com/VerbPatch/headless-uploader/blob/24e7558f0c45149fa75d59a07ac324f7e3fbff0d/packages/headless-uploader/src/types/uploader.ts#L333)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:364](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/uploader.ts#L364)
 
 ***
 
@@ -23,7 +23,7 @@ Defined in: [packages/headless-uploader/src/types/uploader.ts:333](https://githu
 
 > **failedFiles**: [`UploadFile`](/uploader/docs/api/types/UploadFile)[]
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:334](https://github.com/VerbPatch/headless-uploader/blob/24e7558f0c45149fa75d59a07ac324f7e3fbff0d/packages/headless-uploader/src/types/uploader.ts#L334)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:365](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/uploader.ts#L365)
 
 ***
 
@@ -31,7 +31,7 @@ Defined in: [packages/headless-uploader/src/types/uploader.ts:334](https://githu
 
 > **files**: [`UploadFile`](/uploader/docs/api/types/UploadFile)[]
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:331](https://github.com/VerbPatch/headless-uploader/blob/24e7558f0c45149fa75d59a07ac324f7e3fbff0d/packages/headless-uploader/src/types/uploader.ts#L331)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:362](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/uploader.ts#L362)
 
 ***
 
@@ -39,7 +39,7 @@ Defined in: [packages/headless-uploader/src/types/uploader.ts:331](https://githu
 
 > **isPaused**: `boolean`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:342](https://github.com/VerbPatch/headless-uploader/blob/24e7558f0c45149fa75d59a07ac324f7e3fbff0d/packages/headless-uploader/src/types/uploader.ts#L342)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:373](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/uploader.ts#L373)
 
 ***
 
@@ -47,7 +47,7 @@ Defined in: [packages/headless-uploader/src/types/uploader.ts:342](https://githu
 
 > **isUploading**: `boolean`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:341](https://github.com/VerbPatch/headless-uploader/blob/24e7558f0c45149fa75d59a07ac324f7e3fbff0d/packages/headless-uploader/src/types/uploader.ts#L341)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:372](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/uploader.ts#L372)
 
 ***
 
@@ -55,7 +55,7 @@ Defined in: [packages/headless-uploader/src/types/uploader.ts:341](https://githu
 
 > **queuedFiles**: [`UploadFile`](/uploader/docs/api/types/UploadFile)[]
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:335](https://github.com/VerbPatch/headless-uploader/blob/24e7558f0c45149fa75d59a07ac324f7e3fbff0d/packages/headless-uploader/src/types/uploader.ts#L335)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:366](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/uploader.ts#L366)
 
 ***
 
@@ -63,7 +63,7 @@ Defined in: [packages/headless-uploader/src/types/uploader.ts:335](https://githu
 
 > **totalProgress**: `object`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:336](https://github.com/VerbPatch/headless-uploader/blob/24e7558f0c45149fa75d59a07ac324f7e3fbff0d/packages/headless-uploader/src/types/uploader.ts#L336)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:367](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/uploader.ts#L367)
 
 #### loaded
 
@@ -83,4 +83,4 @@ Defined in: [packages/headless-uploader/src/types/uploader.ts:336](https://githu
 
 > **uploadingFiles**: [`UploadFile`](/uploader/docs/api/types/UploadFile)[]
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:332](https://github.com/VerbPatch/headless-uploader/blob/24e7558f0c45149fa75d59a07ac324f7e3fbff0d/packages/headless-uploader/src/types/uploader.ts#L332)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:363](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/uploader.ts#L363)

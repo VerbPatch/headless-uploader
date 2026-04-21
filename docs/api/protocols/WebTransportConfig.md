@@ -5,7 +5,7 @@ description: Configuration options for the modern WebTransport protocol.
 
 # WebTransportConfig
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:125](https://github.com/VerbPatch/headless-uploader/blob/24e7558f0c45149fa75d59a07ac324f7e3fbff0d/packages/headless-uploader/src/types/protocolTypes.ts#L125)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:132](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/protocolTypes.ts#L132)
 
 WebTransport Configuration
 
@@ -15,7 +15,7 @@ WebTransport Configuration
 
 > **allowPooling**: `boolean`
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:134](https://github.com/VerbPatch/headless-uploader/blob/24e7558f0c45149fa75d59a07ac324f7e3fbff0d/packages/headless-uploader/src/types/protocolTypes.ts#L134)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:141](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/protocolTypes.ts#L141)
 
 Whether to allow connection pooling
 
@@ -25,7 +25,7 @@ Whether to allow connection pooling
 
 > **bidirectionalStreams**: `boolean`
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:138](https://github.com/VerbPatch/headless-uploader/blob/24e7558f0c45149fa75d59a07ac324f7e3fbff0d/packages/headless-uploader/src/types/protocolTypes.ts#L138)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:145](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/protocolTypes.ts#L145)
 
 Whether to use bidirectional streams
 
@@ -35,7 +35,7 @@ Whether to use bidirectional streams
 
 > **congestionControl**: `"default"` \| `"throughput"` \| `"low-latency"`
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:136](https://github.com/VerbPatch/headless-uploader/blob/24e7558f0c45149fa75d59a07ac324f7e3fbff0d/packages/headless-uploader/src/types/protocolTypes.ts#L136)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:143](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/protocolTypes.ts#L143)
 
 Congestion control strategy
 
@@ -45,7 +45,7 @@ Congestion control strategy
 
 > `optional` **metadata?**: `Record`\<`string`, `string`\>
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:140](https://github.com/VerbPatch/headless-uploader/blob/24e7558f0c45149fa75d59a07ac324f7e3fbff0d/packages/headless-uploader/src/types/protocolTypes.ts#L140)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:147](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/protocolTypes.ts#L147)
 
 Optional metadata to send during initialization
 
@@ -55,7 +55,7 @@ Optional metadata to send during initialization
 
 > `optional` **onClosed?**: () => `void`
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:144](https://github.com/VerbPatch/headless-uploader/blob/24e7558f0c45149fa75d59a07ac324f7e3fbff0d/packages/headless-uploader/src/types/protocolTypes.ts#L144)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:151](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/protocolTypes.ts#L151)
 
 Callback fired when the transport is closed
 
@@ -69,7 +69,7 @@ Callback fired when the transport is closed
 
 > `optional` **onReady?**: () => `void`
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:142](https://github.com/VerbPatch/headless-uploader/blob/24e7558f0c45149fa75d59a07ac324f7e3fbff0d/packages/headless-uploader/src/types/protocolTypes.ts#L142)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:149](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/protocolTypes.ts#L149)
 
 Callback fired when the transport is ready
 
@@ -83,7 +83,7 @@ Callback fired when the transport is ready
 
 > `optional` **serverCertificateHashes?**: `object`[]
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:129](https://github.com/VerbPatch/headless-uploader/blob/24e7558f0c45149fa75d59a07ac324f7e3fbff0d/packages/headless-uploader/src/types/protocolTypes.ts#L129)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:136](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/protocolTypes.ts#L136)
 
 Certificate hashes for server validation
 
@@ -101,6 +101,6 @@ Certificate hashes for server validation
 
 > **url**: `string`
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:127](https://github.com/VerbPatch/headless-uploader/blob/24e7558f0c45149fa75d59a07ac324f7e3fbff0d/packages/headless-uploader/src/types/protocolTypes.ts#L127)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:134](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/protocolTypes.ts#L134)
 
 The WebTransport server URL (must be HTTPS)

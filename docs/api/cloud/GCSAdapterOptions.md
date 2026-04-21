@@ -5,7 +5,7 @@ description: Configuration options for the Google Cloud Storage adapter.
 
 # GCSAdapterOptions
 
-Defined in: [packages/headless-uploader/src/types/cloudTypes.ts:55](https://github.com/VerbPatch/headless-uploader/blob/24e7558f0c45149fa75d59a07ac324f7e3fbff0d/packages/headless-uploader/src/types/cloudTypes.ts#L55)
+Defined in: [packages/headless-uploader/src/types/cloudTypes.ts:55](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/cloudTypes.ts#L55)
 
 Google Cloud Storage Adapter Configuration
 
@@ -15,7 +15,7 @@ Google Cloud Storage Adapter Configuration
 
 > **getUploadUrl**: (`file`) => `Promise`\<`string`\>
 
-Defined in: [packages/headless-uploader/src/types/cloudTypes.ts:60](https://github.com/VerbPatch/headless-uploader/blob/24e7558f0c45149fa75d59a07ac324f7e3fbff0d/packages/headless-uploader/src/types/cloudTypes.ts#L60)
+Defined in: [packages/headless-uploader/src/types/cloudTypes.ts:60](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/cloudTypes.ts#L60)
 
 Function to get a Signed URL from your backend
 
@@ -37,6 +37,6 @@ The file being uploaded
 
 > `optional` **headers?**: `Record`\<`string`, `string`\>
 
-Defined in: [packages/headless-uploader/src/types/cloudTypes.ts:65](https://github.com/VerbPatch/headless-uploader/blob/24e7558f0c45149fa75d59a07ac324f7e3fbff0d/packages/headless-uploader/src/types/cloudTypes.ts#L65)
+Defined in: [packages/headless-uploader/src/types/cloudTypes.ts:65](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/cloudTypes.ts#L65)
 
 Additional custom headers to include in the GCS PUT request

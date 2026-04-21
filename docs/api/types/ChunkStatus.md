@@ -7,6 +7,6 @@ description: Represents the status of an individual file chunk.
 
 > **ChunkStatus** = `"pending"` \| `"queued"` \| `"uploading"` \| `"completed"` \| `"failed"`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:76](https://github.com/VerbPatch/headless-uploader/blob/24e7558f0c45149fa75d59a07ac324f7e3fbff0d/packages/headless-uploader/src/types/uploader.ts#L76)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:77](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/uploader.ts#L77)
 
 Chunk upload status

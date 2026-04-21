@@ -100,6 +100,30 @@
     "group": "api"
   },
   {
+    "title": "Type Aliases",
+    "children": [
+      {
+        "title": "UploaderErrorCode",
+        "kind": 2097152,
+        "path": "/uploader/docs/api/Type_Aliases/UploaderErrorCode",
+        "isDeprecated": false
+      }
+    ],
+    "group": "api"
+  },
+  {
+    "title": "Variables",
+    "children": [
+      {
+        "title": "ValidationErrorCodes",
+        "kind": 32,
+        "path": "/uploader/docs/api/Variables/ValidationErrorCodes",
+        "isDeprecated": true
+      }
+    ],
+    "group": "api"
+  },
+  {
     "title": "cloud",
     "children": [
       {
@@ -192,6 +216,12 @@
   {
     "title": "types",
     "children": [
+      {
+        "title": "UploaderError",
+        "kind": 128,
+        "path": "/uploader/docs/api/types/UploaderError",
+        "isDeprecated": false
+      },
       {
         "title": "ChunkInfo",
         "kind": 256,
