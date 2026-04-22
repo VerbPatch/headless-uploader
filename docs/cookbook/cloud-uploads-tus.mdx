@@ -1,0 +1,129 @@
+---
+title: "Cloud Upload (via Tus)"
+description: "Learn how to upload files directly to cloud storage (S3, GCS, Azure) using the Tus protocol for reliability and resumability."
+---
+
+# Cloud Upload via Tus
+
+Instead of using proprietary cloud SDKs directly in the browser, the recommended way to perform cloud uploads with Headless Uploader is by using a **Tus Server** backed by a cloud storage provider.
+
+This approach gives you:
+*   **Resumability**: Automatically handles network failures.
+*   **Standardization**: Uses the open Tus protocol.
+*   **Security**: Keeps your cloud credentials safe on the server.
+*   **Performance**: Supports chunked uploads and parallel streams.
+
+## Server-Side Setup
+
+You can use the official `@tus/server` package in Node.js with one of the specialized cloud storage stores.
+
+### Installation
+
+<CodeBlock>
+```bash
+npm install @tus/server @tus/s3-store # For AWS S3
+# or
+npm install @tus/server @tus/gcs-store # For Google Cloud Storage
+# or
+npm install @tus/server @tus/azure-store # For Azure Blob Storage
+```
+</CodeBlock>
+
+### Example: Tus Server with S3 Store
+
+Here is a basic Express server setup using `@tus/s3-store`.
+
+<CodeBlock>
+```javascript
+import express from 'express';
+import { Server } from '@tus/server';
+import { S3Store } from '@tus/s3-store';
+
+const app = express();
+
+const tusServer = new Server({
+  path: '/tus',
+  datastore: new S3Store({
+    bucket: 'your-bucket-name',
+    region: 'us-east-1',
+    credentials: {
+      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    },
+  }),
+});
+
+app.all('/tus/*', (req, res) => {
+  tusServer.handle(req, res);
+});
+
+app.listen(3000, () => {
+  console.log('Tus server with S3 store listening on port 3000');
+});
+```
+</CodeBlock>
+
+## Client-Side Configuration
+
+On the client, you simply configure Headless Uploader to use the `tus` protocol pointing to your server's endpoint.
+
+### Installation
+
+Ensure you have the `tus-js-client` installed:
+
+<CodeBlock>
+```bash
+npm install tus-js-client
+```
+</CodeBlock>
+
+### Basic Usage
+
+<CodeBlock>
+```typescript
+import { useUploader } from '@verbpatch/headless-uploader';
+
+const uploader = useUploader({
+  protocol: 'tus',
+  tus: {
+    endpoint: 'https://nus.verbpatch.com/tus/', // Your server endpoint
+    chunkSize: 5 * 1024 * 1024,
+    metadata: {
+      filename: 'image.jpg',
+      filetype: 'image/jpeg'
+    }
+  }
+});
+```
+</CodeBlock>
+
+## Why use Tus for Cloud?
+
+Using `@tus/s3-store`, `@tus/gcs-store`, or `@tus/azure-store` allows the server to act as a coordinator. The file data is streamed through the server (or directly via S3 multipart upload depending on store configuration) while the Tus protocol manages the state of the upload, allowing for reliable resumption of interrupted transfers.
+
+### Supported Stores
+
+<table>
+  <thead>
+    <tr>
+      <th>Cloud Provider</th>
+      <th>Package</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>**AWS S3**</td>
+      <td>`@tus/s3-store`</td>
+    </tr>
+    <tr>
+      <td>**Google Cloud Storage**</td>
+      <td>`@tus/gcs-store`</td>
+    </tr>
+    <tr>
+      <td>**Azure Blob Storage**</td>
+      <td>`@tus/azure-store`</td>
+    </tr>
+  </tbody>
+</table>
+
+For more advanced configurations like metadata handling, authentication, and pre/post-upload hooks, refer to the [official Tus documentation](https://tus.io/).

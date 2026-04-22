@@ -17,7 +17,6 @@ export const UploaderErrorCodes = {
   NETWORK_ERROR: 'NETWORK_ERROR',
   TIMEOUT_ERROR: 'TIMEOUT_ERROR',
   TUS_ERROR: 'TUS_ERROR',
-  CLOUD_UPLOAD_ERROR: 'CLOUD_UPLOAD_ERROR',
   SERVER_ERROR: 'SERVER_ERROR',
 
   FORMATTING_ERROR: 'FORMATTING_ERROR',
@@ -28,10 +27,12 @@ export const UploaderErrorCodes = {
 
 /**
  * Type representing all possible uploader error codes
+ * @ignore
  */
 export type UploaderErrorCode = (typeof UploaderErrorCodes)[keyof typeof UploaderErrorCodes];
 
 /**
  * @deprecated Use UploaderErrorCodes instead
+ * @ignore
  */
 export const ValidationErrorCodes = UploaderErrorCodes;

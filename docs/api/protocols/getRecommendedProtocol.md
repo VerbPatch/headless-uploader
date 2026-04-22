@@ -7,7 +7,7 @@ description: Suggests the most suitable upload protocol based on file size and m
 
 > **getRecommendedProtocol**(`fileSize`, `browserCapabilities?`): [`UploadProtocol`](/uploader/docs/api/types/UploadProtocol)
 
-Defined in: [packages/headless-uploader/src/adapters/index.ts:142](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/adapters/index.ts#L142)
+Defined in: [packages/headless-uploader/src/adapters/index.ts:73](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/adapters/index.ts#L73)
 
 Get the recommended protocol based on file size and browser capabilities
 

@@ -1,7 +1,7 @@
 const fileData = 'Hello TUS protocol! This is a test upload using fetch.';
 const fileName = 'test-file.txt';
 const metadata = `filename ${Buffer.from(fileName).toString('base64')}`;
-const BASE_URL = 'http://localhost:3000/tus';
+const BASE_URL = 'https://nus.verbpatch.com/tus';
 
 async function runTest() {
   try {

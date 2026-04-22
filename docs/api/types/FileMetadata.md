@@ -5,7 +5,7 @@ description: Describes the properties and extracted metadata of a file.
 
 # FileMetadata
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:58](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/uploader.ts#L58)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:58](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L58)
 
 File metadata interface
 
@@ -15,7 +15,7 @@ File metadata interface
 
 > `optional` **dimensions?**: `object`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:64](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/uploader.ts#L64)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:64](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L64)
 
 #### height
 
@@ -31,7 +31,7 @@ Defined in: [packages/headless-uploader/src/types/uploader.ts:64](https://github
 
 > `optional` **duration?**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:68](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/uploader.ts#L68)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:68](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L68)
 
 ***
 
@@ -39,7 +39,7 @@ Defined in: [packages/headless-uploader/src/types/uploader.ts:68](https://github
 
 > `optional` **extension?**: `string`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:63](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/uploader.ts#L63)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:63](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L63)
 
 ***
 
@@ -47,7 +47,7 @@ Defined in: [packages/headless-uploader/src/types/uploader.ts:63](https://github
 
 > **lastModified**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:62](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/uploader.ts#L62)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:62](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L62)
 
 ***
 
@@ -55,7 +55,7 @@ Defined in: [packages/headless-uploader/src/types/uploader.ts:62](https://github
 
 > **name**: `string`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:59](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/uploader.ts#L59)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:59](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L59)
 
 ***
 
@@ -63,7 +63,7 @@ Defined in: [packages/headless-uploader/src/types/uploader.ts:59](https://github
 
 > **size**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:60](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/uploader.ts#L60)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:60](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L60)
 
 ***
 
@@ -71,4 +71,4 @@ Defined in: [packages/headless-uploader/src/types/uploader.ts:60](https://github
 
 > **type**: `string`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:61](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/uploader.ts#L61)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:61](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L61)

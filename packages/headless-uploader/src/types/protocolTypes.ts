@@ -1,10 +1,4 @@
-import type {
-  UploadFile,
-  UploaderConfig,
-  HttpMethod,
-  CloudAdapter,
-  UploaderError,
-} from './uploader';
+import type { UploadFile, UploaderConfig, HttpMethod, UploaderError } from './uploader';
 import type { UploadOptions } from 'tus-js-client';
 import { UploaderErrorCode } from '../constants/error-codes';
 
@@ -14,7 +8,7 @@ import { UploaderErrorCode } from '../constants/error-codes';
  * @title UploadProtocol
  * @description Defines the available communication protocols for file transfer.
  */
-export type UploadProtocol = 'http' | 'tus' | 'websocket' | 'webtransport' | 'cloud';
+export type UploadProtocol = 'http' | 'tus' | 'websocket' | 'webtransport';
 
 /**
  * Protocol adapter interface
@@ -158,7 +152,6 @@ export interface ProtocolFactoryConfig {
   tus?: TusConfig;
   websocket?: WebSocketConfig;
   webtransport?: WebTransportConfig;
-  cloudAdapter?: CloudAdapter;
 }
 
 /**

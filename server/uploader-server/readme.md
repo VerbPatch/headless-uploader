@@ -6,7 +6,6 @@ This is a versatile demonstration server for handling file uploads across multip
 
 -  **HTTP**: Standard `POST` requests using `multipart/form-data`. Supports both simple single-file uploads and manual chunked uploads with server-side merging.
 - **TUS**: Resumable, reliable uploads following the [TUS protocol](https://tus.io/) (v1.0.0). Ideal for large files and unstable connections.
-- **Cloud (Indirect)**: Generates presigned URLs for **AWS S3**, **Azure Blob Storage**, and **Google Cloud Storage (GCS)**, allowing clients to upload directly to the cloud while maintaining server control.
 - **WebSocket**: Real-time bidirectional streaming uploads using a custom binary framing protocol. Supports resuming and progress tracking.
 
 ## Prerequisites
@@ -22,20 +21,11 @@ This is a versatile demonstration server for handling file uploads across multip
     ```
 
 2.  **Environment Configuration**:
-    Create a `.env` file for Cloud uploads (optional):
+    Create a `.env` file (optional):
     ```env
-    AWS_REGION=us-east-1
-    AWS_ACCESS_KEY_ID=your_id
-    AWS_SECRET_ACCESS_KEY=your_secret
-    AWS_S3_BUCKET=your_bucket
-
-    AZURE_STORAGE_ACCOUNT_NAME=your_account
-    AZURE_STORAGE_ACCOUNT_KEY=your_key
-    AZURE_STORAGE_CONTAINER=your_container
-
-    GCS_PROJECT_ID=your_project
-    GCS_BUCKET=your_bucket
-    GCS_KEY_FILE='{"type": "service_account", ...}'
+    APP_HOST=localhost
+    APP_PORT=3000
+    AUTH_TOKEN=verbpatch-secret-token
     ```
 
 3.  **Start the server**:
@@ -58,7 +48,4 @@ The following endpoints are available (host and ports are configurable in `.env`
 -   **Health Check**: `GET /health`
 -   **HTTP Upload**: `POST /upload`
 -   **TUS Protocol**: `ANY /tus/*`
--   **S3 Signed URL**: `POST /generate-s3-url`
--   **Azure SAS**: `POST /generate-azure-sas`
--   **GCS Signed URL**: `POST /generate-gcs-url`
 -   **WebSocket**: `ws://{host}:{port}/ws-upload`

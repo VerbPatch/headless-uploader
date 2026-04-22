@@ -1,7 +1,7 @@
 const fileData = 'Hello HTTP protocol! This is a test upload using chunked multipart/form-data.';
 const fileName = 'test-file-http.txt';
 const chunkSize = 20; // Split into smaller chunks for testing
-const BASE_URL = 'http://localhost:3000/upload';
+const BASE_URL = 'https://nus.verbpatch.com/upload';
 const fileId = `test-${Date.now()}`;
 
 async function uploadChunk(chunkIndex, totalChunks, chunkData) {

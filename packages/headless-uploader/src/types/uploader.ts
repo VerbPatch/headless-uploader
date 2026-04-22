@@ -171,19 +171,6 @@ export interface UploadFile {
 }
 
 /**
- * Cloud storage adapter interface
- * @group types
- * @title CloudAdapter
- * @description Interface for implementing custom cloud storage providers (e.g., S3, Cloudinary).
- */
-export interface CloudAdapter {
-  name: string;
-  upload: (file: UploadFile, config: UploaderConfig) => Promise<unknown>;
-  getUploadUrl?: (file: UploadFile) => Promise<string>;
-  abortUpload?: (uploadId: string) => Promise<void>;
-}
-
-/**
  * Drag and drop event data
  * @group types
  * @title DropEventData
@@ -236,7 +223,7 @@ export interface RequestBlueprint {
  * ```
  */
 export interface UploaderConfig {
-  /** The protocol to use for uploading (http, tus, websocket, etc.). Set to 'cloud' to use cloudAdapter. */
+  /** The protocol to use for uploading (http, tus, websocket, etc.). */
   protocol?: UploadProtocol;
   /** Configuration for HTTP protocol */
   http?: HttpConfig;
@@ -285,9 +272,6 @@ export interface UploaderConfig {
 
   /** Global request timeout in milliseconds */
   timeout?: number;
-
-  /** Custom cloud storage adapter. Required when protocol is set to 'cloud'. */
-  cloudAdapter?: CloudAdapter;
 
   /** Callback fired when file validation begins */
   onValidationStart?: (files: File[]) => void;

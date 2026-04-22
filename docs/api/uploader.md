@@ -1,22 +1,5 @@
 # @verbpatch/headless-uploader
 
-## Type Aliases
-
-- [UploaderErrorCode](/uploader/docs/api/Type_Aliases/UploaderErrorCode)
-
-## Variables
-
-- [~~ValidationErrorCodes~~](/uploader/docs/api/Variables/ValidationErrorCodes)
-
-## cloud
-
-- [AzureAdapterOptions](/uploader/docs/api/cloud/AzureAdapterOptions)
-- [GCSAdapterOptions](/uploader/docs/api/cloud/GCSAdapterOptions)
-- [S3AdapterOptions](/uploader/docs/api/cloud/S3AdapterOptions)
-- [createAzureAdapter](/uploader/docs/api/cloud/createAzureAdapter)
-- [createGCSAdapter](/uploader/docs/api/cloud/createGCSAdapter)
-- [createS3Adapter](/uploader/docs/api/cloud/createS3Adapter)
-
 ## hooks
 
 - [useUploader](/uploader/docs/api/hooks/useUploader)
@@ -35,7 +18,6 @@
 
 - [UploaderError](/uploader/docs/api/types/UploaderError)
 - [ChunkInfo](/uploader/docs/api/types/ChunkInfo)
-- [CloudAdapter](/uploader/docs/api/types/CloudAdapter)
 - [CompressionOptions](/uploader/docs/api/types/CompressionOptions)
 - [DropEventData](/uploader/docs/api/types/DropEventData)
 - [FileMetadata](/uploader/docs/api/types/FileMetadata)

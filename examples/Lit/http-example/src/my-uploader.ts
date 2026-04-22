@@ -29,7 +29,7 @@ export class MyUploader extends LitElement {
   private uploader = useUploader(this, {
     protocol: 'http',
     http: {
-      endpoint: 'http://localhost:3000/upload',
+      endpoint: 'https://nus.verbpatch.com/upload',
       method: 'POST',
       enableChunking: true,
     },

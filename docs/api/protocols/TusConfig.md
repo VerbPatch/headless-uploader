@@ -5,7 +5,7 @@ description: Configuration options for the Tus resumable upload protocol.
 
 # TusConfig
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:90](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/protocolTypes.ts#L90)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:78](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/protocolTypes.ts#L78)
 
 TUS Protocol Configuration
 
@@ -43,7 +43,7 @@ Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/
 
 > **endpoint**: `string`
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:92](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/protocolTypes.ts#L92)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:80](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/protocolTypes.ts#L80)
 
 The server endpoint for Tus uploads
 

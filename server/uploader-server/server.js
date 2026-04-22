@@ -9,7 +9,6 @@ import { ensureDirSync } from './utils.js';
 import { startCleanupJob } from './cleanup.js';
 import { setupHTTP } from './protocols/http.js';
 import { setupTUS } from './protocols/tus.js';
-import { setupCloud } from './protocols/cloud.js';
 import { setupWebSocket } from './protocols/websocket.js';
 
 const start = async () => {
@@ -48,7 +47,6 @@ const start = async () => {
 
   setupHTTP(fastify);
   setupTUS(fastify);
-  setupCloud(fastify);
   setupWebSocket(fastify);
 
   const protocol = 'http';
@@ -68,13 +66,6 @@ const start = async () => {
     console.log(`\n📍 Available Endpoints:`);
     console.log(`   - HTTP Upload: ${protocol}://${config.APP_HOST}:${displayPort}/upload`);
     console.log(`   - TUS Upload: ${protocol}://${config.APP_HOST}:${displayPort}/tus/`);
-    console.log(`   - Cloud (S3): ${protocol}://${config.APP_HOST}:${displayPort}/generate-s3-url`);
-    console.log(
-      `   - Cloud (Azure): ${protocol}://${config.APP_HOST}:${displayPort}/generate-azure-sas`,
-    );
-    console.log(
-      `   - Cloud (GCS): ${protocol}://${config.APP_HOST}:${displayPort}/generate-gcs-url`,
-    );
     console.log(
       `   - WebSocket: ${protocol === 'https' ? 'wss' : 'ws'}://${config.APP_HOST}:${displayPort}/ws-upload`,
     );

@@ -13,7 +13,7 @@ A powerful, flexible, and completely headless file upload library for applicatio
 - 🔁 **Auto Retry** - Robust error handling with customizable exponential backoff
 - 🖼️ **Preview Generation** - Built-in high-performance preview generation for images and videos
 - 📋 **Metadata Extraction** - Automatically extract dimensions, duration, and extended file metadata
-- ☁️ **Cloud Ready** - Flexible adapter pattern for AWS S3, Google Cloud, Azure, and more: TBD
+- ☁️ **Cloud Ready** - Flexible adapter pattern for AWS S3, Google Cloud, Azure via TUS protocol
 - 🗜️ **Smart Compression** - Optional client-side image compression before transfer
 - ✅ **Advanced Validation** - Deep validation for MIME types, extensions, size, and custom logic
 - 🎭 **TypeScript First** - 100% type safety and excellent IntelliSense support

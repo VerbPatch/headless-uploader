@@ -22,7 +22,7 @@ function removeNotification(id) {
 const uploader = useUploader({
   protocol: 'http',
   http: {
-    endpoint: 'http://localhost:3000/upload',
+    endpoint: 'https://nus.verbpatch.com/upload',
     method: 'POST',
     enableChunking: true,
   },

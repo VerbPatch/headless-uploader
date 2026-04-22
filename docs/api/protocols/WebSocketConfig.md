@@ -5,7 +5,7 @@ description: Configuration options for uploading files via WebSockets.
 
 # WebSocketConfig
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:101](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/protocolTypes.ts#L101)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:89](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/protocolTypes.ts#L89)
 
 WebSocket Configuration
 
@@ -15,7 +15,7 @@ WebSocket Configuration
 
 > **binaryType**: `"blob"` \| `"arraybuffer"`
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:115](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/protocolTypes.ts#L115)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:103](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/protocolTypes.ts#L103)
 
 Preferred binary type for data transfer
 
@@ -25,7 +25,7 @@ Preferred binary type for data transfer
 
 > **heartbeatInterval**: `number`
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:113](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/protocolTypes.ts#L113)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:101](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/protocolTypes.ts#L101)
 
 Interval for sending heartbeat messages in milliseconds
 
@@ -35,7 +35,7 @@ Interval for sending heartbeat messages in milliseconds
 
 > **maxReconnectAttempts**: `number`
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:111](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/protocolTypes.ts#L111)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:99](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/protocolTypes.ts#L99)
 
 Maximum number of reconnection attempts
 
@@ -45,7 +45,7 @@ Maximum number of reconnection attempts
 
 > `optional` **metadata?**: `Record`\<`string`, `string`\>
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:117](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/protocolTypes.ts#L117)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:105](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/protocolTypes.ts#L105)
 
 Optional metadata to send during initialization
 
@@ -55,7 +55,7 @@ Optional metadata to send during initialization
 
 > `optional` **onClose?**: () => `void`
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:121](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/protocolTypes.ts#L121)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:109](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/protocolTypes.ts#L109)
 
 Callback fired when the connection closes
 
@@ -69,7 +69,7 @@ Callback fired when the connection closes
 
 > `optional` **onError?**: (`error`) => `void`
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:123](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/protocolTypes.ts#L123)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:111](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/protocolTypes.ts#L111)
 
 Callback fired on connection error
 
@@ -89,7 +89,7 @@ Callback fired on connection error
 
 > `optional` **onOpen?**: () => `void`
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:119](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/protocolTypes.ts#L119)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:107](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/protocolTypes.ts#L107)
 
 Callback fired when the connection opens
 
@@ -103,7 +103,7 @@ Callback fired when the connection opens
 
 > `optional` **protocols?**: `string` \| `string`[]
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:105](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/protocolTypes.ts#L105)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:93](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/protocolTypes.ts#L93)
 
 WebSocket sub-protocols
 
@@ -113,7 +113,7 @@ WebSocket sub-protocols
 
 > **reconnect**: `boolean`
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:107](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/protocolTypes.ts#L107)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:95](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/protocolTypes.ts#L95)
 
 Whether to automatically reconnect on disconnection
 
@@ -123,7 +123,7 @@ Whether to automatically reconnect on disconnection
 
 > **reconnectDelay**: `number`
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:109](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/protocolTypes.ts#L109)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:97](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/protocolTypes.ts#L97)
 
 Delay between reconnection attempts in milliseconds
 
@@ -133,6 +133,6 @@ Delay between reconnection attempts in milliseconds
 
 > **url**: `string`
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:103](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/protocolTypes.ts#L103)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:91](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/protocolTypes.ts#L91)
 
 The WebSocket server URL

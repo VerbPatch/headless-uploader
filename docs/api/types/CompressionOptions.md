@@ -5,7 +5,7 @@ description: Configuration for client-side file compression.
 
 # CompressionOptions
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:115](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/uploader.ts#L115)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:115](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L115)
 
 Compression options
 
@@ -15,7 +15,7 @@ Compression options
 
 > **enabled**: `boolean`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:116](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/uploader.ts#L116)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:116](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L116)
 
 ***
 
@@ -23,7 +23,7 @@ Defined in: [packages/headless-uploader/src/types/uploader.ts:116](https://githu
 
 > `optional` **maxHeight?**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:119](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/uploader.ts#L119)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:119](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L119)
 
 ***
 
@@ -31,7 +31,7 @@ Defined in: [packages/headless-uploader/src/types/uploader.ts:119](https://githu
 
 > `optional` **maxWidth?**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:118](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/uploader.ts#L118)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:118](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L118)
 
 ***
 
@@ -39,7 +39,7 @@ Defined in: [packages/headless-uploader/src/types/uploader.ts:118](https://githu
 
 > `optional` **mimeType?**: `string`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:120](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/uploader.ts#L120)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:120](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L120)
 
 ***
 
@@ -47,4 +47,4 @@ Defined in: [packages/headless-uploader/src/types/uploader.ts:120](https://githu
 
 > **quality**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:117](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/types/uploader.ts#L117)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:117](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L117)

@@ -7,7 +7,7 @@ description: Returns all protocols that can be used in the current browser or en
 
 > **getSupportedProtocols**(): [`UploadProtocol`](/uploader/docs/api/types/UploadProtocol)[]
 
-Defined in: [packages/headless-uploader/src/adapters/index.ts:247](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/adapters/index.ts#L247)
+Defined in: [packages/headless-uploader/src/adapters/index.ts:169](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/adapters/index.ts#L169)
 
 Get a list of all protocols supported by the current environment
 

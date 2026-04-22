@@ -193,6 +193,7 @@ export function createWebSocketAdapter(wsConfig: WebSocketConfig): ProtocolAdapt
                 // eslint-disable-next-line
                 console.error(`Received error for ${file.id}:`, wsMessage.message);
                 const err = new UploaderError(wsMessage.message || 'Upload failed', {
+                  // eslint-disable-next-line
                   code: (wsMessage as any).code,
                   fileId: wsMessage.fileId || file.id,
                   response: wsMessage,

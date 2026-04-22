@@ -22,7 +22,7 @@ export class MyUploader extends LitElement {
   private uploader = useUploader(this, {
     protocol: 'tus',
     tus: {
-      endpoint: 'http://localhost:3000/tus',
+      endpoint: 'https://nus.verbpatch.com/tus',
       chunkSize: 500 * 1024,
       retryDelays: [0, 1000, 3000, 5000],
     },

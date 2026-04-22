@@ -7,7 +7,7 @@ description: Provides a way to encode strings for use in headers or metadata tha
 
 > **safeBase64**(`str`): `string`
 
-Defined in: [packages/headless-uploader/src/utils/helpers.ts:109](https://github.com/VerbPatch/headless-uploader/blob/759bfa998061b3af5e7b9f53fc466f76606d4b64/packages/headless-uploader/src/utils/helpers.ts#L109)
+Defined in: [packages/headless-uploader/src/utils/helpers.ts:109](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/utils/helpers.ts#L109)
 
 Encode a string into a UTF-8 safe Base64 format
 

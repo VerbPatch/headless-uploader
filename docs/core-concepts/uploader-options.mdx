@@ -48,9 +48,9 @@ Headless Uploader is highly configurable. You can pass an options object to `use
   <tbody>
     <tr>
       <td>`protocol`</td>
-      <td>`'http' | 'tus' | 'websocket' | 'webtransport' | 'cloud'`</td>
+      <td>`'http' | 'tus' | 'websocket' | 'webtransport'`</td>
       <td>`'http'`</td>
-      <td>The communication protocol to use. Set to `'cloud'` to use a custom cloud adapter.</td>
+      <td>The communication protocol to use.</td>
     </tr>
     <tr>
       <td>`http`</td>
@@ -75,12 +75,6 @@ Headless Uploader is highly configurable. You can pass an options object to `use
       <td>`WebTransportConfig`</td>
       <td>`undefined`</td>
       <td>Configuration for WebTransport transfers.</td>
-    </tr>
-    <tr>
-      <td>`cloudAdapter`</td>
-      <td>`CloudAdapter`</td>
-      <td>`undefined`</td>
-      <td>Custom cloud storage adapter (S3, Azure, GCS). **Required** when `protocol` is set to `'cloud'`.</td>
     </tr>
   </tbody>
 </table>

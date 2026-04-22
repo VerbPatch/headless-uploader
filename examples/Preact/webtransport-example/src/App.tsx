@@ -9,7 +9,7 @@ import {
 
 async function fetchWebTransportConfig() {
   try {
-    const response = await fetch('http://localhost:3000/webtransport-config');
+    const response = await fetch('https://nus.verbpatch.com/webtransport-config');
     if (response.ok) return await response.json();
   } catch (err) {
     // eslint-disable-next-line

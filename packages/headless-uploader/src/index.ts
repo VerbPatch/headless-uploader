@@ -11,16 +11,12 @@ export type {
   UploadFile,
   ValidationResult,
   ValidationError,
-  CloudAdapter,
   RetryConfig,
   CompressionOptions,
   UploaderConfig,
   UploaderState,
   UploaderInterface,
   DropEventData,
-  S3AdapterOptions,
-  AzureAdapterOptions,
-  GCSAdapterOptions,
 } from './types';
 
 export type {
@@ -38,14 +34,7 @@ export {
   ValidationErrorCodes,
 } from './constants';
 
-export {
-  getRecommendedProtocol,
-  compareProtocols,
-  getSupportedProtocols,
-  createS3Adapter,
-  createAzureAdapter,
-  createGCSAdapter,
-} from './adapters';
+export { getRecommendedProtocol, compareProtocols, getSupportedProtocols } from './adapters';
 
 export {
   generateId,

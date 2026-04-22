@@ -1,9 +1,4 @@
-import type {
-  ProtocolAdapter,
-  ProtocolFactoryConfig,
-  UploadProtocol,
-  CloudAdapter,
-} from '../types';
+import type { ProtocolAdapter, ProtocolFactoryConfig, UploadProtocol } from '../types';
 import { UploaderError } from '../types/uploader';
 import { UploaderErrorCodes } from '../constants/error-codes';
 import { createHttpAdapter } from './http';
@@ -11,67 +6,13 @@ import { createTusAdapter } from './tus';
 import { createWebSocketAdapter } from './websocket';
 import { createWebTransportAdapter, isWebTransportSupported } from './webtransport';
 
-export * from './cloud';
-
-/**
- * Creates a wrapper that adapts a CloudAdapter to the ProtocolAdapter interface
- * @internal
- */
-function createCloudProtocolWrapper(cloudAdapter: CloudAdapter): ProtocolAdapter {
-  return {
-    name: cloudAdapter.name,
-    protocol: 'cloud',
-
-    async initialize() {},
-
-    async upload(file, config) {
-      try {
-        const response = await cloudAdapter.upload(file, config);
-        return {
-          success: true,
-          response,
-          bytesUploaded: file.file.size,
-        };
-      } catch (error) {
-        return {
-          success: false,
-          error:
-            error instanceof UploaderError
-              ? error
-              : new UploaderError(String(error), {
-                  fileId: file.id,
-                  code: UploaderErrorCodes.CLOUD_UPLOAD_ERROR,
-                }),
-          bytesUploaded: file.progress.loaded,
-        };
-      }
-    },
-
-    async pause(fileId) {
-      if (cloudAdapter.abortUpload) {
-        await cloudAdapter.abortUpload(fileId);
-      }
-    },
-
-    async resume(file, config) {
-      return this.upload(file, config);
-    },
-
-    async cancel(fileId) {
-      if (cloudAdapter.abortUpload) {
-        await cloudAdapter.abortUpload(fileId);
-      }
-    },
-  };
-}
-
 /**
  * Create a protocol adapter based on the provided configuration
  * @param config - The configuration for the protocol factory
  * @returns A protocol adapter instance
  * @group protocols
  * @title createProtocolAdapter
- * @description Factory function that instantiates the appropriate adapter (HTTP, TUS, WebSocket, WebTransport, or Cloud).
+ * @description Factory function that instantiates the appropriate adapter (HTTP, TUS, WebSocket, or WebTransport).
  * @internal
  */
 export function createProtocolAdapter(config: ProtocolFactoryConfig): ProtocolAdapter {
@@ -112,14 +53,6 @@ export function createProtocolAdapter(config: ProtocolFactoryConfig): ProtocolAd
         });
       }
       return createWebTransportAdapter(config.webtransport);
-
-    case 'cloud':
-      if (!config.cloudAdapter) {
-        throw new UploaderError('Cloud adapter is required when protocol is set to "cloud"', {
-          code: UploaderErrorCodes.CONFIG_ERROR,
-        });
-      }
-      return createCloudProtocolWrapper(config.cloudAdapter);
 
     default:
       throw new UploaderError(`Unknown protocol: ${config.protocol}`, {
@@ -199,11 +132,6 @@ export const PROTOCOL_FEATURES = {
     chunking: true,
     support: 'bleeding-edge',
   },
-  cloud: {
-    resumable: 'no',
-    chunking: false,
-    support: 'universal',
-  },
 } as const;
 
 /**
@@ -218,7 +146,6 @@ export function isProtocolSupported(protocol: UploadProtocol): boolean {
   switch (protocol) {
     case 'http':
     case 'tus':
-    case 'cloud':
       return true;
 
     case 'websocket':
@@ -240,7 +167,7 @@ export function isProtocolSupported(protocol: UploadProtocol): boolean {
  * @description Returns all protocols that can be used in the current browser or environment.
  */
 export function getSupportedProtocols(): UploadProtocol[] {
-  const protocols: UploadProtocol[] = ['http', 'tus', 'cloud'];
+  const protocols: UploadProtocol[] = ['http', 'tus'];
 
   if ('WebSocket' in window) {
     protocols.push('websocket');
@@ -281,10 +208,10 @@ export function compareProtocols(
     needsResumability?: boolean;
   } = {},
 ): ProtocolComparison[] {
-  const protocols: UploadProtocol[] = ['http', 'tus', 'websocket', 'webtransport', 'cloud'];
+  const protocols: UploadProtocol[] = ['http', 'tus', 'websocket', 'webtransport'];
 
   const comparisons: ProtocolComparison[] = protocols.map((protocol) => {
-    const features = PROTOCOL_FEATURES[protocol];
+    const features = PROTOCOL_FEATURES[protocol as keyof typeof PROTOCOL_FEATURES];
     const supported = isProtocolSupported(protocol);
     const reasons: string[] = [];
     let score = 0;
@@ -362,16 +289,6 @@ export const PROTOCOL_USAGE_EXAMPLES = {
         bidirectionalStreams: true,
         congestionControl: 'throughput'
       }
-    });
-  `,
-
-  cloud: `
-    const uploader = useUploader({
-      protocol: 'cloud',
-      cloudAdapter: createS3Adapter({
-        getUploadUrl: async (file) => {
-        }
-      })
     });
   `,
 };

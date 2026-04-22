@@ -6,24 +6,6 @@ import { buildExamplesNav } from './example-nav-tree.mjs';
 function docNavigation() {
   return [
     {
-      title: 'Cloud Cookbook',
-      group: 'doc',
-      children: [
-        {
-          title: 'S3 Integration',
-          path: '/uploader/docs/cookbook/s3-integration',
-        },
-        {
-          title: 'Azure Integration',
-          path: '/uploader/docs/cookbook/azure-integration',
-        },
-        {
-          title: 'GCS Integration',
-          path: '/uploader/docs/cookbook/gcs-integration',
-        },
-      ],
-    },
-    {
       title: 'Protocol Cookbook',
       group: 'doc',
       children: [
@@ -42,6 +24,10 @@ function docNavigation() {
         {
           title: 'WebTransport Upload',
           path: '/uploader/docs/cookbook/webtransport-upload',
+        },
+        {
+          title: 'Cloud Upload (TUS)',
+          path: '/uploader/docs/cookbook/cloud-uploads-tus',
         },
         {
           title: 'Custom Previews',
@@ -72,10 +58,6 @@ function docNavigation() {
         {
           title: 'Protocols',
           path: '/uploader/docs/core-concepts/protocols',
-        },
-        {
-          title: 'Cloud Uploads',
-          path: '/uploader/docs/core-concepts/cloud-uploads',
         },
       ],
     },

@@ -37,13 +37,6 @@ A cutting-edge protocol built on HTTP/3 and QUIC for high performance.
 *   **Resumability**: Native pause/resume supported via the stream lifecycle.
 *   **Best for**: Maximum performance and ultra-low latency in modern browsers.
 
-### 5. Cloud
-Direct-to-storage uploads for AWS S3, Azure, and GCS.
-*   **How it works**: Uses a pre-signed URL to `PUT` the file directly to a cloud bucket.
-*   **Chunking**: Usually handled as a single large request (standard adapter).
-*   **Resumability**: Not natively supported on the client-side for simple `PUT` adapters.
-*   **Best for**: Scalability, bypassing application server bottlenecks.
-
 ---
 
 ## Comparison Matrix
@@ -86,13 +79,6 @@ Direct-to-storage uploads for AWS S3, Azure, and GCS.
       <td>Native</td>
       <td>Modern (No Safari)</td>
       <td>Max Performance</td>
-    </tr>
-    <tr>
-      <td>**Cloud**</td>
-      <td>No</td>
-      <td>No</td>
-      <td>Universal</td>
-      <td>Scalable Storage</td>
     </tr>
   </tbody>
 </table>

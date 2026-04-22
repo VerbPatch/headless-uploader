@@ -36,10 +36,6 @@
       {
         "title": "Protocols",
         "path": "/uploader/docs/core-concepts/protocols"
-      },
-      {
-        "title": "Cloud Uploads",
-        "path": "/uploader/docs/core-concepts/cloud-uploads"
       }
     ]
   },
@@ -64,26 +60,12 @@
         "path": "/uploader/docs/cookbook/webtransport-upload"
       },
       {
+        "title": "Cloud Upload (TUS)",
+        "path": "/uploader/docs/cookbook/cloud-uploads-tus"
+      },
+      {
         "title": "Custom Previews",
         "path": "/uploader/docs/cookbook/custom-previews"
-      }
-    ]
-  },
-  {
-    "title": "Cloud Cookbook",
-    "group": "doc",
-    "children": [
-      {
-        "title": "S3 Integration",
-        "path": "/uploader/docs/cookbook/s3-integration"
-      },
-      {
-        "title": "Azure Integration",
-        "path": "/uploader/docs/cookbook/azure-integration"
-      },
-      {
-        "title": "GCS Integration",
-        "path": "/uploader/docs/cookbook/gcs-integration"
       }
     ]
   },
@@ -94,72 +76,6 @@
         "title": "useUploader",
         "kind": 64,
         "path": "/uploader/docs/api/hooks/useUploader",
-        "isDeprecated": false
-      }
-    ],
-    "group": "api"
-  },
-  {
-    "title": "Type Aliases",
-    "children": [
-      {
-        "title": "UploaderErrorCode",
-        "kind": 2097152,
-        "path": "/uploader/docs/api/Type_Aliases/UploaderErrorCode",
-        "isDeprecated": false
-      }
-    ],
-    "group": "api"
-  },
-  {
-    "title": "Variables",
-    "children": [
-      {
-        "title": "ValidationErrorCodes",
-        "kind": 32,
-        "path": "/uploader/docs/api/Variables/ValidationErrorCodes",
-        "isDeprecated": true
-      }
-    ],
-    "group": "api"
-  },
-  {
-    "title": "cloud",
-    "children": [
-      {
-        "title": "AzureAdapterOptions",
-        "kind": 256,
-        "path": "/uploader/docs/api/cloud/AzureAdapterOptions",
-        "isDeprecated": false
-      },
-      {
-        "title": "GCSAdapterOptions",
-        "kind": 256,
-        "path": "/uploader/docs/api/cloud/GCSAdapterOptions",
-        "isDeprecated": false
-      },
-      {
-        "title": "S3AdapterOptions",
-        "kind": 256,
-        "path": "/uploader/docs/api/cloud/S3AdapterOptions",
-        "isDeprecated": false
-      },
-      {
-        "title": "createAzureAdapter",
-        "kind": 64,
-        "path": "/uploader/docs/api/cloud/createAzureAdapter",
-        "isDeprecated": false
-      },
-      {
-        "title": "createGCSAdapter",
-        "kind": 64,
-        "path": "/uploader/docs/api/cloud/createGCSAdapter",
-        "isDeprecated": false
-      },
-      {
-        "title": "createS3Adapter",
-        "kind": 64,
-        "path": "/uploader/docs/api/cloud/createS3Adapter",
         "isDeprecated": false
       }
     ],
@@ -226,12 +142,6 @@
         "title": "ChunkInfo",
         "kind": 256,
         "path": "/uploader/docs/api/types/ChunkInfo",
-        "isDeprecated": false
-      },
-      {
-        "title": "CloudAdapter",
-        "kind": 256,
-        "path": "/uploader/docs/api/types/CloudAdapter",
         "isDeprecated": false
       },
       {
@@ -380,11 +290,6 @@
     "group": "example",
     "children": [
       {
-        "title": "cloud-example",
-        "group": "example",
-        "path": "/uploader/examples/Angular/cloud-example"
-      },
-      {
         "title": "http-example",
         "group": "example",
         "path": "/uploader/examples/Angular/http-example"
@@ -410,11 +315,6 @@
     "title": "jQuery",
     "group": "example",
     "children": [
-      {
-        "title": "cloud-example",
-        "group": "example",
-        "path": "/uploader/examples/jQuery/cloud-example"
-      },
       {
         "title": "http-example",
         "group": "example",
@@ -447,11 +347,6 @@
     "group": "example",
     "children": [
       {
-        "title": "cloud-example",
-        "group": "example",
-        "path": "/uploader/examples/Lit/cloud-example"
-      },
-      {
         "title": "http-example",
         "group": "example",
         "path": "/uploader/examples/Lit/http-example"
@@ -477,11 +372,6 @@
     "title": "Preact",
     "group": "example",
     "children": [
-      {
-        "title": "cloud-example",
-        "group": "example",
-        "path": "/uploader/examples/Preact/cloud-example"
-      },
       {
         "title": "http-example",
         "group": "example",
@@ -509,11 +399,6 @@
     "group": "example",
     "children": [
       {
-        "title": "cloud-example",
-        "group": "example",
-        "path": "/uploader/examples/Qwik/cloud-example"
-      },
-      {
         "title": "http-example",
         "group": "example",
         "path": "/uploader/examples/Qwik/http-example"
@@ -539,11 +424,6 @@
     "title": "React",
     "group": "example",
     "children": [
-      {
-        "title": "cloud-example",
-        "group": "example",
-        "path": "/uploader/examples/React/cloud-example"
-      },
       {
         "title": "http-example",
         "group": "example",
@@ -571,11 +451,6 @@
     "group": "example",
     "children": [
       {
-        "title": "cloud-example",
-        "group": "example",
-        "path": "/uploader/examples/Solid/cloud-example"
-      },
-      {
         "title": "http-example",
         "group": "example",
         "path": "/uploader/examples/Solid/http-example"
@@ -602,11 +477,6 @@
     "group": "example",
     "children": [
       {
-        "title": "cloud-example",
-        "group": "example",
-        "path": "/uploader/examples/Svelte/cloud-example"
-      },
-      {
         "title": "http-example",
         "group": "example",
         "path": "/uploader/examples/Svelte/http-example"
@@ -632,11 +502,6 @@
     "title": "Vanilla",
     "group": "example",
     "children": [
-      {
-        "title": "cloud-example",
-        "group": "example",
-        "path": "/uploader/examples/Vanilla/cloud-example"
-      },
       {
         "title": "dynamic-example",
         "group": "example",
@@ -668,11 +533,6 @@
     "title": "Vue",
     "group": "example",
     "children": [
-      {
-        "title": "cloud-example",
-        "group": "example",
-        "path": "/uploader/examples/Vue/cloud-example"
-      },
       {
         "title": "http-example",
         "group": "example",

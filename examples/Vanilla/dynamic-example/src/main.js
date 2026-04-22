@@ -18,7 +18,7 @@ const PRESETS = {
   http: {
     protocol: 'http',
     http: {
-      endpoint: 'http://localhost:3000/upload',
+      endpoint: 'https://nus.verbpatch.com/upload',
       method: 'POST',
       enableChunking: true,
       maxConcurrentChunks: 3,
@@ -75,7 +75,7 @@ const PRESETS = {
   tus: {
     protocol: 'tus',
     tus: {
-      endpoint: 'http://localhost:3000/tus',
+      endpoint: 'https://nus.verbpatch.com/tus',
       retryDelays: [0, 1000, 3000, 5000],
       metadata: { appName: 'HeadlessDemo' },
       addChunkSizeHeader: true,
