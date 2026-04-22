@@ -37,7 +37,7 @@ export const App = component$(() => {
       retryDelays: [0, 1000, 3000, 5000],
     },
     maxFiles: 10,
-    maxFileSize: 50 * 1024 * 1024, // 50MB
+    maxFileSize: 50 * 1024 * 1024,
     acceptedTypes: ['application/pdf'],
     chunkSize: 500 * 1024,
     maxConcurrent: 2,
@@ -228,7 +228,6 @@ export const App = component$(() => {
         </pre>
       </section>
 
-      {/* Notifications */}
       <div class="notifications-container">
         {notifications.list.map((n) => (
           <div class={`notification ${n.type}`} key={n.id}>

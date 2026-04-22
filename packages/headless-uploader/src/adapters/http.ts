@@ -45,8 +45,6 @@ export function createHttpAdapter(httpConfig: HttpConfig = {}): ProtocolAdapter 
           await uploadSimple(file, fileToUpload, config, httpConfig);
         }
 
-        // If we reached here without an error, but the signal is aborted,
-        // it means we stopped early (paused).
         if (file.abortController?.signal.aborted) {
           return {
             success: false,
@@ -82,13 +80,9 @@ export function createHttpAdapter(httpConfig: HttpConfig = {}): ProtocolAdapter 
       return this.upload(file, config);
     },
 
-    async pause(_fileId: string): Promise<void> {
-      // Logic handled by AbortController in core
-    },
+    async pause(_fileId: string): Promise<void> {},
 
-    async cancel(_fileId: string): Promise<void> {
-      // Logic handled by AbortController in core
-    },
+    async cancel(_fileId: string): Promise<void> {},
   };
 }
 
@@ -200,14 +194,12 @@ async function uploadSimple(
       xhr.timeout = config.timeout;
     }
 
-    // Apply base headers
     if (httpConfig.headers) {
       Object.entries(httpConfig.headers).forEach(([key, value]) => {
         xhr.setRequestHeader(key, value);
       });
     }
 
-    // Apply blueprint headers (overrides)
     if (blueprint?.headers) {
       Object.entries(blueprint.headers).forEach(([key, value]) => {
         xhr.setRequestHeader(key, value);
@@ -337,14 +329,12 @@ async function uploadChunk(
       blueprint?.url || httpConfig.endpoint || '/upload',
     );
 
-    // Apply base headers
     if (httpConfig.headers) {
       Object.entries(httpConfig.headers).forEach(([key, value]) => {
         xhr.setRequestHeader(key, value);
       });
     }
 
-    // Apply blueprint headers (overrides)
     if (blueprint?.headers) {
       Object.entries(blueprint.headers).forEach(([key, value]) => {
         xhr.setRequestHeader(key, value);
@@ -409,13 +399,11 @@ async function uploadWithChunks(
 
   const worker = async () => {
     while (!isTerminated && !uploadFile.abortController?.signal.aborted) {
-      // Find next pending chunk safely
       const myIndex = currentIndex++;
       if (myIndex >= uploadFile.chunks!.length) break;
 
       const chunk = uploadFile.chunks![myIndex];
 
-      // Skip if already completed (from previous attempt)
       if (chunk.status === 'completed') continue;
 
       chunk.status = 'uploading';

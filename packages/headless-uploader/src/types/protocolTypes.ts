@@ -27,20 +27,14 @@ export interface ProtocolAdapter {
   name: string;
   protocol: UploadProtocol;
 
-  // Initialize the protocol (connect, authenticate, etc.)
   initialize?: (config: UploaderConfig) => Promise<void>;
 
-  // Upload a file using this protocol
   upload: (file: UploadFile, config: UploaderConfig) => Promise<ProtocolUploadResult>;
 
-  // Pause upload
   pause?: (uploadId: string) => Promise<void>;
-  // Resume an interrupted upload
   resume?: (file: UploadFile, config: UploaderConfig) => Promise<ProtocolUploadResult>;
-  // Cancel upload
   cancel?: (uploadId: string) => Promise<void>;
 
-  // Cleanup/disconnect
   cleanup?: () => Promise<void>;
 }
 

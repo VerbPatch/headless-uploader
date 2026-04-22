@@ -38,14 +38,14 @@ export class AppComponent {
         },
       },
       maxFiles: 10,
-      maxFileSize: 50 * 1024 * 1024, // 50MB
+      maxFileSize: 50 * 1024 * 1024,
       acceptedTypes: ['application/pdf'],
       chunkSize: 500 * 1024,
       autoRetry: true,
       maxConcurrent: 2,
       enablePreviews: false,
       onBeforeRequest: async (file, chunk) => {
-        // eslint-disable-next-line no-console
+        // eslint-disable-next-line
         console.log(
           `[Auth] Preparing request for ${file.metadata.name}${chunk ? ` (Chunk ${chunk.index})` : ''}`,
         );

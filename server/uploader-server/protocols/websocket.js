@@ -6,7 +6,6 @@ import { ensureDirSync, mergeChunks } from '../utils.js';
 const wsUploads = new Map();
 
 export function setupWebSocket(fastify) {
-  // Add a pre-handler to log incoming WS handshake attempts
   fastify.addHook('onRequest', async (request) => {
     if (request.url === '/ws-upload') {
       console.log(
@@ -16,7 +15,6 @@ export function setupWebSocket(fastify) {
   });
 
   fastify.get('/ws-upload', { websocket: true }, (connection, req) => {
-    // Robustly find the WebSocket instance
     const ws = connection.socket || connection;
 
     if (!ws) {
@@ -26,7 +24,6 @@ export function setupWebSocket(fastify) {
 
     console.log('✅ WS Connection established successfully');
 
-    // Heartbeat mechanism
     ws.isAlive = true;
     ws.on('pong', () => {
       ws.isAlive = true;
@@ -79,7 +76,6 @@ export function setupWebSocket(fastify) {
             const fileId = data.fileId;
             const fileName = data.fileName || '';
 
-            // Validate PDF only
             const isPdf = fileName.toLowerCase().endsWith('.pdf');
             if (!isPdf) {
               console.log(`❌ WS Validation Failed: Non-PDF file attempt: ${fileName}`);

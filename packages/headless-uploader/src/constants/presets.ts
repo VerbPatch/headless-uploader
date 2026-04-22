@@ -3,7 +3,6 @@
  * @ignore
  */
 export const FileTypePresets = {
-  // Images
   IMAGES: ['image/*'],
   IMAGES_COMMON: ['image/jpeg', 'image/png', 'image/gif', 'image/webp'],
   IMAGES_ALL: [
@@ -16,7 +15,6 @@ export const FileTypePresets = {
     'image/tiff',
   ],
 
-  // Videos
   VIDEOS: ['video/*'],
   VIDEOS_COMMON: ['video/mp4', 'video/webm', 'video/ogg'],
   VIDEOS_ALL: [
@@ -28,7 +26,6 @@ export const FileTypePresets = {
     'video/x-matroska',
   ],
 
-  // Audio
   AUDIO: ['audio/*'],
   AUDIO_COMMON: ['audio/mpeg', 'audio/wav', 'audio/ogg'],
   AUDIO_ALL: [
@@ -41,7 +38,6 @@ export const FileTypePresets = {
     'audio/x-m4a',
   ],
 
-  // Documents
   DOCUMENTS: [
     'application/pdf',
     'application/msword',
@@ -73,7 +69,6 @@ export const FileTypePresets = {
     '.pptx',
   ],
 
-  // Archives
   ARCHIVES: [
     'application/zip',
     'application/x-rar-compressed',
@@ -87,7 +82,6 @@ export const FileTypePresets = {
     '.gz',
   ],
 
-  // Code files
   CODE: [
     'text/javascript',
     'text/typescript',
@@ -113,13 +107,10 @@ export const FileTypePresets = {
     '.rs',
   ],
 
-  // Text files
   TEXT: ['text/*', '.txt', '.md', '.log'],
 
-  // All common types (for general uploads)
   ALL_MEDIA: ['image/*', 'video/*', 'audio/*'],
 
-  // Everything except executables (safer default)
   SAFE_FILES: [
     'image/*',
     'video/*',

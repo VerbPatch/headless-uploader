@@ -1,7 +1,6 @@
 import { initUploader, getUploader } from './uploader.js';
 import { formatBytes, formatTime } from '@verbpatch/headless-uploader';
 
-// DOM Elements
 const configEditor = document.getElementById('config-editor');
 const logContainer = document.getElementById('log-container');
 const clearLogsBtn = document.getElementById('clear-logs');
@@ -15,7 +14,6 @@ const totalProgressBar = document.querySelector('#total-progress-bar .fill');
 
 const STORAGE_KEY = 'headless_uploader_config';
 
-// Default Presets - EXHAUSTIVE list of ALL options and events
 const PRESETS = {
   http: {
     protocol: 'http',
@@ -231,7 +229,6 @@ function syncUI() {
   const files = uploader.getFiles();
   const state = uploader.getState();
 
-  // 1. Highlight Active Preset
   document.querySelectorAll('.preset-btn').forEach((btn) => {
     btn.classList.toggle(
       'active',
@@ -240,7 +237,6 @@ function syncUI() {
     );
   });
 
-  // 2. Update Stats View
   stateView.textContent = JSON.stringify(
     state,
     (key, value) => {
@@ -256,10 +252,8 @@ function syncUI() {
     2,
   );
 
-  // 3. Update Total Progress
   totalProgressBar.style.width = `${state.totalProgress.percentage}%`;
 
-  // 4. Render File List
   if (files.length === 0) {
     fileList.innerHTML = '<div class="empty">Queue is empty.</div>';
     return;
@@ -296,7 +290,6 @@ function syncUI() {
       fileList.appendChild(item);
     }
 
-    // Updates
     item.querySelector('.progress-fill').style.width = `${file.progress.percentage}%`;
     item.querySelector('.file-status-badge').textContent = file.status.toUpperCase();
 
@@ -334,10 +327,8 @@ async function handleUpdateConfig() {
   try {
     const config = JSON.parse(configEditor.value);
 
-    // Persist to Local Storage
     localStorage.setItem(STORAGE_KEY, configEditor.value);
 
-    // Update file input 'accept' attribute
     if (config.acceptedTypes && Array.isArray(config.acceptedTypes)) {
       fileInput.setAttribute('accept', config.acceptedTypes.join(','));
     } else {
@@ -352,13 +343,12 @@ async function handleUpdateConfig() {
   }
 }
 
-// Bootstrapper
 async function init() {
   const savedConfigStr = localStorage.getItem(STORAGE_KEY);
   if (savedConfigStr) {
     try {
       const savedConfig = JSON.parse(savedConfigStr);
-      // Merge with presets to ensure new fields are added
+
       const protocol = savedConfig.protocol || 'http';
       const mergedConfig = { ...PRESETS[protocol], ...savedConfig };
       configEditor.value = JSON.stringify(mergedConfig, null, 2);
@@ -374,7 +364,6 @@ async function init() {
   await handleUpdateConfig();
 }
 
-// Listeners
 configEditor.addEventListener('blur', handleUpdateConfig);
 clearLogsBtn.addEventListener('click', () => (logContainer.innerHTML = ''));
 

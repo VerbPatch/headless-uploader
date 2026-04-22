@@ -67,7 +67,7 @@ export function formatTime(seconds: number): string {
  * @description Computes the average upload speed based on bytes loaded and elapsed time.
  */
 export function calculateSpeed(loaded: number, startTime: number): number {
-  const elapsed = (Date.now() - startTime) / 1000; // seconds
+  const elapsed = (Date.now() - startTime) / 1000;
   return elapsed > 0 ? loaded / elapsed : 0;
 }
 

@@ -1,8 +1,3 @@
-// ============================================================================
-// WEBTRANSPORT PROTOCOL ADAPTER
-// Persistent streams per file with pause/resume support
-// ============================================================================
-
 import type {
   ProtocolAdapter,
   ProtocolUploadResult,
@@ -65,7 +60,6 @@ export function createWebTransportAdapter(wtConfig: WebTransportConfig): Protoco
 
       let active = streams.get(file.id);
 
-      // If we have an active stream, we need to handle the new upload attempt
       if (active) {
         // eslint-disable-next-line
         console.log(`Reusing persistent WebTransport stream for ${file.id}`);
@@ -183,7 +177,6 @@ export function createWebTransportAdapter(wtConfig: WebTransportConfig): Protoco
           transport = null;
         });
     } catch (error) {
-      // eslint-disable-next-line
       console.error('WebTransport connection failed:', error);
       transport = null;
       throw error;
@@ -228,7 +221,6 @@ export function createWebTransportAdapter(wtConfig: WebTransportConfig): Protoco
     try {
       active.isStreaming = true;
 
-      // 1. Send init
       // console.log(`Sending WebTransport init for file: ${file.metadata.name}, fileId: ${file.id}, bytes: ${file.progress.loaded}`);
       await writeMessage(
         writer,
@@ -249,14 +241,12 @@ export function createWebTransportAdapter(wtConfig: WebTransportConfig): Protoco
         0,
       );
 
-      // 2. Wait for Ack (Handshake)
       if (reader) {
         // console.log(`Waiting for WebTransport init_ack for ${file.id}...`);
         await waitForMessage(reader, 'init_ack');
         // console.log(`WebTransport handshake successful for ${file.id}`);
       }
 
-      // 3. Stream chunks
       for (let i = startChunk; i < totalChunks; i++) {
         if (signal?.aborted) {
           const err = new UploaderError('Upload paused', {
@@ -289,7 +279,6 @@ export function createWebTransportAdapter(wtConfig: WebTransportConfig): Protoco
         config.onUploadProgress?.(file, file.progress);
       }
 
-      // 4. Send complete
       await writeMessage(
         writer,
         JSON.stringify({
@@ -372,6 +361,7 @@ export function createWebTransportAdapter(wtConfig: WebTransportConfig): Protoco
               return wtMessage;
             } else {
               throw new UploaderError(wtMessage.message || 'Server error', {
+                // eslint-disable-next-line
                 code: (wtMessage as any).code || UploaderErrorCodes.SERVER_ERROR,
                 fileId: wtMessage.fileId,
                 response: wtMessage,

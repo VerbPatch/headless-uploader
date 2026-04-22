@@ -38,7 +38,7 @@ $(function () {
       retryDelays: [0, 1000, 3000, 5000],
     },
     maxFiles: 10,
-    maxFileSize: 50 * 1024 * 1024, // 50MB
+    maxFileSize: 50 * 1024 * 1024,
     acceptedTypes: ['application/pdf'],
     chunkSize: 500 * 1024,
     maxConcurrent: 2,
@@ -46,7 +46,7 @@ $(function () {
     enablePreviews: false,
 
     onBeforeRequest: async (file, chunk) => {
-      // eslint-disable-next-line no-console
+      // eslint-disable-next-line
       console.log(
         '[Auth] Preparing request for ' +
           file.file.name +
@@ -105,7 +105,6 @@ $(function () {
     }
   });
 
-  // Use delegation on $fileList - now safe because .file-item elements are persistent
   $fileList.on('click', '.btn-pause', function () {
     $fileInput.headlessUploader('pauseUpload', $(this).attr('data-id'));
   });
@@ -135,7 +134,6 @@ $(function () {
       renderPending = false;
       const state = $fileInput.headlessUploader('getState');
 
-      // 1. Update Global Stats
       $statsRaw.text(
         JSON.stringify(
           {
@@ -149,7 +147,6 @@ $(function () {
         ),
       );
 
-      // 2. Handle Empty State
       if (state.files.length === 0) {
         $fileList.html('<p>Queue is empty.</p>');
         return;
@@ -157,11 +154,9 @@ $(function () {
         $fileList.empty();
       }
 
-      // 3. Selective Sync of File Items
       state.files.forEach((file) => {
         let $item = $fileList.find(`.file-item[data-id="${file.id}"]`);
 
-        // Create item if it doesn't exist
         if ($item.length === 0) {
           $item = $(`
             <div class="file-item" data-id="${file.id}">
@@ -175,9 +170,7 @@ $(function () {
           $fileList.append($item);
         }
 
-        // Update Dynamic Parts
         $item.find('.status-text').text(`Status: [${file.status.toUpperCase()}]`);
-        // $item.find('.progress-fg').css('width', `${file.progress.percentage}%`);
 
         let info = `${file.progress.percentage.toFixed(1)}%`;
         if (file.status === 'uploading') {
@@ -185,7 +178,6 @@ $(function () {
         }
         $item.find('.progress-info').text(info);
 
-        // Sync Buttons (only if status changed or empty)
         const currentStatus = $item.attr('data-status');
         if (currentStatus !== file.status) {
           $item.attr('data-status', file.status);
@@ -220,7 +212,6 @@ $(function () {
         }
       });
 
-      // 4. Remove deleted files from DOM
       $fileList.find('.file-item').each(function () {
         const id = $(this).attr('data-id');
         if (!state.files.find((f) => f.id === id)) {

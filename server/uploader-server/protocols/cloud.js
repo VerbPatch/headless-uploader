@@ -13,7 +13,6 @@ import 'dotenv/config';
  * PRODUCTION IMPLEMENTATION
  */
 
-// --- AWS S3 Setup ---
 const s3Client = new S3Client({
   region: process.env.AWS_REGION || 'us-east-1',
   credentials: {
@@ -34,7 +33,6 @@ async function generateS3PresignedUrl(fileName, contentType) {
   return await getSignedUrl(s3Client, command, { expiresIn: 3600 });
 }
 
-// --- Azure Blob Storage Setup ---
 let azureBlobServiceClient = null;
 let azureSharedKeyCredential = null;
 
@@ -63,7 +61,7 @@ async function generateAzureSAS(blobName) {
       blobName: timestampedName,
       permissions: BlobSASPermissions.parse('w'),
       startsOn: new Date(),
-      expiresOn: new Date(new Date().valueOf() + 3600 * 1000), // 1 hour
+      expiresOn: new Date(new Date().valueOf() + 3600 * 1000),
     },
     azureSharedKeyCredential,
   ).toString();
@@ -71,7 +69,6 @@ async function generateAzureSAS(blobName) {
   return `https://${process.env.AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net/${containerName}/${timestampedName}?${sas}`;
 }
 
-// --- Google Cloud Storage Setup ---
 let gcsStorage = null;
 if (process.env.GCS_PROJECT_ID) {
   gcsStorage = new Storage({
@@ -91,7 +88,7 @@ async function generateGCSSignedUrl(fileName, contentType) {
   const [url] = await file.getSignedUrl({
     version: 'v4',
     action: 'write',
-    expires: Date.now() + 15 * 60 * 1000, // 15 minutes
+    expires: Date.now() + 15 * 60 * 1000,
     contentType: contentType,
   });
 
@@ -102,7 +99,6 @@ async function generateGCSSignedUrl(fileName, contentType) {
  * Controller setup for Fastify
  */
 export function setupCloud(fastify) {
-  // S3 Presigned URL Endpoint
   fastify.post('/generate-s3-url', async (req, reply) => {
     try {
       const { fileName, contentType } = req.body;
@@ -127,7 +123,6 @@ export function setupCloud(fastify) {
     }
   });
 
-  // Azure SAS Endpoint
   fastify.post('/generate-azure-sas', async (req, reply) => {
     try {
       const { fileName } = req.body;
@@ -150,7 +145,6 @@ export function setupCloud(fastify) {
     }
   });
 
-  // GCS Signed URL Endpoint
   fastify.post('/generate-gcs-url', async (req, reply) => {
     try {
       const { fileName, contentType } = req.body;

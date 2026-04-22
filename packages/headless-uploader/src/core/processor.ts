@@ -62,11 +62,9 @@ export async function uploadFile(
         config.compression.maxHeight,
         config.compression.mimeType,
       );
-      // Store processed file for adapter
       uploadFileData.processedFile = fileToUpload;
     }
 
-    // Use shared adapter or create it
     if (!instance.adapter) {
       const factoryConfig: ProtocolFactoryConfig = {
         protocol: config.protocol || 'http',
@@ -83,7 +81,6 @@ export async function uploadFile(
       await instance.adapter.initialize(config);
     }
 
-    // Execute upload
     const result = await instance.adapter.upload(uploadFileData, config);
 
     if (result.success) {

@@ -13,11 +13,9 @@ import { setupCloud } from './protocols/cloud.js';
 import { setupWebSocket } from './protocols/websocket.js';
 
 const start = async () => {
-  // Ensure directories exist
   ensureDirSync(config.UPLOADS_DIR);
   ensureDirSync(config.CHUNKS_DIR);
 
-  // Start background cleanup job
   startCleanupJob();
 
   const fastify = Fastify({
@@ -26,37 +24,33 @@ const start = async () => {
     keepAliveTimeout: 0,
   });
 
-  // Register Plugins
   await fastify.register(cors, corsOptions);
   await fastify.register(multipart, {
     limits: {
       fieldNameSize: 100,
       fieldSize: 100,
       fields: 10,
-      fileSize: 1024 * 1024 * 100, // 10GB limit
+      fileSize: 1024 * 1024 * 100,
       files: 1,
     },
   });
   await fastify.register(websocket, {
-    maxPayload: 1024 * 1024 * 100, // 512MB limit
+    maxPayload: 1024 * 1024 * 100,
   });
   await fastify.register(fastifyStatic, {
     root: config.UPLOADS_DIR,
     prefix: '/uploads/',
   });
 
-  // Health Check
   fastify.get('/health', async () => {
     return 'OK';
   });
 
-  // --- Implementations ---
   setupHTTP(fastify);
   setupTUS(fastify);
   setupCloud(fastify);
   setupWebSocket(fastify);
 
-  // Start Servers
   const protocol = 'http';
   const listenTarget = process.env.PORT || config.APP_PORT;
   const isPipe = isNaN(Number(listenTarget));

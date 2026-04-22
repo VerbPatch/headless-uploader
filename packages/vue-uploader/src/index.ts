@@ -21,7 +21,6 @@ export interface VueUploader extends Omit<UploaderInterface, 'getState'> {
  * @returns The uploader instance and its reactive state
  */
 export function useUploader(config: UploaderConfig = {}): VueUploader {
-  // Use shallowReactive for the root state object so we can replace arrays directly
   const state = shallowReactive<UploaderState>({
     files: [],
     uploadingFiles: [],
@@ -37,7 +36,6 @@ export function useUploader(config: UploaderConfig = {}): VueUploader {
     if (!uploader) return;
 
     const raw = uploader.getState();
-    // Replace arrays with new instances to trigger Vue's reactivity
     state.files = raw.files.map((f) => ({ ...f, progress: { ...f.progress } }));
     state.uploadingFiles = raw.uploadingFiles.map((f) => ({ ...f, progress: { ...f.progress } }));
     state.completedFiles = raw.completedFiles.map((f) => ({ ...f, progress: { ...f.progress } }));
@@ -133,7 +131,6 @@ export function useUploader(config: UploaderConfig = {}): VueUploader {
   } catch (e) {
     // eslint-disable-next-line
     console.error(e);
-    // Ignore error if not called during component setup
   }
 
   return {

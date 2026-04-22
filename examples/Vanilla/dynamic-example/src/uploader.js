@@ -30,13 +30,11 @@ async function fetchWTFingerprint(onEvent) {
  * Initialize or Re-initialize the uploader
  */
 export async function initUploader(config, onEvent) {
-  // 1. Cleanup existing instance
   if (uploader) {
     onEvent('info', '[System] Destroying existing uploader instance...');
     await uploader.destroy();
   }
 
-  // 2. Handle special WebTransport initialization if needed
   if (config.protocol === 'webtransport' && config.webtransport) {
     const fingerprint = await fetchWTFingerprint(onEvent);
     if (fingerprint) {
@@ -48,11 +46,9 @@ export async function initUploader(config, onEvent) {
 
   const { onStateChange, ...restConfig } = config;
 
-  // 3. Map JSON "flags" to actual logic and logging
   const enhancedConfig = {
     ...restConfig,
 
-    // Custom Validator Demo
     customValidator: config.customValidator
       ? async (file) => {
           onEvent('info', `[Hook] customValidator: Scanning ${file.name}...`);
@@ -134,7 +130,7 @@ export async function initUploader(config, onEvent) {
       if (config.onUploadError) {
         onEvent('error', `[Event] onUploadError: ${file.metadata.name} failed!`);
         onEvent('error', `  -> Reason: ${error.message}`);
-        // eslint-disable-next-line no-console
+        // eslint-disable-next-line
         console.error(`Upload error for ${file.metadata.name}:`, error);
       }
       if (onStateChange) onStateChange();
@@ -196,7 +192,6 @@ export async function initUploader(config, onEvent) {
     },
   };
 
-  // Protocol-Specific Extra Callbacks
   if (config.protocol === 'tus' && config.tus) {
     enhancedConfig.tus = {
       ...config.tus,

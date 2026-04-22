@@ -26,7 +26,7 @@ public static class HttpProtocol
 
         if (!string.IsNullOrEmpty(fileId) && int.TryParse(chunkIndexStr, out var chunkIndex) && int.TryParse(totalChunksStr, out var totalChunks))
         {
-            // Chunked upload
+            
             await ChunkManager.SaveChunkAsync(fileId, chunkIndex, file.OpenReadStream());
 
             if (ChunkManager.AreAllChunksPresent(fileId, totalChunks))
@@ -39,8 +39,8 @@ public static class HttpProtocol
                 }
                 else
                 {
-                    // If finalFileName is null, it means another thread already handled the merge
-                    // We still return success so the client knows this chunk was received
+                    
+                    
                     await context.Response.WriteAsJsonAsync(new { success = true, message = "Chunk received and file merged by another process" });
                 }
             }
@@ -51,7 +51,7 @@ public static class HttpProtocol
         }
         else
         {
-            // Standard single file upload
+            
             var safeFileName = string.IsNullOrEmpty(fileId) 
                 ? $"{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()}-{file.FileName}"
                 : $"{fileId}-{file.FileName}";

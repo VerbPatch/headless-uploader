@@ -11,14 +11,12 @@ function renderFileList() {
     return;
   }
 
-  // Remove placeholder if it exists
   if (fileList.querySelector('p')) {
     fileList.innerHTML = '';
   }
 
   const existingIds = new Set(files.map((f) => f.id));
 
-  // Remove elements that are no longer in the queue
   Array.from(fileList.children).forEach((el) => {
     if (el.dataset.id && !existingIds.has(el.dataset.id)) {
       el.remove();
@@ -42,7 +40,6 @@ function renderFileList() {
       fileList.appendChild(fileItem);
     }
 
-    // Update parts that change
     const statusEl = fileItem.querySelector('.file-status');
     const newStatusText = `Status: [${file.status.toUpperCase()}] • ${formatBytes(file.progress.loaded)} uploaded`;
     if (statusEl.textContent !== newStatusText) {
@@ -56,7 +53,6 @@ function renderFileList() {
       ${file.status === 'uploading' ? `• ${formatBytes(file.progress.speed)}/s • ${formatTime(file.progress.timeRemaining)} left` : ''}
     `;
 
-    // Update controls if status changed
     const controls = fileItem.querySelector('.controls');
     const currentStatus = fileItem.dataset.status;
 
@@ -80,7 +76,6 @@ function renderFileList() {
         buttons = `<button data-action="upload" data-id="${file.id}">Upload</button>`;
       }
 
-      // Always show Remove button, but others depend on status
       controls.innerHTML = `${buttons} <button data-action="remove" data-id="${file.id}">Remove</button>`;
     }
   });
@@ -140,7 +135,7 @@ export function setupUploader() {
       binaryType: 'arraybuffer',
     },
     maxFiles: 10,
-    maxFileSize: 50 * 1024 * 1024, // 50MB
+    maxFileSize: 50 * 1024 * 1024,
     acceptedTypes: ['application/pdf'],
     chunkSize: 500 * 1024,
     maxConcurrent: 2,
@@ -150,7 +145,7 @@ export function setupUploader() {
     onBeforeRequest: async (file, chunk) => {
       const tokenInput = document.getElementById('auth-token');
       const token = tokenInput ? tokenInput.value : '';
-      // eslint-disable-next-line no-console
+      // eslint-disable-next-line
       console.log(
         `[Auth] Preparing request for ${file.metadata.name}${chunk ? ` (Chunk ${chunk.index})` : ''}`,
       );
@@ -171,9 +166,7 @@ export function setupUploader() {
         showNotification(`${err.file.name}: ${err.message}`, 'error');
       });
     },
-    onUploadStart: (file) => {
-      // eslint-disable-next-line
-      console.log('Start:', file.metadata.name);
+    onUploadStart: (_file) => {
       renderFileList();
     },
     onUploadProgress: () => {

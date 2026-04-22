@@ -5,8 +5,8 @@ import { config } from './config.js';
 /**
  * Background job to delete files older than a certain age
  */
-const CLEANUP_INTERVAL = 60 * 1000; // Check every minute
-const MAX_AGE_MS = 2 * 60 * 1000; // 2 minutes
+const CLEANUP_INTERVAL = 60 * 1000;
+const MAX_AGE_MS = 2 * 60 * 1000;
 
 async function performCleanup(dirPath) {
   if (!fs.existsSync(dirPath)) return;
@@ -18,10 +18,8 @@ async function performCleanup(dirPath) {
     const fullPath = path.join(dirPath, entry.name);
 
     if (entry.isDirectory()) {
-      // Recursive cleanup for subdirectories
       await performCleanup(fullPath);
 
-      // If directory is empty after cleanup, remove it (except main protected dirs)
       if (
         fullPath !== config.UPLOADS_DIR &&
         fullPath !== config.CHUNKS_DIR &&
@@ -31,11 +29,10 @@ async function performCleanup(dirPath) {
           fs.rmdirSync(fullPath);
           console.log(`[Cleanup] Removed empty directory: ${entry.name}`);
         } catch {
-          // Ignore errors (e.g. dir not empty anymore)
+          // eslint-disable-next-line
         }
       }
     } else {
-      // Check file age
       try {
         const stats = fs.statSync(fullPath);
         const age = now - stats.mtimeMs;
@@ -55,12 +52,10 @@ export function startCleanupJob() {
   console.log(`[Cleanup] Background job started. Monitoring ${config.UPLOADS_DIR}`);
   console.log(`[Cleanup] Interval: 1m, Max Age: 2m`);
 
-  // Run immediately on start
   performCleanup(config.UPLOADS_DIR).catch((err) =>
     console.error('[Cleanup] Initial run failed:', err),
   );
 
-  // Then run periodically
   setInterval(() => {
     performCleanup(config.UPLOADS_DIR).catch((err) =>
       console.error('[Cleanup] Periodic run failed:', err),

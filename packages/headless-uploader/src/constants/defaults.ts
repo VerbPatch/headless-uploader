@@ -43,11 +43,11 @@ export const DEFAULT_CONFIG: Required<
     maxConcurrentChunks: 3,
   },
   maxFiles: 10,
-  maxFileSize: 10 * 1024 * 1024, // 10MB
+  maxFileSize: 10 * 1024 * 1024,
   minFileSize: 0,
   acceptedTypes: [],
   allowDuplicates: true,
-  chunkSize: 1024 * 1024, // 1MB
+  chunkSize: 1024 * 1024,
   autoUpload: false,
   maxConcurrent: 3,
   autoRetry: true,

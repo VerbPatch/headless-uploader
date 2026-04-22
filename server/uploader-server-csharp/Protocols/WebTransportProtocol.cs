@@ -54,7 +54,7 @@ public static class WebTransportProtocol
             var connectionContext = await session.AcceptStreamAsync(CancellationToken.None);
             if (connectionContext == null) break;
 
-            // Simple check: if we can't write, it's unidirectional
+            
             if (connectionContext.Transport.Output == null)
             {
                 Console.WriteLine("📥 Accepted unidirectional stream");
@@ -78,12 +78,12 @@ public static class WebTransportProtocol
         {
             while (true)
             {
-                // 1. Read message type (1 byte)
+                
                 var typeBuf = await ReadExactAsync(readerStream, 1);
                 if (typeBuf == null) break;
-                byte msgType = typeBuf[0]; // 0 = JSON, 1 = Binary
+                byte msgType = typeBuf[0]; 
 
-                // 2. Read message length (4 bytes)
+                
                 var lenBuf = await ReadExactAsync(readerStream, 4);
                 if (lenBuf == null) 
                 {
@@ -92,7 +92,7 @@ public static class WebTransportProtocol
                 }
                 uint msgLen = BinaryPrimitives.ReadUInt32LittleEndian(lenBuf);
 
-                // 3. Read message content
+                
                 var msgBuf = await ReadExactAsync(readerStream, (int)msgLen);
                 if (msgBuf == null)
                 {
@@ -100,7 +100,7 @@ public static class WebTransportProtocol
                     break;
                 }
 
-                // 4. Process
+                
                 if (msgType == 0)
                 {
                     var text = Encoding.UTF8.GetString(msgBuf);

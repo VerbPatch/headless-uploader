@@ -148,8 +148,6 @@ export function createTusAdapter(tusConfig: TusConfig): ProtocolAdapter {
 
               const payload = (uploadInstance as unknown as { url: string }).url;
 
-              // TUS success doesn't always provide a payload in all versions
-              // We pass the URL as the payload
               tusConfig.onSuccess?.(successPayload);
 
               resolve({

@@ -19,7 +19,7 @@ async function fetchWebTransportConfig() {
     const response = await fetch('http://localhost:3000/webtransport-config');
     if (response.ok) return await response.json();
   } catch (err) {
-    // eslint-disable-next-line no-console
+    // eslint-disable-next-line
     console.warn('WT config fetch failed:', err);
   }
   return null;
@@ -49,7 +49,7 @@ export const App = component$(() => {
       congestionControl: 'throughput',
     },
     maxFiles: 10,
-    maxFileSize: 50 * 1024 * 1024, // 50MB
+    maxFileSize: 50 * 1024 * 1024,
     acceptedTypes: ['application/pdf'],
     chunkSize: 500 * 1024,
     maxConcurrent: 2,
@@ -264,7 +264,6 @@ export const App = component$(() => {
         </pre>
       </section>
 
-      {/* Notifications */}
       <div class="notifications-container">
         {notifications.list.map((n) => (
           <div class={`notification ${n.type}`} key={n.id}>

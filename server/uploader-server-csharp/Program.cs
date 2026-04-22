@@ -9,16 +9,16 @@ using Microsoft.AspNetCore.Http.Features;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 1. Configure Kestrel for HTTP/1, HTTP/2, and HTTP/3
+
 builder.WebHost.ConfigureKestrel((context, options) =>
 {
-    // Standard HTTP/1 & 2 on port 3000
+    
     options.ListenAnyIP(Config.AppPort, listenOptions =>
     {
         listenOptions.Protocols = HttpProtocols.Http1AndHttp2;
     });
 
-    // HTTP/3 (WebTransport) on port 4443
+    
     options.ListenAnyIP(Config.WebTransportPort, listenOptions =>
     {
         listenOptions.Protocols = HttpProtocols.Http3;
@@ -29,11 +29,11 @@ builder.WebHost.ConfigureKestrel((context, options) =>
         if (File.Exists(certPath) && File.Exists(keyPath))
         {
             try {
-                // Load certificate with private key
+                
                 var cert = X509Certificate2.CreateFromPemFile(certPath, keyPath);
                 
-                // On Windows, Kestrel/Schannel often needs the certificate to be "processed" 
-                // into a PFX-style format to correctly handle the private key association.
+                
+                
                 if (OperatingSystem.IsWindows())
                 {
                     var pfx = cert.Export(X509ContentType.Pfx);
@@ -56,7 +56,7 @@ builder.WebHost.ConfigureKestrel((context, options) =>
     });
 });
 
-// 2. Add Services
+
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
@@ -70,7 +70,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// --- Initialize Config ---
+
 var webRootPath = app.Environment.WebRootPath;
 if (string.IsNullOrEmpty(webRootPath))
 {
@@ -78,13 +78,13 @@ if (string.IsNullOrEmpty(webRootPath))
 }
 Config.Initialize(webRootPath);
 
-// 3. Configure Pipeline
+
 app.UseCors();
 
-// Diagnostic & Alt-Svc Middleware
+
 app.Use(async (context, next) =>
 {
-    // Tell the browser that HTTP/3 is available on port 4443
+    
     context.Response.Headers.Append("Alt-Svc", $"h3=\":{Config.WebTransportPort}\"");
     
     if (context.Request.Path != "/webtransport-config")
@@ -92,7 +92,7 @@ app.Use(async (context, next) =>
         Console.WriteLine($"🔍 Request: {context.Request.Method} {context.Request.Path} (Protocol: {context.Request.Protocol})");
     }
     
-    // Check for WebTransport feature
+    
     var wtFeature = context.Features.Get<IHttpWebTransportFeature>();
     if (wtFeature != null && wtFeature.IsWebTransportRequest)
     {
@@ -105,19 +105,19 @@ app.Use(async (context, next) =>
 app.UseWebSockets();
 app.UseStaticFiles();
 
-// --- Protocol Endpoints ---
+
 
 app.MapTus("/tus", ctx => Task.FromResult(TusProtocol.GetTusConfiguration(ctx)));
 app.MapPost("/upload", UploaderServer.Protocols.HttpProtocol.HandleUploadAsync);
 app.Map("/ws-upload", WebSocketProtocol.HandleWebSocketAsync);
 
-// WebTransport Upload
+
 app.Map("/wt-upload", async (HttpContext context) => {
     Console.WriteLine("🎯 WebTransport Endpoint (/wt-upload) matched");
     await WebTransportProtocol.HandleWebTransportAsync(context);
 });
 
-// WebTransport Config
+
 app.MapGet("/webtransport-config", () => {
     var certPath = Path.Combine(AppContext.BaseDirectory, "cert.pem");
     if (File.Exists(certPath)) {
@@ -141,7 +141,7 @@ app.MapGet("/debug-wt", (HttpContext context) => {
     });
 });
 
-// Root info
+
 app.MapGet("/", () => "Uploader Server (.NET) is running.\n" +
                     $"- HTTP: http://127.0.0.1:{Config.AppPort}/upload\n" +
                     $"- TUS: http://127.0.0.1:{Config.AppPort}/tus\n" +

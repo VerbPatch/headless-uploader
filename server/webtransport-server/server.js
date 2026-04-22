@@ -9,11 +9,9 @@ import { startCleanupJob } from './cleanup.js';
 import { setupWebTransport, getWebTransportFingerprint } from './protocols/webtransport.js';
 
 const start = async () => {
-  // Ensure directories exist
   ensureDirSync(config.UPLOADS_DIR);
   ensureDirSync(config.CHUNKS_DIR);
 
-  // Start background cleanup job
   startCleanupJob();
 
   const fastify = Fastify({
@@ -22,19 +20,16 @@ const start = async () => {
     keepAliveTimeout: 0,
   });
 
-  // Register Plugins
   await fastify.register(cors, corsOptions);
   await fastify.register(fastifyStatic, {
     root: config.UPLOADS_DIR,
     prefix: '/uploads/',
   });
 
-  // Health Check
   fastify.get('/health', async () => {
     return 'OK';
   });
 
-  // --- WebTransport Setup ---
   setupWebTransport();
 
   fastify.get('/webtransport-config', async () => {
@@ -47,7 +42,6 @@ const start = async () => {
     return reply.type('text/html').send(html);
   });
 
-  // Start HTTP Server (for config and static files)
   const listenTarget = process.env.PORT || config.APP_PORT;
   const isPipe = isNaN(Number(listenTarget));
   const listenOptions = isPipe

@@ -1,8 +1,3 @@
-// ============================================================================
-// WEBSOCKET PROTOCOL ADAPTER
-// Persistent connection per file with pause/resume support
-// ============================================================================
-
 import type {
   ProtocolAdapter,
   ProtocolUploadResult,
@@ -43,7 +38,6 @@ export function createWebSocketAdapter(wsConfig: WebSocketConfig): ProtocolAdapt
       clearInterval(conn.heartbeatInterval);
 
       if (conn.ws.readyState === WebSocket.OPEN || conn.ws.readyState === WebSocket.CONNECTING) {
-        // Ensure reason is within 123 bytes limit for WebSocket close
         const safeReason = reason.substring(0, 100);
         try {
           conn.ws.close(code, safeReason);
@@ -251,6 +245,7 @@ export function createWebSocketAdapter(wsConfig: WebSocketConfig): ProtocolAdapt
                 `WebSocket closed: ${event.reason || 'Unknown reason'}`,
                 {
                   fileId: file.id,
+                  // eslint-disable-next-line
                   code: String(event.code) as any,
                 },
               );
@@ -302,7 +297,6 @@ async function uploadFileInChunks(
   const startChunk = Math.floor((file.progress.loaded || 0) / chunkSize);
   let uploadedBytes = file.progress.loaded || 0;
 
-  // 1. Send Init (Auth included)
   socket.send(
     JSON.stringify({
       type: 'init',
@@ -320,7 +314,6 @@ async function uploadFileInChunks(
     }),
   );
 
-  // 2. Wait for Ack from server (Handshake)
   await new Promise<void>((resolve, reject) => {
     connection.onInitAck = () => {
       connection.onInitAck = undefined;

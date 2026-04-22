@@ -36,7 +36,6 @@ export function useUploader(config: UploaderConfig = {}): SolidUploader {
   function refresh() {
     if (!uploader) return;
     const rawState = uploader.getState();
-    // Deep clone state to ensure Solid's store reactivity picks up changes
     const newState: UploaderState = {
       ...rawState,
       files: rawState.files.map((f) => ({ ...f, progress: { ...f.progress } })),
@@ -125,7 +124,6 @@ export function useUploader(config: UploaderConfig = {}): SolidUploader {
     },
   });
 
-  // Initial sync
   refresh();
 
   onCleanup(() => {

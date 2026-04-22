@@ -10,7 +10,7 @@ public static class Config
 
     public static void Initialize(string webRootPath)
     {
-        // Use the provided WebRootPath (wwwroot)
+        
         UploadsDir = Path.Combine(webRootPath, "uploads");
         ChunksDir = Path.Combine(webRootPath, "chunks");
 

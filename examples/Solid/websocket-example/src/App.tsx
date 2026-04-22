@@ -14,7 +14,8 @@ export default function App() {
   const [authToken, setAuthToken] = createSignal('verbpatch-secret-token');
   const [isDragOver, setIsDragOver] = createSignal(false);
   const [notifications, setNotifications] = createSignal<Notification[]>([]);
-  // eslint-disable-next-line no-unassigned-vars
+
+  // eslint-disable-next-line
   let fileInput: HTMLInputElement | undefined;
 
   const showNotification = (message: string, type: NotificationType = 'info') => {
@@ -51,14 +52,14 @@ export default function App() {
       binaryType: 'arraybuffer',
     },
     maxFiles: 10,
-    maxFileSize: 50 * 1024 * 1024, // 50MB
+    maxFileSize: 50 * 1024 * 1024,
     acceptedTypes: ['application/pdf'],
     chunkSize: 500 * 1024,
     maxConcurrent: 2,
     autoRetry: true,
     enablePreviews: false,
     onBeforeRequest: async (file, chunk) => {
-      // eslint-disable-next-line no-console
+      // eslint-disable-next-line
       console.log(
         '[Auth] Preparing request for ' +
           file.file.name +
@@ -214,7 +215,6 @@ export default function App() {
         </pre>
       </section>
 
-      {/* Notifications */}
       <div class="notifications-container">
         <For each={notifications()}>
           {(n) => (

@@ -43,8 +43,8 @@ export interface UploadProgress {
   loaded: number;
   total: number;
   percentage: number;
-  speed: number; // bytes per second
-  timeRemaining: number; // seconds
+  speed: number;
+  timeRemaining: number;
   startTime: number;
   elapsedTime: number;
 }
@@ -65,7 +65,7 @@ export interface FileMetadata {
     width: number;
     height: number;
   };
-  duration?: number; // For video/audio
+  duration?: number;
 }
 
 /**
@@ -101,9 +101,9 @@ export interface ChunkInfo {
  */
 export interface RetryConfig {
   maxRetries: number;
-  retryDelay: number; // milliseconds
-  retryDelayMultiplier: number; // for exponential backoff
-  retryableStatuses: number[]; // HTTP status codes to retry
+  retryDelay: number;
+  retryDelayMultiplier: number;
+  retryableStatuses: number[];
 }
 
 /**
@@ -114,7 +114,7 @@ export interface RetryConfig {
  */
 export interface CompressionOptions {
   enabled: boolean;
-  quality: number; // 0-1 for images
+  quality: number;
   maxWidth?: number;
   maxHeight?: number;
   mimeType?: string;
@@ -145,7 +145,6 @@ export class UploaderError extends Error {
       this.fileId = options.fileId;
       this.response = options.response;
     }
-    // Set the prototype explicitly for built-in classes extension
     Object.setPrototypeOf(this, UploaderError.prototype);
   }
 }
@@ -248,7 +247,6 @@ export interface UploaderConfig {
   /** Configuration for WebTransport protocol */
   webtransport?: WebTransportConfig;
 
-  // File constraints
   /** Maximum number of files allowed in the queue */
   maxFiles?: number;
   /** Maximum size for a single file in bytes */
@@ -260,23 +258,19 @@ export interface UploaderConfig {
   /** Whether to allow adding the same file multiple times */
   allowDuplicates?: boolean;
 
-  // Chunking
   /** Size of each chunk in bytes for chunked uploads */
   chunkSize?: number;
 
-  // Upload behavior
   /** Whether to start uploading immediately after adding files */
   autoUpload?: boolean;
   /** Maximum number of files to upload simultaneously */
   maxConcurrent?: number;
 
-  // Retry configuration
   /** Whether to automatically retry failed uploads */
   autoRetry?: boolean;
   /** Detailed retry strategy configuration */
   retryConfig?: RetryConfig;
 
-  // Compression & Preview
   /** Options for client-side image compression */
   compression?: CompressionOptions;
   /** Whether to generate preview URLs for images and videos */
@@ -286,11 +280,9 @@ export interface UploaderConfig {
   /** Maximum height for generated previews */
   previewMaxHeight?: number;
 
-  // Metadata extraction
   /** Whether to extract extended metadata (dimensions, duration) from files */
   extractMetadata?: boolean;
 
-  // Network
   /** Global request timeout in milliseconds */
   timeout?: number;
 

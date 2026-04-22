@@ -1,3 +1,5 @@
+import fs from 'fs';
+import path from 'path';
 import { Server } from '@tus/server';
 import { FileStore } from '@tus/file-store';
 import { config } from '../config.js';
@@ -12,7 +14,6 @@ export function initTUS() {
       directory: config.UPLOADS_DIR,
     }),
     onUploadCreate: async (req, upload) => {
-      // Validate PDF only for creation requests
       if (req.method === 'POST') {
         const filetype = upload.metadata.filetype || '';
         const filename = upload.metadata.filename || '';
@@ -33,6 +34,18 @@ export function initTUS() {
         }
       }
     },
+    onUploadFinish: async (req, upload) => {
+      const { id, metadata } = upload;
+      if (metadata.filename) {
+        const oldPath = path.join(config.UPLOADS_DIR, id);
+        const newPath = path.join(config.UPLOADS_DIR, `${Date.now()}-${metadata.filename}`);
+
+        if (fs.existsSync(oldPath)) {
+          fs.renameSync(oldPath, newPath);
+          console.log(`✅ TUS: File ${id} renamed to ${path.basename(newPath)}`);
+        }
+      }
+    },
   });
   return tusServer;
 }
@@ -42,12 +55,10 @@ export function setupTUS(fastify) {
     initTUS();
   }
 
-  // Allow TUS content types to pass through without Fastify parsing them
   fastify.addContentTypeParser('application/offset+octet-stream', (request, payload, done) => {
     done(null, payload);
   });
 
-  // Fastify route for TUS
   fastify.all('/tus', (req, reply) => {
     handleTusRequest(req, reply);
   });
@@ -58,12 +69,10 @@ export function setupTUS(fastify) {
 }
 
 function handleTusRequest(req, reply) {
-  // Allow OPTIONS requests for CORS preflight
   if (req.method === 'OPTIONS') {
     return tusServer.handle(req.raw, reply.raw);
   }
 
-  // Simple Auth Check
   const authHeader = req.headers.authorization;
   if (
     config.AUTH_TOKEN &&
@@ -77,6 +86,5 @@ function handleTusRequest(req, reply) {
     });
   }
 
-  // TUS handles the response using raw node objects
   tusServer.handle(req.raw, reply.raw);
 }

@@ -7,7 +7,6 @@ import {
   UploadFile,
 } from '@verbpatch/headless-uploader';
 
-// Re-export core types and utilities
 export * from '@verbpatch/headless-uploader';
 
 /**
@@ -17,14 +16,12 @@ export * from '@verbpatch/headless-uploader';
 export interface QwikUploader {
   state: UploaderState;
 
-  // Getters
   getFiles: QRL<() => UploadFile[]>;
   getFile: QRL<(fileId: string) => UploadFile | undefined>;
   getState: QRL<() => UploaderState>;
   getPreview: QRL<(fileId: string) => string | undefined>;
   getTotalProgress: QRL<() => { loaded: number; total: number; percentage: number }>;
 
-  // Actions
   addFiles: QRL<(fileList: FileList | File[]) => Promise<void>>;
   removeFile: QRL<(fileId: string) => Promise<void>>;
   clearAll: QRL<() => Promise<void>>;
@@ -47,7 +44,6 @@ export interface QwikUploader {
  * Manages a persistent uploader instance and provides reactive state.
  */
 export function useUploader(config: UploaderConfig = {}): QwikUploader {
-  // 1. Core reactive store for state and uploader instance
   const store = useStore({
     state: {
       files: [],
@@ -59,18 +55,14 @@ export function useUploader(config: UploaderConfig = {}): QwikUploader {
       isUploading: false,
       isPaused: false,
     } as UploaderState,
-    // Use noSerialize for the raw uploader instance as it's not serializable
     instance: undefined as NoSerialize<UploaderInterface> | undefined,
   });
 
-  // 2. Persistent Client-side Initialization
   useVisibleTask$(({ cleanup }) => {
-    // Utility to sync headless state to Qwik store
     const refresh = () => {
       if (!store.instance) return;
       const s = store.instance.getState();
 
-      // Deep clone only what's necessary for reactivity
       store.state = {
         ...s,
         files: s.files.map((f) => ({ ...f, progress: { ...f.progress } })),
@@ -78,7 +70,6 @@ export function useUploader(config: UploaderConfig = {}): QwikUploader {
       };
     };
 
-    // Initialize headless uploader with hooked callbacks
     const uploader = createUploader({
       ...config,
       onFilesAdded: (f) => {
@@ -133,27 +124,22 @@ export function useUploader(config: UploaderConfig = {}): QwikUploader {
 
     store.instance = noSerialize(uploader);
 
-    // Initial sync
     refresh();
 
     cleanup(() => uploader.destroy());
   });
 
-  // 3. Return a stable, QRL-friendly API
-  // We wrap methods to ensure they only run on client and trigger refresh
   return {
     get state() {
       return store.state;
     },
 
-    // Getters
     getFiles: $(() => store.instance?.getFiles() || []),
     getFile: $((id: string) => store.instance?.getFile(id)),
     getState: $(() => store.instance?.getState() || store.state),
     getPreview: $((id: string) => store.instance?.getPreview(id)),
     getTotalProgress: $(() => store.instance?.getTotalProgress() || store.state.totalProgress),
 
-    // Actions
     addFiles: $(async (files: FileList | File[]) => {
       await store.instance?.addFiles(files);
     }),

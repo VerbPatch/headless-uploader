@@ -67,7 +67,7 @@ export default function App() {
       getUploadUrl: getS3PresignedUrl,
     }),
     maxFiles: 5,
-    maxFileSize: 100 * 1024 * 1024, // 100MB
+    maxFileSize: 100 * 1024 * 1024,
     autoUpload: false,
     enablePreviews: true,
     previewMaxWidth: 100,

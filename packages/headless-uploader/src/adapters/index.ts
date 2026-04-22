@@ -22,9 +22,7 @@ function createCloudProtocolWrapper(cloudAdapter: CloudAdapter): ProtocolAdapter
     name: cloudAdapter.name,
     protocol: 'cloud',
 
-    async initialize() {
-      // Cloud adapters usually don't need explicit initialization at connection level
-    },
+    async initialize() {},
 
     async upload(file, config) {
       try {
@@ -152,29 +150,26 @@ export function getRecommendedProtocol(
     ...browserCapabilities,
   };
 
-  // Very large files (>100MB) - Use TUS
   if (fileSize > 100 * 1024 * 1024) {
     return 'tus';
   }
 
-  // Medium files (10MB-100MB) - Use modern protocols if available
   if (fileSize > 10 * 1024 * 1024) {
     if (caps.supportsWebTransport) {
-      return 'webtransport'; // Best performance
+      return 'webtransport';
     }
-    return 'tus'; // Fallback with resumability
+    return 'tus';
   }
 
-  // Small files (<10MB) - Any protocol works
   if (caps.supportsWebTransport) {
-    return 'webtransport'; // Best performance
+    return 'webtransport';
   }
 
   if (caps.supportsWebSocket) {
-    return 'websocket'; // Real-time feedback
+    return 'websocket';
   }
 
-  return 'http'; // Standard HTTP fallback
+  return 'http';
 }
 
 /**
@@ -185,7 +180,7 @@ export function getRecommendedProtocol(
  */
 export const PROTOCOL_FEATURES = {
   http: {
-    resumable: 'conditional', // Only if chunking is enabled
+    resumable: 'conditional',
     chunking: true,
     support: 'universal',
   },
@@ -195,17 +190,17 @@ export const PROTOCOL_FEATURES = {
     support: 'universal',
   },
   websocket: {
-    resumable: 'native', // Internal chunking supports pause/resume
+    resumable: 'native',
     chunking: true,
     support: 'modern',
   },
   webtransport: {
-    resumable: 'native', // Internal streaming supports pause/resume
+    resumable: 'native',
     chunking: true,
-    support: 'bleeding-edge', // Chrome 97+, Edge 97+, Firefox 114+
+    support: 'bleeding-edge',
   },
   cloud: {
-    resumable: 'no', // Simple PUT uploads, usually not resumable on client side
+    resumable: 'no',
     chunking: false,
     support: 'universal',
   },
@@ -294,7 +289,6 @@ export function compareProtocols(
     const reasons: string[] = [];
     let score = 0;
 
-    // Base score for support
     if (supported) {
       score += 10;
       reasons.push('Supported in browser');
@@ -303,7 +297,6 @@ export function compareProtocols(
       return { protocol, score: 0, reasons, supported };
     }
 
-    // File size considerations
     if (fileSize > 100 * 1024 * 1024) {
       if (protocol === 'tus') {
         score += 20;
@@ -315,7 +308,6 @@ export function compareProtocols(
       }
     }
 
-    // Requirements
     if (requirements.needsResumability) {
       if (features.resumable === 'native') {
         score += 20;
@@ -326,7 +318,6 @@ export function compareProtocols(
       }
     }
 
-    // Performance bonuses
     if (protocol === 'webtransport') {
       score += 10;
       reasons.push('Best performance (HTTP/3 + QUIC)');
@@ -335,7 +326,6 @@ export function compareProtocols(
     return { protocol, score, reasons, supported };
   });
 
-  // Sort by score descending
   return comparisons.sort((a, b) => b.score - a.score);
 }
 
@@ -344,30 +334,27 @@ export function compareProtocols(
  */
 export const PROTOCOL_USAGE_EXAMPLES = {
   tus: `
-    // TUS - Resumable uploads
     const uploader = useUploader({
       protocol: 'tus',
       tus: {
         endpoint: 'https://api.example.com/files',
-        chunkSize: 1024 * 1024, // 1MB
+        chunkSize: 1024 * 1024,
       }
     });
   `,
 
   websocket: `
-    // WebSocket - Real-time streaming
     const uploader = useUploader({
       protocol: 'websocket',
       websocket: {
         url: 'wss://api.example.com/upload',
-        chunkSize: 64 * 1024, // 64KB for real-time
+        chunkSize: 64 * 1024,
         reconnect: true
       }
     });
   `,
 
   webtransport: `
-    // WebTransport - Cutting-edge low-latency
     const uploader = useUploader({
       protocol: 'webtransport',
       webtransport: {
@@ -379,12 +366,10 @@ export const PROTOCOL_USAGE_EXAMPLES = {
   `,
 
   cloud: `
-    // Cloud - Direct S3/Azure/GCS
     const uploader = useUploader({
       protocol: 'cloud',
       cloudAdapter: createS3Adapter({
         getUploadUrl: async (file) => {
-           // ...
         }
       })
     });

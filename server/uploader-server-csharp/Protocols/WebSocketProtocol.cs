@@ -34,7 +34,7 @@ public static class WebSocketProtocol
 
     private static async Task ProcessWebSocketAsync(WebSocket webSocket, Dictionary<string, Queue<WebSocketMessage>> metadataQueues)
     {
-        var buffer = new byte[1024 * 64]; // 64KB buffer
+        var buffer = new byte[1024 * 64]; 
         
         try
         {
@@ -58,8 +58,8 @@ public static class WebSocketProtocol
                 }
                 else if (result.MessageType == WebSocketMessageType.Binary)
                 {
-                    // For binary messages, we might need to handle multi-part frames if buffer is too small
-                    // But for now, let's assume one chunk per binary message or handle it simply.
+                    
+                    
                     using var ms = new MemoryStream();
                     ms.Write(buffer, 0, result.Count);
                     while (!result.EndOfMessage)
@@ -126,7 +126,7 @@ public static class WebSocketProtocol
 
     private static async Task HandleBinaryMessageAsync(WebSocket webSocket, byte[] data, Dictionary<string, Queue<WebSocketMessage>> metadataQueues)
     {
-        // Find which fileId this belongs to
+        
         foreach (var (fileId, queue) in metadataQueues)
         {
             if (queue.Count > 0)

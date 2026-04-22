@@ -6,7 +6,6 @@ import {
   UploaderInterface,
 } from '@verbpatch/headless-uploader';
 
-// Re-export core types and utilities
 export * from '@verbpatch/headless-uploader';
 
 /**
@@ -23,7 +22,6 @@ export interface AngularUploaderConfig extends UploaderConfig {
 export function useUploader(
   config: AngularUploaderConfig = {},
 ): UploaderInterface & { state: Signal<UploaderState> } {
-  // Resolve dependencies safely from DI or options
   let destroyRef: DestroyRef | null = config.destroyRef ?? null;
   let zone: NgZone | null = config.zone ?? null;
 
@@ -33,10 +31,8 @@ export function useUploader(
   } catch (e) {
     // eslint-disable-next-line
     console.error(e);
-    // Silently fall back if outside injection context
   }
 
-  // Reactive state source
   const _state = signal<UploaderState>({
     files: [],
     uploadingFiles: [],
@@ -59,7 +55,6 @@ export function useUploader(
     else _state.set(next);
   };
 
-  // Initialize core with hooked callbacks
   const uploader = createUploader({
     ...config,
     onFilesAdded: (f) => {
@@ -112,13 +107,10 @@ export function useUploader(
     },
   });
 
-  // Cleanup
   if (destroyRef) destroyRef.onDestroy(() => uploader.destroy());
 
-  // Sync initial state
   refresh();
 
-  // Return clean API with reactive state
   return {
     ...uploader,
     state: _state.asReadonly(),

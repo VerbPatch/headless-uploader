@@ -4,11 +4,11 @@ namespace UploaderServer;
 
 public static class ChunkManager
 {
-    // In-memory storage for active chunk uploads
+    
     private static readonly ConcurrentDictionary<string, ConcurrentDictionary<int, MemoryStream>> ChunkCache = new();
 
-    // Cache for recently merged files to handle concurrent "last chunk" requests
-    // Key: fileId, Value: finalFileName
+    
+    
     private static readonly ConcurrentDictionary<string, string> RecentlyMergedFiles = new();
 
     public static async Task SaveChunkAsync(string fileId, int chunkIndex, Stream chunkStream)
@@ -26,7 +26,7 @@ public static class ChunkManager
 
     public static bool AreAllChunksPresent(string fileId, int totalChunks)
     {
-        // If it's already been merged, we consider it "present" (the work is done)
+        
         if (RecentlyMergedFiles.ContainsKey(fileId)) return true;
 
         if (!ChunkCache.TryGetValue(fileId, out var fileChunks)) return false;
@@ -43,7 +43,7 @@ public static class ChunkManager
 
     public static async Task<string?> MergeChunksAsync(string fileId, string fileName, int totalChunks)
     {
-        // 1. Fast check: was it already merged?
+        
         if (RecentlyMergedFiles.TryGetValue(fileId, out var existingFileName))
         {
             return existingFileName;
@@ -52,13 +52,13 @@ public static class ChunkManager
         await MergeLock.WaitAsync();
         try
         {
-            // 2. Double check inside the lock
+            
             if (RecentlyMergedFiles.TryGetValue(fileId, out existingFileName))
             {
                 return existingFileName;
             }
 
-            // 3. Atomically take the chunks out of the cache. 
+            
             if (!ChunkCache.TryRemove(fileId, out var fileChunks))
             {
                 return null; 
@@ -85,10 +85,10 @@ public static class ChunkManager
                 }
             }
 
-            // 4. Store the result so late-arriving threads can still get the filename
+            
             RecentlyMergedFiles.TryAdd(fileId, finalFileName);
             
-            // 5. Schedule cleanup of the mapping to avoid memory leak (e.g., after 1 minute)
+            
             _ = Task.Delay(TimeSpan.FromMinutes(1)).ContinueWith(_ => {
                 RecentlyMergedFiles.TryRemove(fileId, out string? _);
             });

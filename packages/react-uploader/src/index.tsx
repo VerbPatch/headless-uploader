@@ -11,7 +11,6 @@ export function useUploader(config: UploaderConfig = {}) {
 
   const uploader = useMemo(() => {
     const updateState = () => {
-      // Force a new reference for the whole state to trigger React re-render
       setStateChanged((prev) => prev + 1);
     };
 

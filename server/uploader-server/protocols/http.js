@@ -7,7 +7,6 @@ import { ensureDirSync, mergeChunks } from '../utils.js';
 export function setupHTTP(fastify) {
   fastify.post('/upload', async (req, reply) => {
     try {
-      // Simple Auth Check
       const authHeader = req.headers.authorization;
       if (
         config.AUTH_TOKEN &&
@@ -27,7 +26,6 @@ export function setupHTTP(fastify) {
 
       for await (const part of parts) {
         if (part.file) {
-          // Validate PDF only
           const isPdf =
             part.mimetype === 'application/pdf' ||
             (part.filename && part.filename.toLowerCase().endsWith('.pdf'));
@@ -40,7 +38,6 @@ export function setupHTTP(fastify) {
             });
           }
 
-          // It's a file
           const chunkIndex = body.chunkIndex;
           const totalChunks = body.totalChunks;
           const fileId = body.fileId;
@@ -62,7 +59,6 @@ export function setupHTTP(fastify) {
             path: savePath,
           };
         } else {
-          // It's a field
           body[part.fieldname] = part.value;
         }
       }

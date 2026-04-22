@@ -162,7 +162,6 @@ export function useUploader(config: UploaderConfig = {}): Writable<SvelteUploade
   } catch (e) {
     // eslint-disable-next-line
     console.error(e);
-    // onDestroy might fail if called outside of component initialization
   }
 
   return uploaderStore;

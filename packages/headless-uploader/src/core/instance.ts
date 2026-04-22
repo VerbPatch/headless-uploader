@@ -147,7 +147,7 @@ export async function pauseUploadFile(instance: UploaderInstance, fileId: string
     }
   }
 
-  uploadFileObj.status = 'paused'; // Set status BEFORE aborting to avoid error handling marking it as failed
+  uploadFileObj.status = 'paused';
   await pauseUpload(instance, fileId);
   instance.config.onUploadPause?.(uploadFileObj);
 }

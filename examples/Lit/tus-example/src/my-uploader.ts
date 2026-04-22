@@ -27,14 +27,14 @@ export class MyUploader extends LitElement {
       retryDelays: [0, 1000, 3000, 5000],
     },
     maxFiles: 10,
-    maxFileSize: 50 * 1024 * 1024, // 50MB
+    maxFileSize: 50 * 1024 * 1024,
     acceptedTypes: ['application/pdf'],
     chunkSize: 500 * 1024,
     maxConcurrent: 2,
     autoRetry: true,
     enablePreviews: false,
     onBeforeRequest: async (file, chunk) => {
-      // eslint-disable-next-line no-console
+      // eslint-disable-next-line
       console.log(
         '[Auth] Preparing request for ' +
           file.file.name +

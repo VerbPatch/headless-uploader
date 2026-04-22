@@ -166,9 +166,7 @@ export class UploaderController implements ReactiveController {
     host.addController(this);
   }
 
-  hostConnected() {
-    // Connected
-  }
+  hostConnected() {}
 
   hostDisconnected() {
     this._uploader.destroy();

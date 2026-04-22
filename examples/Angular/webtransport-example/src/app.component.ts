@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
         allowPooling: true,
       },
       maxFiles: 10,
-      maxFileSize: 50 * 1024 * 1024, // 50MB
+      maxFileSize: 50 * 1024 * 1024,
       acceptedTypes: ['application/pdf'],
       chunkSize: 500 * 1024,
       maxConcurrent: 2,
@@ -45,7 +45,7 @@ export class AppComponent implements OnInit {
       enablePreviews: false,
 
       onBeforeRequest: async (file, chunk) => {
-        // eslint-disable-next-line no-console
+        // eslint-disable-next-line
         console.log(
           `[Auth] Preparing WT request for ${file.metadata.name}${chunk ? ` (Chunk ${chunk.index})` : ''}`,
         );
@@ -76,7 +76,6 @@ export class AppComponent implements OnInit {
   showNotification(message: string, type: 'success' | 'error' | 'info' = 'info') {
     const id = Date.now();
     this.notifications.update((prev) => [...prev, { id, message, type }]);
-    //setTimeout(() => this.removeNotification(id), 5000);
   }
 
   removeNotification(id: number) {
@@ -126,7 +125,6 @@ export class AppComponent implements OnInit {
       const response = await fetch('http://localhost:3000/webtransport-config');
       if (response.ok) return await response.json();
     } catch (err) {
-      // eslint-disable-next-line no-console
       console.warn('WT config fetch failed:', err);
     }
     return null;

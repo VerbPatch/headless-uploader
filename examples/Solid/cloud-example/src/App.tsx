@@ -19,7 +19,7 @@ interface Notification {
 export default function App() {
   const [isDragOver, setIsDragOver] = createSignal(false);
   const [notifications, setNotifications] = createSignal<Notification[]>([]);
-  // eslint-disable-next-line no-unassigned-vars
+  // eslint-disable-next-line
   let fileInput: HTMLInputElement | undefined;
 
   const showNotification = (message: string, type: NotificationType = 'info') => {
