@@ -83,6 +83,14 @@ export function useUploader(config: UploaderConfig = {}): Writable<SvelteUploade
       refreshStore();
       config.onFilesAdded?.(files);
     },
+    onQueueChange: (files) => {
+      refreshStore();
+      config.onQueueChange?.(files);
+    },
+    onStateChange: (file) => {
+      refreshStore();
+      config.onStateChange?.(file);
+    },
     onFilesRejected: (errors) => {
       refreshStore();
       config.onFilesRejected?.(errors);
@@ -96,8 +104,9 @@ export function useUploader(config: UploaderConfig = {}): Writable<SvelteUploade
       config.onValidationComplete?.(results);
     },
     onBeforeUpload: async (file) => {
-      await config.onBeforeUpload?.(file);
+      const result = await config.onBeforeUpload?.(file);
       refreshStore();
+      return result;
     },
     onUploadStart: (file) => {
       refreshStore();
@@ -106,6 +115,10 @@ export function useUploader(config: UploaderConfig = {}): Writable<SvelteUploade
     onUploadProgress: (file, progress) => {
       refreshStore();
       config.onUploadProgress?.(file, progress);
+    },
+    onChunkStart: (file, chunk) => {
+      refreshStore();
+      config.onChunkStart?.(file, chunk);
     },
     onChunkComplete: (file, chunk) => {
       refreshStore();
@@ -122,10 +135,6 @@ export function useUploader(config: UploaderConfig = {}): Writable<SvelteUploade
     onUploadCancel: (file) => {
       refreshStore();
       config.onUploadCancel?.(file);
-    },
-    onUploadComplete: (file) => {
-      refreshStore();
-      config.onUploadComplete?.(file);
     },
     onUploadSuccess: (file, response) => {
       refreshStore();

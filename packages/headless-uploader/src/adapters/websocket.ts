@@ -5,6 +5,7 @@ import type {
   WebSocketMessage,
   UploadFile,
   UploaderConfig,
+  ChunkInfo,
 } from '../types';
 import { UploaderError } from '../types/uploader';
 import { UploaderErrorCodes } from '../constants/error-codes';
@@ -348,9 +349,22 @@ async function uploadFileInChunks(
 
     const start = i * chunkSize;
     const end = Math.min(start + chunkSize, file.metadata.size);
-    const chunk = file.file.slice(start, end);
+    const chunkBlob = file.file.slice(start, end);
 
-    const buffer = wsConfig.binaryType === 'arraybuffer' ? await chunk.arrayBuffer() : chunk;
+    const chunkInfo: ChunkInfo = {
+      index: i,
+      start,
+      end,
+      size: end - start,
+      status: 'uploading',
+      blob: chunkBlob,
+      uploadedBytes: 0,
+      retries: 0,
+    };
+
+    config.onChunkStart?.(file, chunkInfo);
+
+    const buffer = wsConfig.binaryType === 'arraybuffer' ? await chunkBlob.arrayBuffer() : chunkBlob;
 
     socket.send(
       JSON.stringify({
@@ -369,6 +383,10 @@ async function uploadFileInChunks(
     file.progress.loaded = uploadedBytes;
     file.progress.percentage = (uploadedBytes / file.metadata.size) * 100;
     config.onUploadProgress?.(file, file.progress);
+
+    chunkInfo.status = 'completed';
+    chunkInfo.uploadedBytes = chunkInfo.size;
+    config.onChunkComplete?.(file, chunkInfo);
   }
 
   if (socket.readyState === WebSocket.OPEN) {

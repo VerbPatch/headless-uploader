@@ -4,6 +4,7 @@ import type {
   WebTransportConfig,
   UploadFile,
   UploaderConfig,
+  ChunkInfo,
 } from '../types';
 import { UploaderError } from '../types/uploader';
 import { UploaderErrorCodes } from '../constants/error-codes';
@@ -260,6 +261,20 @@ export function createWebTransportAdapter(wtConfig: WebTransportConfig): Protoco
         const end = Math.min(start + chunkSize, file.metadata.size);
         const chunkBlob = file.processedFile || file.file;
         const chunk = chunkBlob.slice(start, end);
+
+        const chunkInfo: ChunkInfo = {
+          index: i,
+          start,
+          end,
+          size: end - start,
+          status: 'uploading',
+          blob: chunk,
+          uploadedBytes: 0,
+          retries: 0,
+        };
+
+        config.onChunkStart?.(file, chunkInfo);
+
         const arrayBuffer = await chunk.arrayBuffer();
 
         await writeMessage(
@@ -277,6 +292,10 @@ export function createWebTransportAdapter(wtConfig: WebTransportConfig): Protoco
         file.progress.loaded = end;
         file.progress.percentage = (end / file.metadata.size) * 100;
         config.onUploadProgress?.(file, file.progress);
+
+        chunkInfo.status = 'completed';
+        chunkInfo.uploadedBytes = chunkInfo.size;
+        config.onChunkComplete?.(file, chunkInfo);
       }
 
       await writeMessage(

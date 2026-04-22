@@ -6,6 +6,35 @@ import { sleep, compressImage, isImage } from '../utils';
 import { createProtocolAdapter } from '../adapters';
 
 /**
+ * Update file status and trigger onStateChange
+ */
+function updateFileStatus(
+  instance: UploaderInstance,
+  file: UploadFile,
+  status: UploadFile['status'],
+) {
+  if (file.status !== status) {
+    file.status = status;
+    instance.config.onStateChange?.(file);
+  }
+}
+
+/**
+ * Check if all uploads are complete and trigger onAllComplete
+ */
+function checkAllComplete(instance: UploaderInstance) {
+  const { config, files, activeUploads } = instance;
+  const allFiles = Array.from(files.values());
+  const hasIncomplete = allFiles.some(
+    (f) => f.status === 'pending' || f.status === 'queued' || f.status === 'uploading',
+  );
+
+  if (activeUploads.size === 0 && !hasIncomplete) {
+    config.onAllComplete?.(allFiles);
+  }
+}
+
+/**
  * Retry failed upload with exponential backoff
  */
 async function retryUpload(instance: UploaderInstance, uploadFileData: UploadFile): Promise<void> {
@@ -26,7 +55,7 @@ async function retryUpload(instance: UploaderInstance, uploadFileData: UploadFil
 
   await sleep(delay);
 
-  uploadFileData.status = 'queued';
+  updateFileStatus(instance, uploadFileData, 'queued');
   uploadFileData.error = undefined;
 
   await uploadFile(instance, uploadFileData);
@@ -42,13 +71,17 @@ export async function uploadFile(
   const { config, activeUploads } = instance;
   const { id, file } = uploadFileData;
 
-  uploadFileData.status = 'uploading';
+  updateFileStatus(instance, uploadFileData, 'uploading');
   uploadFileData.abortController = new AbortController();
   activeUploads.set(id, uploadFileData.abortController);
 
   try {
     if (config.onBeforeUpload) {
-      await config.onBeforeUpload(uploadFileData);
+      const result = await config.onBeforeUpload(uploadFileData);
+      if (result === false) {
+        updateFileStatus(instance, uploadFileData, 'cancelled');
+        return;
+      }
     }
 
     config.onUploadStart?.(uploadFileData);
@@ -83,9 +116,8 @@ export async function uploadFile(
     const result = await instance.adapter.upload(uploadFileData, config);
 
     if (result.success) {
-      uploadFileData.status = 'completed';
       uploadFileData.response = result.response;
-      config.onUploadComplete?.(uploadFileData);
+      updateFileStatus(instance, uploadFileData, 'completed');
       config.onUploadSuccess?.(uploadFileData, uploadFileData.response);
     } else {
       throw (
@@ -111,7 +143,7 @@ export async function uploadFile(
       return;
     }
 
-    uploadFileData.status = 'failed';
+    updateFileStatus(instance, uploadFileData, 'failed');
     uploadFileData.error = error;
     config.onUploadError?.(uploadFileData, error);
 
@@ -120,6 +152,7 @@ export async function uploadFile(
     }
   } finally {
     activeUploads.delete(id);
+    checkAllComplete(instance);
   }
 }
 

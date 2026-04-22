@@ -61,6 +61,14 @@ export function useUploader(
       refresh();
       config.onFilesAdded?.(f);
     },
+    onQueueChange: (f) => {
+      refresh();
+      config.onQueueChange?.(f);
+    },
+    onStateChange: (f) => {
+      refresh();
+      config.onStateChange?.(f);
+    },
     onFilesRejected: (e) => {
       refresh();
       config.onFilesRejected?.(e);
@@ -73,9 +81,22 @@ export function useUploader(
       refresh();
       config.onUploadProgress?.(f, p);
     },
-    onUploadComplete: (f) => {
+    onChunkStart: (f, c) => {
       refresh();
-      config.onUploadComplete?.(f);
+      config.onChunkStart?.(f, c);
+    },
+    onChunkComplete: (f, c) => {
+      refresh();
+      config.onChunkComplete?.(f, c);
+    },
+    onUploadSuccess: (f, r) => {
+      refresh();
+      config.onUploadSuccess?.(f, r);
+    },
+    onBeforeUpload: async (f) => {
+      const res = await config.onBeforeUpload?.(f);
+      refresh();
+      return res;
     },
     onUploadError: (f, e) => {
       refresh();

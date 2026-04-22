@@ -17,8 +17,6 @@ export async function uploadAll(instance: UploaderInstance): Promise<void> {
     const batchPromises = batch.map((file) => uploadSingleFile(instance, file.id));
     await Promise.all(batchPromises);
   }
-
-  instance.config.onAllComplete?.(Array.from(instance.files.values()));
 }
 
 /**

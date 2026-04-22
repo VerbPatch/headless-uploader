@@ -52,6 +52,14 @@ export function useUploader(config: UploaderConfig = {}): VueUploader {
       refresh();
       config.onFilesAdded?.(files);
     },
+    onQueueChange: (files) => {
+      refresh();
+      config.onQueueChange?.(files);
+    },
+    onStateChange: (file) => {
+      refresh();
+      config.onStateChange?.(file);
+    },
     onFilesRejected: (errors) => {
       refresh();
       config.onFilesRejected?.(errors);
@@ -65,8 +73,9 @@ export function useUploader(config: UploaderConfig = {}): VueUploader {
       config.onValidationComplete?.(results);
     },
     onBeforeUpload: async (file) => {
-      await config.onBeforeUpload?.(file);
+      const result = await config.onBeforeUpload?.(file);
       refresh();
+      return result;
     },
     onUploadStart: (file) => {
       refresh();
@@ -75,6 +84,10 @@ export function useUploader(config: UploaderConfig = {}): VueUploader {
     onUploadProgress: (file, progress) => {
       refresh();
       config.onUploadProgress?.(file, progress);
+    },
+    onChunkStart: (file, chunk) => {
+      refresh();
+      config.onChunkStart?.(file, chunk);
     },
     onChunkComplete: (file, chunk) => {
       refresh();
@@ -91,10 +104,6 @@ export function useUploader(config: UploaderConfig = {}): VueUploader {
     onUploadCancel: (file) => {
       refresh();
       config.onUploadCancel?.(file);
-    },
-    onUploadComplete: (file) => {
-      refresh();
-      config.onUploadComplete?.(file);
     },
     onUploadSuccess: (file, response) => {
       refresh();

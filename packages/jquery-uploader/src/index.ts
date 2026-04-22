@@ -59,6 +59,16 @@ declare global {
         options.onFilesAdded?.(files);
         $el.trigger('uploader:filesAdded', [files]);
       },
+      onQueueChange: (files: UploadFile[]) => {
+        refresh();
+        options.onQueueChange?.(files);
+        $el.trigger('uploader:queueChange', [files]);
+      },
+      onStateChange: (file: UploadFile) => {
+        refresh();
+        options.onStateChange?.(file);
+        $el.trigger('uploader:stateChange', [file]);
+      },
       onFilesRejected: (errors: ValidationError[]) => {
         refresh();
         options.onFilesRejected?.(errors);
@@ -75,9 +85,10 @@ declare global {
         $el.trigger('uploader:validationComplete', [results]);
       },
       onBeforeUpload: async (file: UploadFile) => {
-        await options.onBeforeUpload?.(file);
+        const result = await options.onBeforeUpload?.(file);
         refresh();
         $el.trigger('uploader:beforeUpload', [file]);
+        return result;
       },
       onUploadStart: (file: UploadFile) => {
         refresh();
@@ -88,6 +99,11 @@ declare global {
         refresh();
         options.onUploadProgress?.(file, progress);
         $el.trigger('uploader:uploadProgress', [file, progress]);
+      },
+      onChunkStart: (file: UploadFile, chunk: ChunkInfo) => {
+        refresh();
+        options.onChunkStart?.(file, chunk);
+        $el.trigger('uploader:chunkStart', [file, chunk]);
       },
       onChunkComplete: (file: UploadFile, chunk: ChunkInfo) => {
         refresh();
@@ -108,11 +124,6 @@ declare global {
         refresh();
         options.onUploadCancel?.(file);
         $el.trigger('uploader:uploadCancel', [file]);
-      },
-      onUploadComplete: (file: UploadFile) => {
-        refresh();
-        options.onUploadComplete?.(file);
-        $el.trigger('uploader:uploadComplete', [file]);
       },
       onUploadSuccess: (file: UploadFile, response: any) => {
         refresh();

@@ -41,6 +41,14 @@ export class UploaderController implements ReactiveController {
         refresh();
         this.options.onFilesAdded?.(files);
       },
+      onQueueChange: (files) => {
+        refresh();
+        this.options.onQueueChange?.(files);
+      },
+      onStateChange: (file) => {
+        refresh();
+        this.options.onStateChange?.(file);
+      },
       onFilesRejected: (errors) => {
         refresh();
         this.options.onFilesRejected?.(errors);
@@ -54,8 +62,9 @@ export class UploaderController implements ReactiveController {
         this.options.onValidationComplete?.(results);
       },
       onBeforeUpload: async (file) => {
-        await this.options.onBeforeUpload?.(file);
+        const result = await this.options.onBeforeUpload?.(file);
         refresh();
+        return result;
       },
       onUploadStart: (file) => {
         refresh();
@@ -64,6 +73,10 @@ export class UploaderController implements ReactiveController {
       onUploadProgress: (file, progress) => {
         refresh();
         this.options.onUploadProgress?.(file, progress);
+      },
+      onChunkStart: (file, chunk) => {
+        refresh();
+        this.options.onChunkStart?.(file, chunk);
       },
       onChunkComplete: (file, chunk) => {
         refresh();
@@ -80,10 +93,6 @@ export class UploaderController implements ReactiveController {
       onUploadCancel: (file) => {
         refresh();
         this.options.onUploadCancel?.(file);
-      },
-      onUploadComplete: (file) => {
-        refresh();
-        this.options.onUploadComplete?.(file);
       },
       onUploadSuccess: (file, response) => {
         refresh();

@@ -64,6 +64,27 @@ async function createUploadFile(file: File, config: UploaderConfig): Promise<Upl
 }
 
 /**
+ * Trigger onQueueChange event
+ */
+function triggerQueueChange(instance: UploaderInstance) {
+  instance.config.onQueueChange?.(Array.from(instance.files.values()));
+}
+
+/**
+ * Update file status and trigger onStateChange
+ */
+function updateFileStatus(
+  instance: UploaderInstance,
+  file: UploadFile,
+  status: UploadFile['status'],
+) {
+  if (file.status !== status) {
+    file.status = status;
+    instance.config.onStateChange?.(file);
+  }
+}
+
+/**
  * Add files to upload queue
  * @param instance - The uploader instance
  * @param fileList - List of files to add
@@ -106,6 +127,7 @@ export async function addFiles(
 
   if (uploadFiles.length > 0) {
     instance.config.onFilesAdded?.(uploadFiles);
+    triggerQueueChange(instance);
   }
 
   if (instance.config.autoUpload && uploadFiles.length > 0) {
@@ -147,7 +169,7 @@ export async function pauseUploadFile(instance: UploaderInstance, fileId: string
     }
   }
 
-  uploadFileObj.status = 'paused';
+  updateFileStatus(instance, uploadFileObj, 'paused');
   await pauseUpload(instance, fileId);
   instance.config.onUploadPause?.(uploadFileObj);
 }
@@ -164,7 +186,7 @@ export async function resumeUploadFile(instance: UploaderInstance, fileId: strin
   const uploadFileObj = instance.files.get(fileId);
   if (!uploadFileObj) return;
 
-  uploadFileObj.status = 'queued';
+  updateFileStatus(instance, uploadFileObj, 'queued');
   instance.config.onUploadResume?.(uploadFileObj);
 
   await uploadSingleFile(instance, fileId);
@@ -182,7 +204,7 @@ export async function cancelUploadFile(instance: UploaderInstance, fileId: strin
   const uploadFileObj = instance.files.get(fileId);
   if (!uploadFileObj) return;
 
-  uploadFileObj.status = 'cancelled';
+  updateFileStatus(instance, uploadFileObj, 'cancelled');
   await cancelUpload(instance, fileId);
   instance.config.onUploadCancel?.(uploadFileObj);
 }
@@ -201,7 +223,7 @@ export async function retryUploadFile(instance: UploaderInstance, fileId: string
 
   uploadFileObj.retries = 0;
   uploadFileObj.error = undefined;
-  uploadFileObj.status = 'queued';
+  updateFileStatus(instance, uploadFileObj, 'queued');
 
   await uploadSingleFile(instance, fileId);
 }
@@ -223,6 +245,7 @@ export async function removeFile(instance: UploaderInstance, fileId: string): Pr
   }
 
   instance.files.delete(fileId);
+  triggerQueueChange(instance);
 }
 
 /**
@@ -243,6 +266,7 @@ export async function clearAll(instance: UploaderInstance): Promise<void> {
 
   await Promise.all(promises);
   instance.files.clear();
+  triggerQueueChange(instance);
 }
 
 /**

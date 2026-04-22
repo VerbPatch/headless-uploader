@@ -407,6 +407,7 @@ async function uploadWithChunks(
       if (chunk.status === 'completed') continue;
 
       chunk.status = 'uploading';
+      config.onChunkStart?.(uploadFile, chunk);
 
       let attempt = 0;
       let success = false;

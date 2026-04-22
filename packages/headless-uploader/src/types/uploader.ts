@@ -287,18 +287,22 @@ export interface UploaderConfig {
   onPreviewGenerated?: (file: UploadFile, preview: string) => void;
   /** Callback fired when files have been successfully added to the queue */
   onFilesAdded?: (files: UploadFile[]) => void;
-  /** Hook to perform actions before a file starts uploading */
-  onBeforeUpload?: (file: UploadFile) => void | Promise<void>;
+  /** Callback fired whenever files are added to or removed from the queue */
+  onQueueChange?: (files: UploadFile[]) => void;
+  /** Callback fired whenever a file's overarching status transitions */
+  onStateChange?: (file: UploadFile) => void;
+  /** Hook to perform actions before a file starts uploading. Return false to skip/cancel. */
+  onBeforeUpload?: (file: UploadFile) => void | boolean | Promise<void | boolean>;
   /** Callback fired when a file upload starts */
   onUploadStart?: (file: UploadFile) => void;
   /** Callback fired periodically to report upload progress */
   onUploadProgress?: (file: UploadFile, progress: UploadProgress) => void;
-  /** Hook to modify the network request before it is sent */
+  /** Hook to modify the network request before it is sent. Throwing or returning void can affect flow. */
   onBeforeRequest?: (file: UploadFile, chunkInfo?: ChunkInfo) => Promise<RequestBlueprint | void>;
+  /** Callback fired immediately before a chunk begins uploading */
+  onChunkStart?: (file: UploadFile, chunk: ChunkInfo) => void;
   /** Callback fired when a single chunk has completed uploading */
   onChunkComplete?: (file: UploadFile, chunk: ChunkInfo) => void;
-  /** Callback fired when all chunks of a file have been sent */
-  onUploadComplete?: (file: UploadFile) => void;
   /** Callback fired when the server confirms a successful upload */
   onUploadSuccess?: (file: UploadFile, response: unknown) => void;
   /** Callback fired when all files in the queue have finished (success or failure) */

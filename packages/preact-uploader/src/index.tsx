@@ -25,6 +25,14 @@ export function useUploader(config: UploaderConfig = {}) {
         configRef.current.onFilesAdded?.(files);
         updateState();
       },
+      onQueueChange: (files) => {
+        configRef.current.onQueueChange?.(files);
+        updateState();
+      },
+      onStateChange: (file) => {
+        configRef.current.onStateChange?.(file);
+        updateState();
+      },
       onFilesRejected: (errors) => {
         configRef.current.onFilesRejected?.(errors);
         updateState();
@@ -38,8 +46,9 @@ export function useUploader(config: UploaderConfig = {}) {
         updateState();
       },
       onBeforeUpload: async (file) => {
-        await configRef.current.onBeforeUpload?.(file);
+        const result = await configRef.current.onBeforeUpload?.(file);
         updateState();
+        return result;
       },
       onUploadStart: (file) => {
         configRef.current.onUploadStart?.(file);
@@ -47,6 +56,10 @@ export function useUploader(config: UploaderConfig = {}) {
       },
       onUploadProgress: (file, progress) => {
         configRef.current.onUploadProgress?.(file, progress);
+        updateState();
+      },
+      onChunkStart: (file, chunk) => {
+        configRef.current.onChunkStart?.(file, chunk);
         updateState();
       },
       onChunkComplete: (file, chunk) => {
@@ -63,10 +76,6 @@ export function useUploader(config: UploaderConfig = {}) {
       },
       onUploadCancel: (file) => {
         configRef.current.onUploadCancel?.(file);
-        updateState();
-      },
-      onUploadComplete: (file) => {
-        configRef.current.onUploadComplete?.(file);
         updateState();
       },
       onUploadSuccess: (file, response) => {
