@@ -364,7 +364,8 @@ async function uploadFileInChunks(
 
     config.onChunkStart?.(file, chunkInfo);
 
-    const buffer = wsConfig.binaryType === 'arraybuffer' ? await chunkBlob.arrayBuffer() : chunkBlob;
+    const buffer =
+      wsConfig.binaryType === 'arraybuffer' ? await chunkBlob.arrayBuffer() : chunkBlob;
 
     socket.send(
       JSON.stringify({

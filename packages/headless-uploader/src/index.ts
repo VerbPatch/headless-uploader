@@ -27,12 +27,7 @@ export type {
   UploadProtocol,
 } from './types/protocolTypes';
 
-export {
-  DEFAULT_CONFIG,
-  FileTypePresets,
-  UploaderErrorCodes,
-  ValidationErrorCodes,
-} from './constants';
+export { DEFAULT_CONFIG, FileTypePresets, UploaderErrorCodes } from './constants';
 
 export { getRecommendedProtocol, compareProtocols, getSupportedProtocols } from './adapters';
 

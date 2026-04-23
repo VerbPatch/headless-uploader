@@ -84,8 +84,30 @@ function docNavigation() {
 export function load(app) {
   let publicPath = '';
 
-  app.renderer.on('beginRender', () => {
+  app.renderer.on('beginRender', (page) => {
     publicPath = (app.options.getValue('publicPath') || '').replace(/\/$/, '');
+  });
+
+  app.renderer.on('beginPage', (page) => {
+    if (page.model.name == 'TusConfig') {
+      const children = page.model.childrenIncludingDocuments;
+      if (Array.isArray(children)) {
+        Array.from(children).forEach((item, index) => {
+          // if (item.name !== 'endpoint') {
+          //   console.log(item.comment);
+          //   item.comment = {
+          //     summary: [{ kind: 'text', text: 'Inherit from tus-js-client package' }],
+          //     getTag: () => {
+          //       return ['rameez'];
+          //     },
+          //   };
+          // }
+          if (item.inheritedFrom?.package === 'tus-js-client') {
+            item.sources = undefined;
+          }
+        });
+      }
+    }
   });
 
   app.renderer.on('endPage', (page) => {
@@ -110,7 +132,7 @@ export function load(app) {
 
           if (publicPath) {
             const normalized = item.path.startsWith('/') ? item.path : '/' + item.path;
-            item.path = publicPath + normalized;
+            item.path = publicPath + normalized.toLowerCase();
           }
         } else {
           item.group = 'api';

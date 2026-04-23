@@ -1,7 +1,7 @@
 /**
  * Generate a unique identifier for files or uploads
  * @returns A cryptographically secure random UUID string
- * @group utils
+ * @ignore
  * @title generateId
  * @description Generates a unique ID using `crypto.randomUUID()`.
  */
@@ -90,7 +90,7 @@ export function calculateTimeRemaining(loaded: number, total: number, speed: num
 /**
  * Pause execution for a specified duration
  * @param ms - Milliseconds to sleep
- * @group utils
+ * @ignore
  * @title sleep
  * @description Simple utility for introducing delays, useful for retry strategies.
  */

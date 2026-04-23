@@ -1,36 +1,44 @@
 # @verbpatch/headless-uploader
 
+## Exception Handling
+
+- [UploaderError](/uploader/docs/api/Exception_Handling/UploaderError)
+- [UploaderErrorCode](/uploader/docs/api/Exception_Handling/UploaderErrorCode)
+- [UploaderErrorCodes](/uploader/docs/api/Exception_Handling/UploaderErrorCodes)
+
+## Protocol Configurations
+
+- [HttpConfig](/uploader/docs/api/Protocol_Configurations/HttpConfig)
+- [TusConfig](/uploader/docs/api/Protocol_Configurations/TusConfig)
+- [WebSocketConfig](/uploader/docs/api/Protocol_Configurations/WebSocketConfig)
+- [WebTransportConfig](/uploader/docs/api/Protocol_Configurations/WebTransportConfig)
+
+## Protocol Selection
+
+- [compareProtocols](/uploader/docs/api/Protocol_Selection/compareProtocols)
+- [getRecommendedProtocol](/uploader/docs/api/Protocol_Selection/getRecommendedProtocol)
+- [getSupportedProtocols](/uploader/docs/api/Protocol_Selection/getSupportedProtocols)
+
+## Types
+
+- [ChunkInfo](/uploader/docs/api/Types/ChunkInfo)
+- [CompressionOptions](/uploader/docs/api/Types/CompressionOptions)
+- [DropEventData](/uploader/docs/api/Types/DropEventData)
+- [FileMetadata](/uploader/docs/api/Types/FileMetadata)
+- [RetryConfig](/uploader/docs/api/Types/RetryConfig)
+- [UploaderConfig](/uploader/docs/api/Types/UploaderConfig)
+- [UploaderInterface](/uploader/docs/api/Types/UploaderInterface)
+- [UploaderState](/uploader/docs/api/Types/UploaderState)
+- [UploadFile](/uploader/docs/api/Types/UploadFile)
+- [UploadProgress](/uploader/docs/api/Types/UploadProgress)
+- [ChunkStatus](/uploader/docs/api/Types/ChunkStatus)
+- [HttpMethod](/uploader/docs/api/Types/HttpMethod)
+- [UploadProtocol](/uploader/docs/api/Types/UploadProtocol)
+- [UploadStatus](/uploader/docs/api/Types/UploadStatus)
+
 ## hooks
 
 - [useUploader](/uploader/docs/api/hooks/useUploader)
-
-## protocols
-
-- [HttpConfig](/uploader/docs/api/protocols/HttpConfig)
-- [TusConfig](/uploader/docs/api/protocols/TusConfig)
-- [WebSocketConfig](/uploader/docs/api/protocols/WebSocketConfig)
-- [WebTransportConfig](/uploader/docs/api/protocols/WebTransportConfig)
-- [compareProtocols](/uploader/docs/api/protocols/compareProtocols)
-- [getRecommendedProtocol](/uploader/docs/api/protocols/getRecommendedProtocol)
-- [getSupportedProtocols](/uploader/docs/api/protocols/getSupportedProtocols)
-
-## types
-
-- [UploaderError](/uploader/docs/api/types/UploaderError)
-- [ChunkInfo](/uploader/docs/api/types/ChunkInfo)
-- [CompressionOptions](/uploader/docs/api/types/CompressionOptions)
-- [DropEventData](/uploader/docs/api/types/DropEventData)
-- [FileMetadata](/uploader/docs/api/types/FileMetadata)
-- [RetryConfig](/uploader/docs/api/types/RetryConfig)
-- [UploaderConfig](/uploader/docs/api/types/UploaderConfig)
-- [UploaderInterface](/uploader/docs/api/types/UploaderInterface)
-- [UploaderState](/uploader/docs/api/types/UploaderState)
-- [UploadFile](/uploader/docs/api/types/UploadFile)
-- [UploadProgress](/uploader/docs/api/types/UploadProgress)
-- [ChunkStatus](/uploader/docs/api/types/ChunkStatus)
-- [HttpMethod](/uploader/docs/api/types/HttpMethod)
-- [UploadProtocol](/uploader/docs/api/types/UploadProtocol)
-- [UploadStatus](/uploader/docs/api/types/UploadStatus)
 
 ## utils
 
@@ -38,7 +46,6 @@
 - [calculateTimeRemaining](/uploader/docs/api/utils/calculateTimeRemaining)
 - [formatBytes](/uploader/docs/api/utils/formatBytes)
 - [formatTime](/uploader/docs/api/utils/formatTime)
-- [generateId](/uploader/docs/api/utils/generateId)
 - [safeBase64](/uploader/docs/api/utils/safeBase64)
 
 ## validation

@@ -5,19 +5,121 @@ description: The public API for interacting with a headless uploader instance.
 
 # UploaderInterface
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:358](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L358)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:450](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L450)
 
 Uploader public interface
 
-## Properties
+## Actions
+
+### updateConfig
+
+> **updateConfig**: (`config`) => `void`
+
+Defined in: [packages/headless-uploader/src/types/uploader.ts:543](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L543)
+
+#### Parameters
+
+##### config
+
+`Partial`\<[`UploaderConfig`](/uploader/docs/api/Types/UploaderConfig)\>
+
+#### Returns
+
+`void`
+
+#### Description
+
+Update the uploader's configuration on the fly
+
+## Event Handlers
+
+### handleDragOver
+
+> **handleDragOver**: (`event`) => `void`
+
+Defined in: [packages/headless-uploader/src/types/uploader.ts:528](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L528)
+
+#### Parameters
+
+##### event
+
+`DragEvent`
+
+#### Returns
+
+`void`
+
+#### Description
+
+Helper for handling dragover events. Sets drop effect.
+
+***
+
+### handleDrop
+
+> **handleDrop**: (`event`) => `Promise`\<`void`\>
+
+Defined in: [packages/headless-uploader/src/types/uploader.ts:533](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L533)
+
+#### Parameters
+
+##### event
+
+`DragEvent`
+
+#### Returns
+
+`Promise`\<`void`\>
+
+#### Description
+
+Helper for handling drop events. Extracts files.
+
+***
+
+### handleFileSelect
+
+> **handleFileSelect**: (`event`) => `Promise`\<`void`\>
+
+Defined in: [packages/headless-uploader/src/types/uploader.ts:538](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L538)
+
+#### Parameters
+
+##### event
+
+`Event`
+
+#### Returns
+
+`Promise`\<`void`\>
+
+#### Description
+
+Helper for handling file input change events. Extracts files.
+
+## Lifecycle
+
+### destroy
+
+> **destroy**: () => `Promise`\<`void`\>
+
+Defined in: [packages/headless-uploader/src/types/uploader.ts:548](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L548)
+
+#### Returns
+
+`Promise`\<`void`\>
+
+#### Description
+
+Cleanup the uploader instance, release memory and abort requests
+
+## Queue Actions
 
 ### addFiles
 
 > **addFiles**: (`fileList`) => `Promise`\<`void`\>
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:371](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L371)
-
-Add files to the upload queue
+Defined in: [packages/headless-uploader/src/types/uploader.ts:481](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L481)
 
 #### Parameters
 
@@ -29,25 +131,9 @@ Add files to the upload queue
 
 `Promise`\<`void`\>
 
-***
+#### Description
 
-### cancelUpload
-
-> **cancelUpload**: (`fileId`) => `Promise`\<`void`\>
-
-Defined in: [packages/headless-uploader/src/types/uploader.ts:386](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L386)
-
-Cancel an active or queued file upload
-
-#### Parameters
-
-##### fileId
-
-`string`
-
-#### Returns
-
-`Promise`\<`void`\>
+Add files to the upload queue. Triggers validation.
 
 ***
 
@@ -55,37 +141,23 @@ Cancel an active or queued file upload
 
 > **clearAll**: () => `Promise`\<`void`\>
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:375](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L375)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:491](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L491)
+
+#### Returns
+
+`Promise`\<`void`\>
+
+#### Description
 
 Cancel all uploads and clear the file list
 
-#### Returns
-
-`Promise`\<`void`\>
-
 ***
 
-### destroy
+### removeFile
 
-> **destroy**: () => `Promise`\<`void`\>
+> **removeFile**: (`fileId`) => `Promise`\<`void`\>
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:399](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L399)
-
-Cleanup the uploader instance and release resources
-
-#### Returns
-
-`Promise`\<`void`\>
-
-***
-
-### getFile
-
-> **getFile**: (`fileId`) => [`UploadFile`](/uploader/docs/api/types/UploadFile) \| `undefined`
-
-Defined in: [packages/headless-uploader/src/types/uploader.ts:362](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L362)
-
-Get a specific file by its identifier
+Defined in: [packages/headless-uploader/src/types/uploader.ts:486](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L486)
 
 #### Parameters
 
@@ -95,21 +167,49 @@ Get a specific file by its identifier
 
 #### Returns
 
-[`UploadFile`](/uploader/docs/api/types/UploadFile) \| `undefined`
+`Promise`\<`void`\>
+
+#### Description
+
+Remove a file from the uploader and cancel its upload if active
+
+## State
+
+### getFile
+
+> **getFile**: (`fileId`) => [`UploadFile`](/uploader/docs/api/Types/UploadFile) \| `undefined`
+
+Defined in: [packages/headless-uploader/src/types/uploader.ts:460](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L460)
+
+#### Parameters
+
+##### fileId
+
+`string`
+
+#### Returns
+
+[`UploadFile`](/uploader/docs/api/Types/UploadFile) \| `undefined`
+
+#### Description
+
+Get a specific file by its identifier
 
 ***
 
 ### getFiles
 
-> **getFiles**: () => [`UploadFile`](/uploader/docs/api/types/UploadFile)[]
+> **getFiles**: () => [`UploadFile`](/uploader/docs/api/Types/UploadFile)[]
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:360](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L360)
-
-Get all files currently in the uploader
+Defined in: [packages/headless-uploader/src/types/uploader.ts:455](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L455)
 
 #### Returns
 
-[`UploadFile`](/uploader/docs/api/types/UploadFile)[]
+[`UploadFile`](/uploader/docs/api/Types/UploadFile)[]
+
+#### Description
+
+Get all files currently in the uploader
 
 ***
 
@@ -117,9 +217,7 @@ Get all files currently in the uploader
 
 > **getPreview**: (`fileId`) => `string` \| `undefined`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:366](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L366)
-
-Get the preview URL for a specific file
+Defined in: [packages/headless-uploader/src/types/uploader.ts:470](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L470)
 
 #### Parameters
 
@@ -131,19 +229,25 @@ Get the preview URL for a specific file
 
 `string` \| `undefined`
 
+#### Description
+
+Get the preview URL for a specific file
+
 ***
 
 ### getState
 
-> **getState**: () => [`UploaderState`](/uploader/docs/api/types/UploaderState)
+> **getState**: () => [`UploaderState`](/uploader/docs/api/Types/UploaderState)
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:364](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L364)
-
-Get a reactive-friendly snapshot of the current state
+Defined in: [packages/headless-uploader/src/types/uploader.ts:465](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L465)
 
 #### Returns
 
-[`UploaderState`](/uploader/docs/api/types/UploaderState)
+[`UploaderState`](/uploader/docs/api/Types/UploaderState)
+
+#### Description
+
+Get a reactive-friendly snapshot of the current state
 
 ***
 
@@ -151,9 +255,7 @@ Get a reactive-friendly snapshot of the current state
 
 > **getTotalProgress**: () => `object`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:368](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L368)
-
-Get the aggregate progress of all files
+Defined in: [packages/headless-uploader/src/types/uploader.ts:475](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L475)
 
 #### Returns
 
@@ -171,65 +273,31 @@ Get the aggregate progress of all files
 
 > **total**: `number`
 
-***
+#### Description
 
-### handleDragOver
+Get the aggregate progress of all files
 
-> **handleDragOver**: (`event`) => `void`
+## Upload Actions
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:391](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L391)
+### cancelUpload
 
-Helper for handling dragover events
+> **cancelUpload**: (`fileId`) => `Promise`\<`void`\>
 
-#### Parameters
-
-##### event
-
-`DragEvent`
-
-#### Returns
-
-`void`
-
-***
-
-### handleDrop
-
-> **handleDrop**: (`event`) => `Promise`\<`void`\>
-
-Defined in: [packages/headless-uploader/src/types/uploader.ts:393](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L393)
-
-Helper for handling drop events
+Defined in: [packages/headless-uploader/src/types/uploader.ts:517](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L517)
 
 #### Parameters
 
-##### event
+##### fileId
 
-`DragEvent`
+`string`
 
 #### Returns
 
 `Promise`\<`void`\>
 
-***
+#### Description
 
-### handleFileSelect
-
-> **handleFileSelect**: (`event`) => `Promise`\<`void`\>
-
-Defined in: [packages/headless-uploader/src/types/uploader.ts:395](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L395)
-
-Helper for handling file input change events
-
-#### Parameters
-
-##### event
-
-`Event`
-
-#### Returns
-
-`Promise`\<`void`\>
+Cancel an active or queued file upload. Aborts requests.
 
 ***
 
@@ -237,9 +305,7 @@ Helper for handling file input change events
 
 > **pauseUpload**: (`fileId`) => `Promise`\<`void`\>
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:382](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L382)
-
-Pause an active file upload
+Defined in: [packages/headless-uploader/src/types/uploader.ts:507](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L507)
 
 #### Parameters
 
@@ -251,25 +317,9 @@ Pause an active file upload
 
 `Promise`\<`void`\>
 
-***
+#### Description
 
-### removeFile
-
-> **removeFile**: (`fileId`) => `Promise`\<`void`\>
-
-Defined in: [packages/headless-uploader/src/types/uploader.ts:373](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L373)
-
-Remove a file from the uploader and cancel its upload if active
-
-#### Parameters
-
-##### fileId
-
-`string`
-
-#### Returns
-
-`Promise`\<`void`\>
+Pause an active file upload. Supports resumption.
 
 ***
 
@@ -277,9 +327,7 @@ Remove a file from the uploader and cancel its upload if active
 
 > **resumeUpload**: (`fileId`) => `Promise`\<`void`\>
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:384](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L384)
-
-Resume a paused file upload
+Defined in: [packages/headless-uploader/src/types/uploader.ts:512](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L512)
 
 #### Parameters
 
@@ -290,6 +338,10 @@ Resume a paused file upload
 #### Returns
 
 `Promise`\<`void`\>
+
+#### Description
+
+Resume a paused file upload from the last known state
 
 ***
 
@@ -297,9 +349,7 @@ Resume a paused file upload
 
 > **retryUpload**: (`fileId`) => `Promise`\<`void`\>
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:388](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L388)
-
-Retry a failed file upload
+Defined in: [packages/headless-uploader/src/types/uploader.ts:522](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L522)
 
 #### Parameters
 
@@ -311,25 +361,9 @@ Retry a failed file upload
 
 `Promise`\<`void`\>
 
-***
+#### Description
 
-### updateConfig
-
-> **updateConfig**: (`config`) => `void`
-
-Defined in: [packages/headless-uploader/src/types/uploader.ts:397](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L397)
-
-Update the uploader's configuration on the fly
-
-#### Parameters
-
-##### config
-
-`Partial`\<[`UploaderConfig`](/uploader/docs/api/types/UploaderConfig)\>
-
-#### Returns
-
-`void`
+Retry a failed file upload
 
 ***
 
@@ -337,13 +371,15 @@ Update the uploader's configuration on the fly
 
 > **uploadAll**: () => `Promise`\<`void`\>
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:378](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L378)
-
-Start uploading all queued files
+Defined in: [packages/headless-uploader/src/types/uploader.ts:497](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L497)
 
 #### Returns
 
 `Promise`\<`void`\>
+
+#### Description
+
+Start uploading all currently queued/pending files
 
 ***
 
@@ -351,9 +387,7 @@ Start uploading all queued files
 
 > **uploadFile**: (`fileId`) => `Promise`\<`void`\>
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:380](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L380)
-
-Start or resume uploading a specific file
+Defined in: [packages/headless-uploader/src/types/uploader.ts:502](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L502)
 
 #### Parameters
 
@@ -364,3 +398,7 @@ Start or resume uploading a specific file
 #### Returns
 
 `Promise`\<`void`\>
+
+#### Description
+
+Start or resume uploading a specific file

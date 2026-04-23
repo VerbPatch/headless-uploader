@@ -5,7 +5,7 @@ description: The primary configuration object for initializing the uploader.
 
 # UploaderConfig
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:225](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L225)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:272](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L272)
 
 Main uploader configuration
 
@@ -13,14 +13,11 @@ Main uploader configuration
 
 ```typescript
 const config: UploaderConfig = {
-  maxFileSize: 5 * 1024 * 1024, // 5MB
-  acceptedTypes: ['image/*', 'application/pdf'],
-  autoUpload: false,
-  http: {
-    endpoint: '/api/upload',
-  },
-  onUploadProgress: (file, progress) => {
-    console.log(`${file.metadata.name}: ${progress.percentage}%`);
+  maxFileSize: 5 * 1024 * 1024,
+  autoUpload: true,
+  http: { endpoint: '/api/upload' },
+  onUploadSuccess: (file, response) => {
+    console.log(`${file.metadata.name} is safe on the server!`);
   }
 };
 ```
@@ -31,9 +28,9 @@ const config: UploaderConfig = {
 
 > `optional` **acceptedTypes?**: `string`[]
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:244](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L244)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:291](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L291)
 
-Allowed MIME types or file extensions
+Allowed MIME types or extensions (e.g. `['image/*', '.pdf']`)
 
 ***
 
@@ -41,9 +38,9 @@ Allowed MIME types or file extensions
 
 > `optional` **allowDuplicates?**: `boolean`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:246](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L246)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:293](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L293)
 
-Whether to allow adding the same file multiple times
+Whether to allow adding the same file multiple times to the queue
 
 ***
 
@@ -51,7 +48,7 @@ Whether to allow adding the same file multiple times
 
 > `optional` **autoRetry?**: `boolean`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:257](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L257)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:304](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L304)
 
 Whether to automatically retry failed uploads
 
@@ -61,9 +58,9 @@ Whether to automatically retry failed uploads
 
 > `optional` **autoUpload?**: `boolean`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:252](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L252)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:299](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L299)
 
-Whether to start uploading immediately after adding files
+Whether to start uploading immediately when files are added
 
 ***
 
@@ -71,19 +68,19 @@ Whether to start uploading immediately after adding files
 
 > `optional` **chunkSize?**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:249](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L249)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:296](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L296)
 
-Size of each chunk in bytes for chunked uploads
+Size of each chunk in bytes for protocols that support chunking
 
 ***
 
 ### compression?
 
-> `optional` **compression?**: [`CompressionOptions`](/uploader/docs/api/types/CompressionOptions)
+> `optional` **compression?**: [`CompressionOptions`](/uploader/docs/api/Types/CompressionOptions)
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:262](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L262)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:309](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L309)
 
-Options for client-side image compression
+Options for client-side image compression before upload
 
 ***
 
@@ -91,9 +88,9 @@ Options for client-side image compression
 
 > `optional` **customValidator?**: (`file`) => `Promise`\<[`ValidationResult`](/uploader/docs/api/validation/ValidationResult)\>
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:279](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L279)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:326](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L326)
 
-Function for custom file validation logic
+Function for custom file validation logic (local or remote)
 
 #### Parameters
 
@@ -111,9 +108,9 @@ Function for custom file validation logic
 
 > `optional` **enablePreviews?**: `boolean`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:264](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L264)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:311](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L311)
 
-Whether to generate preview URLs for images and videos
+Whether to generate local preview URLs for media files
 
 ***
 
@@ -121,19 +118,19 @@ Whether to generate preview URLs for images and videos
 
 > `optional` **extractMetadata?**: `boolean`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:271](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L271)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:318](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L318)
 
-Whether to extract extended metadata (dimensions, duration) from files
+Whether to extract extended metadata like dimensions or duration
 
 ***
 
 ### http?
 
-> `optional` **http?**: [`HttpConfig`](/uploader/docs/api/protocols/HttpConfig)
+> `optional` **http?**: [`HttpConfig`](/uploader/docs/api/Protocol_Configurations/HttpConfig)
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:229](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L229)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:276](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L276)
 
-Configuration for HTTP protocol
+Configuration for standard HTTP multipart/chunked uploads
 
 ***
 
@@ -141,9 +138,9 @@ Configuration for HTTP protocol
 
 > `optional` **maxConcurrent?**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:254](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L254)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:301](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L301)
 
-Maximum number of files to upload simultaneously
+Maximum number of files to transmit simultaneously
 
 ***
 
@@ -151,9 +148,9 @@ Maximum number of files to upload simultaneously
 
 > `optional` **maxFiles?**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:238](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L238)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:285](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L285)
 
-Maximum number of files allowed in the queue
+Maximum number of files allowed in the queue at once
 
 ***
 
@@ -161,9 +158,9 @@ Maximum number of files allowed in the queue
 
 > `optional` **maxFileSize?**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:240](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L240)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:287](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L287)
 
-Maximum size for a single file in bytes
+Maximum allowed size for a single file in bytes
 
 ***
 
@@ -171,9 +168,9 @@ Maximum size for a single file in bytes
 
 > `optional` **minFileSize?**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:242](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L242)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:289](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L289)
 
-Minimum size for a single file in bytes
+Minimum required size for a single file in bytes
 
 ***
 
@@ -181,15 +178,16 @@ Minimum size for a single file in bytes
 
 > `optional` **onAllComplete?**: (`files`) => `void`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:305](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L305)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:389](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L389)
 
-Callback fired when all files in the queue have finished (success or failure)
+Callback fired when all files in the uploader have finished (success or failure).
+Fires reliably even in `autoUpload` mode once the engine becomes idle.
 
 #### Parameters
 
 ##### files
 
-[`UploadFile`](/uploader/docs/api/types/UploadFile)[]
+[`UploadFile`](/uploader/docs/api/Types/UploadFile)[]
 
 #### Returns
 
@@ -201,43 +199,64 @@ Callback fired when all files in the queue have finished (success or failure)
 
 > `optional` **onBeforeRequest?**: (`file`, `chunkInfo?`) => `Promise`\<`void` \| `RequestBlueprint`\>
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:297](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L297)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:375](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L375)
 
-Hook to modify the network request before it is sent
+Hook to modify the network request before it is sent.
+Allows injecting dynamic headers or changing the endpoint per-chunk.
 
 #### Parameters
 
 ##### file
 
-[`UploadFile`](/uploader/docs/api/types/UploadFile)
+[`UploadFile`](/uploader/docs/api/Types/UploadFile)
 
 ##### chunkInfo?
 
-[`ChunkInfo`](/uploader/docs/api/types/ChunkInfo)
+[`ChunkInfo`](/uploader/docs/api/Types/ChunkInfo)
 
 #### Returns
 
 `Promise`\<`void` \| `RequestBlueprint`\>
 
+#### Example
+
+```typescript
+onBeforeRequest: async (file, chunk) => {
+  return {
+    headers: { 'X-Chunk-Index': chunk?.index.toString() || '0' }
+  };
+}
+```
+
 ***
 
 ### onBeforeUpload?
 
-> `optional` **onBeforeUpload?**: (`file`) => `void` \| `Promise`\<`void`\>
+> `optional` **onBeforeUpload?**: (`file`) => `boolean` \| `void` \| `Promise`\<`boolean` \| `void`\>
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:291](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L291)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:358](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L358)
 
-Hook to perform actions before a file starts uploading
+Hook to perform actions before a file starts uploading.
+Return `false` to cancel the upload for this specific file.
 
 #### Parameters
 
 ##### file
 
-[`UploadFile`](/uploader/docs/api/types/UploadFile)
+[`UploadFile`](/uploader/docs/api/Types/UploadFile)
 
 #### Returns
 
-`void` \| `Promise`\<`void`\>
+`boolean` \| `void` \| `Promise`\<`boolean` \| `void`\>
+
+#### Example
+
+```typescript
+onBeforeUpload: async (file) => {
+  const permitted = await checkUserPermissions();
+  return permitted; // returning false stops the upload
+}
+```
 
 ***
 
@@ -245,19 +264,43 @@ Hook to perform actions before a file starts uploading
 
 > `optional` **onChunkComplete?**: (`file`, `chunk`) => `void`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:299](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L299)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:379](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L379)
 
-Callback fired when a single chunk has completed uploading
+Callback fired when a single chunk has been acknowledged by the server
 
 #### Parameters
 
 ##### file
 
-[`UploadFile`](/uploader/docs/api/types/UploadFile)
+[`UploadFile`](/uploader/docs/api/Types/UploadFile)
 
 ##### chunk
 
-[`ChunkInfo`](/uploader/docs/api/types/ChunkInfo)
+[`ChunkInfo`](/uploader/docs/api/Types/ChunkInfo)
+
+#### Returns
+
+`void`
+
+***
+
+### onChunkStart?
+
+> `optional` **onChunkStart?**: (`file`, `chunk`) => `void`
+
+Defined in: [packages/headless-uploader/src/types/uploader.ts:377](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L377)
+
+Callback fired immediately before a chunk transmission begins
+
+#### Parameters
+
+##### file
+
+[`UploadFile`](/uploader/docs/api/Types/UploadFile)
+
+##### chunk
+
+[`ChunkInfo`](/uploader/docs/api/Types/ChunkInfo)
 
 #### Returns
 
@@ -269,15 +312,15 @@ Callback fired when a single chunk has completed uploading
 
 > `optional` **onFilesAdded?**: (`files`) => `void`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:289](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L289)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:336](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L336)
 
-Callback fired when files have been successfully added to the queue
+Callback fired when valid files have been added to the internal Map
 
 #### Parameters
 
 ##### files
 
-[`UploadFile`](/uploader/docs/api/types/UploadFile)[]
+[`UploadFile`](/uploader/docs/api/Types/UploadFile)[]
 
 #### Returns
 
@@ -289,9 +332,9 @@ Callback fired when files have been successfully added to the queue
 
 > `optional` **onFilesRejected?**: (`errors`) => `void`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:281](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L281)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:328](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L328)
 
-Callback fired when files are rejected by validation
+Callback fired when files are rejected by internal or custom validation
 
 #### Parameters
 
@@ -309,19 +352,19 @@ Callback fired when files are rejected by validation
 
 > `optional` **onMetadataExtracted?**: (`file`, `metadata`) => `void`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:285](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L285)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:332](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L332)
 
-Callback fired when metadata has been extracted for a file
+Callback fired when metadata (dimensions, etc) has been extracted
 
 #### Parameters
 
 ##### file
 
-[`UploadFile`](/uploader/docs/api/types/UploadFile)
+[`UploadFile`](/uploader/docs/api/Types/UploadFile)
 
 ##### metadata
 
-[`FileMetadata`](/uploader/docs/api/types/FileMetadata)
+[`FileMetadata`](/uploader/docs/api/Types/FileMetadata)
 
 #### Returns
 
@@ -333,15 +376,15 @@ Callback fired when metadata has been extracted for a file
 
 > `optional` **onPreviewGenerated?**: (`file`, `preview`) => `void`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:287](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L287)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:334](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L334)
 
-Callback fired when a preview has been generated for a file
+Callback fired when a local preview URL has been generated
 
 #### Parameters
 
 ##### file
 
-[`UploadFile`](/uploader/docs/api/types/UploadFile)
+[`UploadFile`](/uploader/docs/api/Types/UploadFile)
 
 ##### preview
 
@@ -353,19 +396,40 @@ Callback fired when a preview has been generated for a file
 
 ***
 
+### onQueueChange?
+
+> `optional` **onQueueChange?**: (`files`) => `void`
+
+Defined in: [packages/headless-uploader/src/types/uploader.ts:341](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L341)
+
+Callback fired whenever the queue content changes (add/remove/clear).
+Ideal for syncing framework state.
+
+#### Parameters
+
+##### files
+
+[`UploadFile`](/uploader/docs/api/Types/UploadFile)[]
+
+#### Returns
+
+`void`
+
+***
+
 ### onRetry?
 
 > `optional` **onRetry?**: (`file`, `attempt`) => `void`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:315](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L315)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:399](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L399)
 
-Callback fired before a retry attempt is made
+Callback fired before a retry attempt is made for a file/chunk
 
 #### Parameters
 
 ##### file
 
-[`UploadFile`](/uploader/docs/api/types/UploadFile)
+[`UploadFile`](/uploader/docs/api/Types/UploadFile)
 
 ##### attempt
 
@@ -377,19 +441,20 @@ Callback fired before a retry attempt is made
 
 ***
 
-### onUploadCancel?
+### onStateChange?
 
-> `optional` **onUploadCancel?**: (`file`) => `void`
+> `optional` **onStateChange?**: (`file`) => `void`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:311](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L311)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:346](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L346)
 
-Callback fired when an upload is cancelled
+Callback fired whenever a file's `status` changes.
+Preferred for UI reactivity over `onUploadProgress`.
 
 #### Parameters
 
 ##### file
 
-[`UploadFile`](/uploader/docs/api/types/UploadFile)
+[`UploadFile`](/uploader/docs/api/Types/UploadFile)
 
 #### Returns
 
@@ -397,19 +462,19 @@ Callback fired when an upload is cancelled
 
 ***
 
-### onUploadComplete?
+### onUploadCancel?
 
-> `optional` **onUploadComplete?**: (`file`) => `void`
+> `optional` **onUploadCancel?**: (`file`) => `void`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:301](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L301)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:395](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L395)
 
-Callback fired when all chunks of a file have been sent
+Callback fired when an upload is aborted by the user
 
 #### Parameters
 
 ##### file
 
-[`UploadFile`](/uploader/docs/api/types/UploadFile)
+[`UploadFile`](/uploader/docs/api/Types/UploadFile)
 
 #### Returns
 
@@ -421,19 +486,19 @@ Callback fired when all chunks of a file have been sent
 
 > `optional` **onUploadError?**: (`file`, `error`) => `void`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:313](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L313)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:397](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L397)
 
-Callback fired when an upload fails with an error
+Callback fired when an upload fails permanently or exceeds retries
 
 #### Parameters
 
 ##### file
 
-[`UploadFile`](/uploader/docs/api/types/UploadFile)
+[`UploadFile`](/uploader/docs/api/Types/UploadFile)
 
 ##### error
 
-[`UploaderError`](/uploader/docs/api/types/UploaderError)
+[`UploaderError`](/uploader/docs/api/Exception_Handling/UploaderError)
 
 #### Returns
 
@@ -445,15 +510,15 @@ Callback fired when an upload fails with an error
 
 > `optional` **onUploadPause?**: (`file`) => `void`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:307](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L307)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:391](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L391)
 
-Callback fired when an upload is paused
+Callback fired when an upload is intentionally paused
 
 #### Parameters
 
 ##### file
 
-[`UploadFile`](/uploader/docs/api/types/UploadFile)
+[`UploadFile`](/uploader/docs/api/Types/UploadFile)
 
 #### Returns
 
@@ -465,19 +530,19 @@ Callback fired when an upload is paused
 
 > `optional` **onUploadProgress?**: (`file`, `progress`) => `void`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:295](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L295)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:362](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L362)
 
-Callback fired periodically to report upload progress
+Callback fired periodically to report upload progress metrics
 
 #### Parameters
 
 ##### file
 
-[`UploadFile`](/uploader/docs/api/types/UploadFile)
+[`UploadFile`](/uploader/docs/api/Types/UploadFile)
 
 ##### progress
 
-[`UploadProgress`](/uploader/docs/api/types/UploadProgress)
+[`UploadProgress`](/uploader/docs/api/Types/UploadProgress)
 
 #### Returns
 
@@ -489,15 +554,15 @@ Callback fired periodically to report upload progress
 
 > `optional` **onUploadResume?**: (`file`) => `void`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:309](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L309)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:393](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L393)
 
-Callback fired when an upload is resumed
+Callback fired when an upload is resumed from a paused state
 
 #### Parameters
 
 ##### file
 
-[`UploadFile`](/uploader/docs/api/types/UploadFile)
+[`UploadFile`](/uploader/docs/api/Types/UploadFile)
 
 #### Returns
 
@@ -509,15 +574,15 @@ Callback fired when an upload is resumed
 
 > `optional` **onUploadStart?**: (`file`) => `void`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:293](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L293)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:360](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L360)
 
-Callback fired when a file upload starts
+Callback fired when a file transitions to the `uploading` state
 
 #### Parameters
 
 ##### file
 
-[`UploadFile`](/uploader/docs/api/types/UploadFile)
+[`UploadFile`](/uploader/docs/api/Types/UploadFile)
 
 #### Returns
 
@@ -529,15 +594,16 @@ Callback fired when a file upload starts
 
 > `optional` **onUploadSuccess?**: (`file`, `response`) => `void`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:303](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L303)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:384](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L384)
 
-Callback fired when the server confirms a successful upload
+Callback fired when the server confirms a successful upload.
+This is the final terminal event for a successful transfer.
 
 #### Parameters
 
 ##### file
 
-[`UploadFile`](/uploader/docs/api/types/UploadFile)
+[`UploadFile`](/uploader/docs/api/Types/UploadFile)
 
 ##### response
 
@@ -553,9 +619,9 @@ Callback fired when the server confirms a successful upload
 
 > `optional` **onValidationComplete?**: (`results`) => `void`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:283](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L283)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:330](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L330)
 
-Callback fired when validation is complete for all files
+Callback fired when validation is complete for all files in a batch
 
 #### Parameters
 
@@ -573,7 +639,7 @@ Callback fired when validation is complete for all files
 
 > `optional` **onValidationStart?**: (`files`) => `void`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:277](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L277)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:324](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L324)
 
 Callback fired when file validation begins
 
@@ -593,7 +659,7 @@ Callback fired when file validation begins
 
 > `optional` **previewMaxHeight?**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:268](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L268)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:315](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L315)
 
 Maximum height for generated previews
 
@@ -603,7 +669,7 @@ Maximum height for generated previews
 
 > `optional` **previewMaxWidth?**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:266](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L266)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:313](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L313)
 
 Maximum width for generated previews
 
@@ -611,21 +677,21 @@ Maximum width for generated previews
 
 ### protocol?
 
-> `optional` **protocol?**: [`UploadProtocol`](/uploader/docs/api/types/UploadProtocol)
+> `optional` **protocol?**: [`UploadProtocol`](/uploader/docs/api/Types/UploadProtocol)
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:227](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L227)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:274](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L274)
 
-The protocol to use for uploading (http, tus, websocket, etc.).
+The protocol to use for uploading (http, tus, websocket, webtransport).
 
 ***
 
 ### retryConfig?
 
-> `optional` **retryConfig?**: [`RetryConfig`](/uploader/docs/api/types/RetryConfig)
+> `optional` **retryConfig?**: [`RetryConfig`](/uploader/docs/api/Types/RetryConfig)
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:259](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L259)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:306](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L306)
 
-Detailed retry strategy configuration
+Detailed exponential backoff and retry strategy
 
 ***
 
@@ -633,36 +699,36 @@ Detailed retry strategy configuration
 
 > `optional` **timeout?**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:274](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L274)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:321](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L321)
 
-Global request timeout in milliseconds
+Global request timeout in milliseconds (0 for no timeout)
 
 ***
 
 ### tus?
 
-> `optional` **tus?**: [`TusConfig`](/uploader/docs/api/protocols/TusConfig)
+> `optional` **tus?**: [`TusConfig`](/uploader/docs/api/Protocol_Configurations/TusConfig)
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:231](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L231)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:278](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L278)
 
-Configuration for Tus protocol
+Configuration for the Tus resumable protocol
 
 ***
 
 ### websocket?
 
-> `optional` **websocket?**: [`WebSocketConfig`](/uploader/docs/api/protocols/WebSocketConfig)
+> `optional` **websocket?**: [`WebSocketConfig`](/uploader/docs/api/Protocol_Configurations/WebSocketConfig)
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:233](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L233)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:280](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L280)
 
-Configuration for WebSocket protocol
+Configuration for persistent WebSocket streams
 
 ***
 
 ### webtransport?
 
-> `optional` **webtransport?**: [`WebTransportConfig`](/uploader/docs/api/protocols/WebTransportConfig)
+> `optional` **webtransport?**: [`WebTransportConfig`](/uploader/docs/api/Protocol_Configurations/WebTransportConfig)
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:235](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L235)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:282](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L282)
 
-Configuration for WebTransport protocol
+Configuration for modern WebTransport streams

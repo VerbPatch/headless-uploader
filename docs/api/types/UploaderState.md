@@ -5,7 +5,7 @@ description: A read-only snapshot of the uploader's current state.
 
 # UploaderState
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:337](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L337)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:421](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L421)
 
 UI-friendly representation of the uploader state
 
@@ -13,25 +13,31 @@ UI-friendly representation of the uploader state
 
 ### completedFiles
 
-> **completedFiles**: [`UploadFile`](/uploader/docs/api/types/UploadFile)[]
+> **completedFiles**: [`UploadFile`](/uploader/docs/api/Types/UploadFile)[]
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:340](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L340)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:427](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L427)
+
+Subset of files in the `completed` state
 
 ***
 
 ### failedFiles
 
-> **failedFiles**: [`UploadFile`](/uploader/docs/api/types/UploadFile)[]
+> **failedFiles**: [`UploadFile`](/uploader/docs/api/Types/UploadFile)[]
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:341](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L341)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:429](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L429)
+
+Subset of files in the `failed` state
 
 ***
 
 ### files
 
-> **files**: [`UploadFile`](/uploader/docs/api/types/UploadFile)[]
+> **files**: [`UploadFile`](/uploader/docs/api/Types/UploadFile)[]
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:338](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L338)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:423](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L423)
+
+List of all files currently in the uploader
 
 ***
 
@@ -39,7 +45,9 @@ Defined in: [packages/headless-uploader/src/types/uploader.ts:338](https://githu
 
 > **isPaused**: `boolean`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:349](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L349)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:441](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L441)
+
+Whether at least one file is currently paused
 
 ***
 
@@ -47,15 +55,19 @@ Defined in: [packages/headless-uploader/src/types/uploader.ts:349](https://githu
 
 > **isUploading**: `boolean`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:348](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L348)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:439](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L439)
+
+Whether at least one file is actively uploading
 
 ***
 
 ### queuedFiles
 
-> **queuedFiles**: [`UploadFile`](/uploader/docs/api/types/UploadFile)[]
+> **queuedFiles**: [`UploadFile`](/uploader/docs/api/Types/UploadFile)[]
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:342](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L342)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:431](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L431)
+
+Subset of files in the `queued` state
 
 ***
 
@@ -63,7 +75,9 @@ Defined in: [packages/headless-uploader/src/types/uploader.ts:342](https://githu
 
 > **totalProgress**: `object`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:343](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L343)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:433](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L433)
+
+Aggregate progress metrics across all managed files
 
 #### loaded
 
@@ -81,6 +95,8 @@ Defined in: [packages/headless-uploader/src/types/uploader.ts:343](https://githu
 
 ### uploadingFiles
 
-> **uploadingFiles**: [`UploadFile`](/uploader/docs/api/types/UploadFile)[]
+> **uploadingFiles**: [`UploadFile`](/uploader/docs/api/Types/UploadFile)[]
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:339](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L339)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:425](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L425)
+
+Subset of files currently in the `uploading` state

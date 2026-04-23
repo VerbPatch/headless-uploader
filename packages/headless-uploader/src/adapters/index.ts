@@ -10,7 +10,7 @@ import { createWebTransportAdapter, isWebTransportSupported } from './webtranspo
  * Create a protocol adapter based on the provided configuration
  * @param config - The configuration for the protocol factory
  * @returns A protocol adapter instance
- * @group protocols
+ * @group Internal
  * @title createProtocolAdapter
  * @description Factory function that instantiates the appropriate adapter (HTTP, TUS, WebSocket, or WebTransport).
  * @internal
@@ -66,9 +66,14 @@ export function createProtocolAdapter(config: ProtocolFactoryConfig): ProtocolAd
  * @param fileSize - Size of the file in bytes
  * @param browserCapabilities - Optional overrides for browser capability detection
  * @returns The recommended UploadProtocol
- * @group protocols
+ * @group Protocol Selection
  * @title getRecommendedProtocol
  * @description Suggests the most suitable upload protocol based on file size and modern browser feature support.
+ * @example
+ * ```typescript
+ * const protocol = getRecommendedProtocol(file.size);
+ * console.log(`We suggest using: ${protocol}`);
+ * ```
  */
 export function getRecommendedProtocol(
   fileSize: number,
@@ -107,7 +112,7 @@ export function getRecommendedProtocol(
 
 /**
  * Detailed feature matrix for each supported protocol
- * @group protocols
+ * @group Protocol Selection
  * @title PROTOCOL_FEATURES
  * @description Comparison matrix showing capabilities like resumability and chunking.
  */
@@ -138,7 +143,7 @@ export const PROTOCOL_FEATURES = {
  * Check if a specific protocol is supported in the current environment
  * @param protocol - The protocol to check
  * @returns True if the protocol is supported
- * @group protocols
+ * @group Protocol Selection
  * @title isProtocolSupported
  * @description Verifies if the browser environment supports the required APIs for a given protocol.
  */
@@ -162,7 +167,7 @@ export function isProtocolSupported(protocol: UploadProtocol): boolean {
 /**
  * Get a list of all protocols supported by the current environment
  * @returns Array of supported UploadProtocol values
- * @group protocols
+ * @group Protocol Selection
  * @title getSupportedProtocols
  * @description Returns all protocols that can be used in the current browser or environment.
  */
@@ -182,14 +187,17 @@ export function getSupportedProtocols(): UploadProtocol[] {
 
 /**
  * Detailed comparison result for a protocol
- * @group protocols
+ * @group Protocol Selection
  * @title ProtocolComparison
- * @internal
  */
 export interface ProtocolComparison {
+  /** The protocol being evaluated */
   protocol: UploadProtocol;
+  /** A numerical score (higher is better) for the specific use case */
   score: number;
+  /** Human-readable reasons for the assigned score */
   reasons: string[];
+  /** Whether the protocol is supported in the current browser */
   supported: boolean;
 }
 
@@ -198,9 +206,16 @@ export interface ProtocolComparison {
  * @param fileSize - Size of the file in bytes
  * @param requirements - Optional set of functional requirements
  * @returns An array of ProtocolComparison objects sorted by score
- * @group protocols
+ * @group Protocol Selection
  * @title compareProtocols
  * @description Ranks available protocols based on their suitability for a specific upload scenario.
+ *
+ * @example
+ * ```typescript
+ * const results = compareProtocols(500 * 1024 * 1024, { needsResumability: true });
+ * console.log('Best protocol:', results[0].protocol);
+ * console.log('Why:', results[0].reasons.join(', '));
+ * ```
  */
 export function compareProtocols(
   fileSize: number,
@@ -256,39 +271,39 @@ export function compareProtocols(
   return comparisons.sort((a, b) => b.score - a.score);
 }
 
-/**
- * Example usage guide
- */
-export const PROTOCOL_USAGE_EXAMPLES = {
-  tus: `
-    const uploader = useUploader({
-      protocol: 'tus',
-      tus: {
-        endpoint: 'https://api.example.com/files',
-        chunkSize: 1024 * 1024,
-      }
-    });
-  `,
+// /**
+//  * Example usage guide
+//  */
+// export const PROTOCOL_USAGE_EXAMPLES = {
+//   tus: `
+//     const uploader = useUploader({
+//       protocol: 'tus',
+//       tus: {
+//         endpoint: 'https://api.example.com/files',
+//         chunkSize: 1024 * 1024,
+//       }
+//     });
+//   `,
 
-  websocket: `
-    const uploader = useUploader({
-      protocol: 'websocket',
-      websocket: {
-        url: 'wss://api.example.com/upload',
-        chunkSize: 64 * 1024,
-        reconnect: true
-      }
-    });
-  `,
+//   websocket: `
+//     const uploader = useUploader({
+//       protocol: 'websocket',
+//       websocket: {
+//         url: 'wss://api.example.com/upload',
+//         chunkSize: 64 * 1024,
+//         reconnect: true
+//       }
+//     });
+//   `,
 
-  webtransport: `
-    const uploader = useUploader({
-      protocol: 'webtransport',
-      webtransport: {
-        url: 'https://api.example.com:4433/upload',
-        bidirectionalStreams: true,
-        congestionControl: 'throughput'
-      }
-    });
-  `,
-};
+//   webtransport: `
+//     const uploader = useUploader({
+//       protocol: 'webtransport',
+//       webtransport: {
+//         url: 'https://api.example.com:4433/upload',
+//         bidirectionalStreams: true,
+//         congestionControl: 'throughput'
+//       }
+//     });
+//   `,
+// };

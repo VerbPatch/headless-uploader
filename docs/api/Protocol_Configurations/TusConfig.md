@@ -1,11 +1,14 @@
 ---
 title: TusConfig
-description: Configuration options for the Tus resumable upload protocol.
+description: |-
+  Configuration for the Tus resumable upload protocol.
+  Extends the official 
+   options.
 ---
 
 # TusConfig
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:78](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/protocolTypes.ts#L78)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:105](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/protocolTypes.ts#L105)
 
 TUS Protocol Configuration
 
@@ -19,8 +22,6 @@ TUS Protocol Configuration
 
 > `optional` **addRequestId?**: `boolean`
 
-Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/lib/index.d.ts:47
-
 #### Inherited from
 
 `Partial.addRequestId`
@@ -30,8 +31,6 @@ Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/
 ### chunkSize?
 
 > `optional` **chunkSize?**: `number`
-
-Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/lib/index.d.ts:51
 
 #### Inherited from
 
@@ -43,9 +42,10 @@ Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/
 
 > **endpoint**: `string`
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:80](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/protocolTypes.ts#L80)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:110](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/protocolTypes.ts#L110)
 
-The server endpoint for Tus uploads
+The server endpoint for Tus uploads (e.g., `https://tus.io/files/`).
+This is a required field for the Tus protocol.
 
 #### Overrides
 
@@ -57,8 +57,6 @@ The server endpoint for Tus uploads
 
 > `optional` **fileReader?**: `FileReader`
 
-Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/lib/index.d.ts:61
-
 #### Inherited from
 
 `Partial.fileReader`
@@ -68,8 +66,6 @@ Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/
 ### fingerprint?
 
 > `optional` **fingerprint?**: (`file`, `options`) => `Promise`\<`string`\>
-
-Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/lib/index.d.ts:33
 
 #### Parameters
 
@@ -95,8 +91,6 @@ Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/
 
 > `optional` **headers?**: `object`
 
-Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/lib/index.d.ts:46
-
 #### Index Signature
 
 \[`key`: `string`\]: `string`
@@ -111,8 +105,6 @@ Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/
 
 > `optional` **httpStack?**: `HttpStack`
 
-Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/lib/index.d.ts:62
-
 #### Inherited from
 
 `Partial.httpStack`
@@ -122,8 +114,6 @@ Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/
 ### metadata?
 
 > `optional` **metadata?**: `object`
-
-Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/lib/index.d.ts:31
 
 #### Index Signature
 
@@ -139,8 +129,6 @@ Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/
 
 > `optional` **metadataForPartialUploads?**: `object`
 
-Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/lib/index.d.ts:32
-
 #### Index Signature
 
 \[`key`: `string`\]: `string`
@@ -154,8 +142,6 @@ Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/
 ### onAfterResponse?
 
 > `optional` **onAfterResponse?**: (`req`, `res`) => `void` \| `Promise`\<`void`\>
-
-Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/lib/index.d.ts:49
 
 #### Parameters
 
@@ -181,8 +167,6 @@ Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/
 
 > `optional` **onBeforeRequest?**: (`req`) => `void` \| `Promise`\<`void`\>
 
-Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/lib/index.d.ts:48
-
 #### Parameters
 
 ##### req
@@ -203,8 +187,6 @@ Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/
 
 > `optional` **onChunkComplete?**: ((`chunkSize`, `bytesAccepted`, `bytesTotal`) => `void`) \| `null`
 
-Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/lib/index.d.ts:37
-
 #### Inherited from
 
 `Partial.onChunkComplete`
@@ -214,8 +196,6 @@ Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/
 ### onError?
 
 > `optional` **onError?**: ((`error`) => `void`) \| `null`
-
-Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/lib/index.d.ts:39
 
 #### Inherited from
 
@@ -227,8 +207,6 @@ Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/
 
 > `optional` **onProgress?**: ((`bytesSent`, `bytesTotal`) => `void`) \| `null`
 
-Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/lib/index.d.ts:36
-
 #### Inherited from
 
 `Partial.onProgress`
@@ -238,8 +216,6 @@ Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/
 ### onShouldRetry?
 
 > `optional` **onShouldRetry?**: ((`error`, `retryAttempt`, `options`) => `boolean`) \| `null`
-
-Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/lib/index.d.ts:40
 
 #### Inherited from
 
@@ -251,8 +227,6 @@ Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/
 
 > `optional` **onSuccess?**: ((`payload`) => `void`) \| `null`
 
-Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/lib/index.d.ts:38
-
 #### Inherited from
 
 `Partial.onSuccess`
@@ -262,8 +236,6 @@ Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/
 ### onUploadUrlAvailable?
 
 > `optional` **onUploadUrlAvailable?**: (() => `void`) \| `null`
-
-Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/lib/index.d.ts:43
 
 #### Inherited from
 
@@ -275,8 +247,6 @@ Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/
 
 > `optional` **overridePatchMethod?**: `boolean`
 
-Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/lib/index.d.ts:45
-
 #### Inherited from
 
 `Partial.overridePatchMethod`
@@ -286,8 +256,6 @@ Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/
 ### parallelUploadBoundaries?
 
 > `optional` **parallelUploadBoundaries?**: `object`[] \| `null`
-
-Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/lib/index.d.ts:54
 
 #### Inherited from
 
@@ -299,8 +267,6 @@ Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/
 
 > `optional` **parallelUploads?**: `number`
 
-Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/lib/index.d.ts:53
-
 #### Inherited from
 
 `Partial.parallelUploads`
@@ -310,8 +276,6 @@ Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/
 ### removeFingerprintOnSuccess?
 
 > `optional` **removeFingerprintOnSuccess?**: `boolean`
-
-Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/lib/index.d.ts:56
 
 #### Inherited from
 
@@ -323,8 +287,6 @@ Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/
 
 > `optional` **retryDelays?**: `number`[] \| `null`
 
-Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/lib/index.d.ts:52
-
 #### Inherited from
 
 `Partial.retryDelays`
@@ -334,8 +296,6 @@ Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/
 ### storeFingerprintForResuming?
 
 > `optional` **storeFingerprintForResuming?**: `boolean`
-
-Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/lib/index.d.ts:55
 
 #### Inherited from
 
@@ -347,8 +307,6 @@ Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/
 
 > `optional` **uploadDataDuringCreation?**: `boolean`
 
-Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/lib/index.d.ts:58
-
 #### Inherited from
 
 `Partial.uploadDataDuringCreation`
@@ -358,8 +316,6 @@ Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/
 ### uploadLengthDeferred?
 
 > `optional` **uploadLengthDeferred?**: `boolean`
-
-Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/lib/index.d.ts:57
 
 #### Inherited from
 
@@ -371,8 +327,6 @@ Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/
 
 > `optional` **uploadSize?**: `number` \| `null`
 
-Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/lib/index.d.ts:34
-
 #### Inherited from
 
 `Partial.uploadSize`
@@ -383,8 +337,6 @@ Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/
 
 > `optional` **uploadUrl?**: `string` \| `null`
 
-Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/lib/index.d.ts:30
-
 #### Inherited from
 
 `Partial.uploadUrl`
@@ -394,8 +346,6 @@ Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/
 ### urlStorage?
 
 > `optional` **urlStorage?**: `UrlStorage`
-
-Defined in: node\_modules/.pnpm/tus-js-client@4.3.1/node\_modules/tus-js-client/lib/index.d.ts:60
 
 #### Inherited from
 

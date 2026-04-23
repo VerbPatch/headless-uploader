@@ -5,7 +5,7 @@ description: Extends the standard Error with additional fields for machine-reada
 
 # UploaderError
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:129](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L129)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:160](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L160)
 
 Custom error object for uploader operations
 
@@ -19,7 +19,7 @@ Custom error object for uploader operations
 
 > **new UploaderError**(`message`, `options?`): `UploaderError`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:137](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L137)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:168](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L168)
 
 #### Parameters
 
@@ -31,7 +31,7 @@ Defined in: [packages/headless-uploader/src/types/uploader.ts:137](https://githu
 
 ###### code?
 
-`UploaderErrorCode`
+[`UploaderErrorCode`](/uploader/docs/api/Exception_Handling/UploaderErrorCode)
 
 ###### fileId?
 
@@ -53,9 +53,9 @@ Defined in: [packages/headless-uploader/src/types/uploader.ts:137](https://githu
 
 ### code?
 
-> `optional` **code?**: `UploaderErrorCode`
+> `optional` **code?**: [`UploaderErrorCode`](/uploader/docs/api/Exception_Handling/UploaderErrorCode)
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:131](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L131)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:162](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L162)
 
 Machine-readable error code (e.g., 'INVALID_FILE_TYPE', 'FILE_TOO_LARGE')
 
@@ -65,7 +65,7 @@ Machine-readable error code (e.g., 'INVALID_FILE_TYPE', 'FILE_TOO_LARGE')
 
 > `optional` **fileId?**: `string`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:133](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L133)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:164](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L164)
 
 The unique identifier of the file associated with this error
 
@@ -99,7 +99,7 @@ Defined in: node\_modules/.pnpm/typescript@6.0.2/node\_modules/typescript/lib/li
 
 > `optional` **response?**: `unknown`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:135](https://github.com/VerbPatch/headless-uploader/blob/fc7195783146195f65e16cb9514b37913d6e03b9/packages/headless-uploader/src/types/uploader.ts#L135)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:166](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L166)
 
 The raw server response if the error occurred during a network request
 
