@@ -44,7 +44,7 @@ export default function App() {
   } = useUploader({
     protocol: 'websocket',
     websocket: {
-      url: 'ws://localhost:3000/ws-upload',
+      url: 'wss://nus.verbpatch.com/ws-upload',
       reconnect: true,
       reconnectDelay: 3000,
       maxReconnectAttempts: 5,

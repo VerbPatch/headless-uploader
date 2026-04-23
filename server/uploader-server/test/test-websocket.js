@@ -3,7 +3,7 @@ import { WebSocket } from 'ws';
 const fileData = 'Hello WebSocket protocol! This is a test upload using bidirectional streaming.';
 const fileName = 'test-file-websocket.txt';
 const chunkSize = 20;
-const WS_URL = 'ws://localhost:3000/ws-upload';
+const WS_URL = 'wss://nus.verbpatch.com/ws-upload';
 const fileId = `test-${Date.now()}`;
 
 async function runTest() {

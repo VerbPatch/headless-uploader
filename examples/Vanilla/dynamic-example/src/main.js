@@ -123,7 +123,7 @@ const PRESETS = {
   websocket: {
     protocol: 'websocket',
     websocket: {
-      url: 'ws://localhost:3000/ws-upload',
+      url: 'wss://nus.verbpatch.com/ws-upload',
       protocols: [],
       reconnect: true,
       reconnectDelay: 3000,
