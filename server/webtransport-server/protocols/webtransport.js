@@ -192,15 +192,16 @@ async function handleWTStream(stream, isUni = false) {
             return;
           }
 
-          const isPdf = fileName.toLowerCase().endsWith('.pdf');
-          if (!isPdf) {
-            console.log(`❌ WT Validation Failed: Non-PDF file attempt: ${fileName}`);
+          const isAllowed =
+            fileName.toLowerCase().endsWith('.pdf') || fileName.toLowerCase().endsWith('.txt');
+          if (!isAllowed) {
+            console.log(`❌ WT Validation Failed: Invalid file type attempt: ${fileName}`);
             if (writer) {
               const response = JSON.stringify({
                 fileId: fileId,
                 success: false,
                 code: 'INVALID_FILE_TYPE',
-                message: 'Invalid file type. Only PDF files are allowed.',
+                message: 'Invalid file type. Only PDF and TXT files are allowed.',
               });
               await writer.write(new TextEncoder().encode(response));
               await sleep(100);

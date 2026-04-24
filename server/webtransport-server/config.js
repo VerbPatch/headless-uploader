@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename);
 export const config = {
   APP_HOST: process.env.APP_HOST || 'localhost',
   APP_PORT: process.env.APP_PORT || 3000,
-  WEBTRANSPORT_PORT: process.env.WEBTRANSPORT_PORT || 4443,
+  WEBTRANSPORT_PORT: process.env.WEBTRANSPORT_PORT || 443,
   UPLOADS_DIR: path.join(__dirname, 'uploads'),
   CHUNKS_DIR: path.join(__dirname, 'uploads', 'chunks'),
   AUTH_TOKEN: process.env.AUTH_TOKEN || 'verbpatch-secret-token',

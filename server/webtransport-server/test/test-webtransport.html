@@ -103,8 +103,8 @@
         <input
           type="text"
           id="serverUrl"
-          value="https://127.0.0.1:4443/wt-upload"
-          placeholder="https://127.0.0.1:4443/wt-upload"
+          value=""
+          placeholder="https://your-domain:443/wt-upload"
         />
       </div>
 
@@ -115,6 +115,16 @@
           id="fileData"
           value="Hello WebTransport protocol! This is a test upload using HTTP/3 streams with length-prefixed messages."
           placeholder="Enter file content"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Auth Token:</label>
+        <input
+          type="text"
+          id="authToken"
+          value="verbpatch-secret-token"
+          placeholder="Enter auth token"
         />
       </div>
 
@@ -170,6 +180,7 @@
         try {
           const serverUrl = document.getElementById('serverUrl').value;
           const fileData = document.getElementById('fileData').value;
+          const authToken = document.getElementById('authToken').value;
           const chunkSize = parseInt(document.getElementById('chunkSize').value);
 
           clearLog();
@@ -227,9 +238,15 @@
           // Send metadata
           const metadata = {
             type: 'init',
+            fileId: 'test-' + Date.now(),
             fileName: 'test-file-webtransport.txt',
             fileSize: fileData.length,
             totalChunks: Math.ceil(fileData.length / chunkSize),
+            auth: {
+              headers: {
+                Authorization: `Bearer ${authToken}`,
+              },
+            },
           };
 
           log('Sending metadata (Type 0)...', 'info');
@@ -271,31 +288,54 @@
           log('Waiting for server response...\n', 'info');
 
           const decoder = new TextDecoder();
-          while (true) {
+          let buffer = '';
+          let isComplete = false;
+
+          while (!isComplete) {
             const { done, value } = await reader.read();
             if (done) break;
 
-            const responseText = decoder.decode(value);
-            // Minimal multi-JSON parsing
-            const openBrace = responseText.indexOf('{');
-            const closeBrace = responseText.lastIndexOf('}');
-            if (openBrace === -1 || closeBrace === -1) continue;
+            buffer += decoder.decode(value, { stream: true });
 
-            const response = JSON.parse(responseText.substring(openBrace, closeBrace + 1));
+            let start = 0;
+            while (start < buffer.length) {
+              const openBrace = buffer.indexOf('{', start);
+              if (openBrace === -1) break;
 
-            if (response.type === 'complete') {
-              log(`Server Response: ${JSON.stringify(response)}`, 'info');
-              if (response.success) {
-                log('✅ Upload Complete!', 'success');
-                log(`File URL: ${response.url}`, 'success');
-                log('\n✅ WebTransport Upload Test Completed Successfully!', 'success');
-              } else {
-                log(`❌ Upload failed: ${response.message}`, 'error');
+              const closeBrace = buffer.indexOf('}', openBrace);
+              if (closeBrace === -1) break;
+
+              const jsonStr = buffer.substring(openBrace, closeBrace + 1);
+              try {
+                const response = JSON.parse(jsonStr);
+
+                if (response.type === 'init_ack') {
+                  log('✅ Received init_ack', 'success');
+                } else if (response.type === 'complete') {
+                  log(`Server Response: ${JSON.stringify(response)}`, 'info');
+                  if (response.success) {
+                    log('✅ Upload Complete!', 'success');
+                    log(`File URL: ${response.url}`, 'success');
+                    log('\n✅ WebTransport Upload Test Completed Successfully!', 'success');
+                  } else {
+                    log(`❌ Upload failed: ${response.message}`, 'error');
+                  }
+                  isComplete = true;
+                  break;
+                } else if (response.type === 'progress') {
+                  console.log('Progress:', response);
+                } else if (response.type === 'error') {
+                  log(`❌ Server Error: ${response.error || response.message}`, 'error');
+                  isComplete = true;
+                  break;
+                }
+                start = closeBrace + 1;
+              } catch (e) {
+                // If parse fails, it might be partial or nested, skip to next {
+                start = openBrace + 1;
               }
-              break;
-            } else if (response.type === 'progress') {
-              console.log('Progress:', response);
             }
+            if (start > 0) buffer = buffer.substring(start);
           }
 
           // Close connection
@@ -311,6 +351,13 @@
 
       // Log on load
       window.addEventListener('load', () => {
+        // Auto-populate server URL based on current host
+        const urlInput = document.getElementById('serverUrl');
+        if (urlInput && !urlInput.value) {
+          const hostname = window.location.hostname;
+          urlInput.value = `https://${hostname}:443/wt-upload`;
+        }
+
         log('WebTransport test page loaded', 'info');
         log('Click "Start Test" to begin', 'info');
       });
