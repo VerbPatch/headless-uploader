@@ -37,10 +37,13 @@ export default function App() {
   const uploader = useUploader({
     protocol: 'webtransport',
     webtransport: {
-      url: 'https://127.0.0.1:4443/wt-upload',
+      url: 'https://127.0.0.1:443/wt-upload',
+      allowPooling: true,
       congestionControl: 'throughput',
       bidirectionalStreams: true,
-      allowPooling: true,
+      metadata: { connectionType: 'persistent' },
+      onReady: () => console.log('Webtransport connected at https://127.0.0.1:443/wt-upload'),
+      onClosed: () => console.log('Webtransport closed at https://127.0.0.1:443/wt-upload'),
     },
     maxFiles: 10,
     maxFileSize: 50 * 1024 * 1024,
@@ -100,7 +103,7 @@ export default function App() {
         updateConfig({
           chunkSize: 500 * 1024,
           webtransport: {
-            url: 'https://127.0.0.1:4443/wt-upload',
+            url: 'https://127.0.0.1:443/wt-upload',
             congestionControl: 'throughput',
             bidirectionalStreams: true,
             allowPooling: true,

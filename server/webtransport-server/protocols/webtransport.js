@@ -137,7 +137,7 @@ async function readExact(reader, n, leftover = null) {
 }
 
 async function handleWTStream(stream, isUni = false) {
-  const reader = stream.readable.getReader();
+  const reader = isUni ? stream.getReader() : stream.readable.getReader();
   const writer = isUni ? null : stream.writable.getWriter();
   let uploadInfo = null;
   let fileId = null;

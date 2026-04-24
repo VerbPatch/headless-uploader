@@ -35,7 +35,6 @@ export function createWebSocketAdapter(wsConfig: WebSocketConfig): ProtocolAdapt
   function closeConnection(fileId: string, code = 1000, reason = 'Normal closure') {
     const conn = connections.get(fileId);
     if (conn) {
-      //console.log(`Closing WebSocket for ${fileId}: ${reason}`);
       clearInterval(conn.heartbeatInterval);
 
       if (conn.ws.readyState === WebSocket.OPEN || conn.ws.readyState === WebSocket.CONNECTING) {
@@ -58,6 +57,175 @@ export function createWebSocketAdapter(wsConfig: WebSocketConfig): ProtocolAdapt
     }
   }
 
+  function createConnection(
+    file: UploadFile,
+    resolve: (result: ProtocolUploadResult) => void,
+    reject: (error: UploaderError) => void,
+    config: UploaderConfig,
+  ) {
+    const protocols =
+      wsConfig.protocols &&
+      (Array.isArray(wsConfig.protocols) ? wsConfig.protocols.length > 0 : true)
+        ? wsConfig.protocols
+        : undefined;
+
+    let ws: WebSocket;
+    try {
+      ws = new WebSocket(wsConfig.url, protocols);
+      ws.binaryType = wsConfig.binaryType || 'blob';
+    } catch (err) {
+      const error = new UploaderError(err instanceof Error ? err.message : 'Invalid WebSocket URL', {
+        fileId: file.id,
+        code: UploaderErrorCodes.CONFIG_ERROR,
+      });
+      reject(error);
+      return;
+    }
+
+    const heartbeatInterval = window.setInterval(() => {
+      if (ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify({ type: 'heartbeat' }));
+      }
+    }, wsConfig.heartbeatInterval || 30000);
+
+    const connection: ActiveConnection = {
+      ws,
+      heartbeatInterval,
+      resolve,
+      reject,
+      file,
+      isStreaming: false,
+    };
+    connections.set(file.id, connection);
+
+    const onOpen = async () => {
+      if (connection.isStreaming) return;
+      connection.isStreaming = true;
+      wsConfig.onOpen?.();
+
+      const signal = file.abortController?.signal;
+
+      try {
+        await uploadFileInChunks(ws, file, config, wsConfig, connection, signal);
+      } catch (err) {
+        connection.isStreaming = false;
+        const error =
+          err instanceof UploaderError
+            ? err
+            : new UploaderError(err instanceof Error ? err.message : String(err), {
+                fileId: file.id,
+                code: UploaderErrorCodes.UPLOAD_FAILED,
+              });
+
+        if (error.code === UploaderErrorCodes.ABORT_ERROR || error.message.includes('paused')) {
+          resolve({
+            success: false,
+            error,
+            bytesUploaded: file.progress.loaded,
+          });
+          closeConnection(file.id, 1000, 'Paused');
+        } else {
+          closeConnection(file.id, 4000, error.message);
+          reject(error);
+        }
+      }
+    };
+
+    ws.onopen = onOpen;
+
+    ws.onmessage = (event) => {
+      try {
+        const wsMessage: WebSocketMessage = JSON.parse(event.data);
+        const currentConn = connections.get(file.id);
+        if (!currentConn) return;
+
+        if (wsMessage.type === 'init_ack') {
+          if (currentConn.onInitAck) currentConn.onInitAck();
+        } else if (wsMessage.type === 'complete') {
+          currentConn.isStreaming = false;
+          const res = {
+            success: true,
+            uploadId: wsMessage.uploadId || file.id,
+            url: wsMessage.url,
+            bytesUploaded: wsMessage.bytesUploaded || file.metadata.size,
+            response: wsMessage,
+          };
+          currentConn.resolve(res);
+          closeConnection(file.id);
+        } else if (wsMessage.type === 'progress' || wsMessage.type === 'heartbeat') {
+          // eslint-disable-next-line
+          console.log(`Received ${wsMessage.type} for ${file.id}`);
+        } else {
+          const isError = wsMessage.type === 'error' || (wsMessage as any).success === false;
+
+          if (isError) {
+            const err = new UploaderError(wsMessage.message || 'Upload failed', {
+              // eslint-disable-next-line
+              code: (wsMessage as any).code || UploaderErrorCodes.UPLOAD_FAILED,
+              fileId: wsMessage.fileId || file.id,
+              response: wsMessage,
+            });
+            currentConn.isStreaming = false;
+
+            if (currentConn.onInitError) {
+              currentConn.onInitError(err);
+            } else {
+              currentConn.reject(err);
+              closeConnection(file.id, 4000, wsMessage.message);
+            }
+          }
+        }
+      } catch (err) {
+        const error =
+          err instanceof UploaderError
+            ? err
+            : new UploaderError(err instanceof Error ? err.message : String(err), {
+                code: UploaderErrorCodes.SERVER_ERROR,
+              });
+        // eslint-disable-next-line
+        console.error('Failed to parse WS message:', error);
+      }
+    };
+
+    ws.onerror = (error) => {
+      wsConfig.onError?.(error);
+      const currentConn = connections.get(file.id);
+      if (currentConn) {
+        const err = new UploaderError('WebSocket connection failed', {
+          fileId: file.id,
+          code: UploaderErrorCodes.NETWORK_ERROR,
+        });
+        currentConn.reject(err);
+        closeConnection(file.id, 1006, 'Connection error');
+      }
+    };
+
+    ws.onclose = (event) => {
+      wsConfig.onClose?.();
+      const currentConn = connections.get(file.id);
+
+      if (currentConn) {
+        const err = new UploaderError(`WebSocket closed: ${event.reason || 'Unknown reason'}`, {
+          fileId: file.id,
+          // eslint-disable-next-line
+          code: String(event.code) as any,
+        });
+
+        if (currentConn.onInitError) {
+          currentConn.onInitError(err);
+        } else if (event.code !== 1000 && event.code !== 1001) {
+          currentConn.isStreaming = false;
+          currentConn.reject(err);
+        } else {
+          // Normal closure
+          connections.delete(file.id);
+          clearInterval(currentConn.heartbeatInterval);
+        }
+      }
+    };
+  }
+
+
   return {
     name: 'WebSocket',
     protocol: 'websocket',
@@ -72,196 +240,48 @@ export function createWebSocketAdapter(wsConfig: WebSocketConfig): ProtocolAdapt
 
     async upload(file: UploadFile, config: UploaderConfig): Promise<ProtocolUploadResult> {
       return new Promise((resolve, reject) => {
-        let conn = connections.get(file.id);
-
-        if (
-          conn &&
-          (conn.ws.readyState === WebSocket.CLOSED || conn.ws.readyState === WebSocket.CLOSING)
-        ) {
-          closeConnection(file.id);
-          conn = undefined;
-        }
-
-        const onOpen = async (socket: WebSocket, connection: ActiveConnection) => {
-          if (connection.isStreaming) {
-            //console.log(`Connection for ${file.id} is already streaming.`);
-            return;
-          }
-
-          //console.log(`WebSocket ready for ${file.metadata.name}`);
-          connection.isStreaming = true;
-
-          const signal = file.abortController?.signal;
-
-          try {
-            await uploadFileInChunks(socket, file, config, wsConfig, connection, signal);
-          } catch (err) {
-            const error =
-              err instanceof UploaderError
-                ? err
-                : new UploaderError(err instanceof Error ? err.message : String(err), {
-                    fileId: file.id,
-                    code: UploaderErrorCodes.UPLOAD_FAILED,
-                  });
-            connection.isStreaming = false;
-            if (error.code === UploaderErrorCodes.ABORT_ERROR || error.message.includes('paused')) {
-              //console.log(`Upload loop paused for ${file.id}. Keeping socket alive.`);
-              resolve({
-                success: false,
-                error,
-                bytesUploaded: file.progress.loaded,
-              });
-            } else {
-              // eslint-disable-next-line
-              console.error(`Upload loop error for ${file.id}:`, error);
-              closeConnection(file.id, 4000, error.message);
-              reject(error);
-            }
-          }
-        };
+        const conn = connections.get(file.id);
 
         if (conn) {
-          // console.log(`Reusing existing WebSocket for ${file.metadata.name}`);
-          conn.resolve = resolve;
-          conn.reject = reject;
-          conn.file = file;
-
           if (conn.ws.readyState === WebSocket.OPEN) {
-            onOpen(conn.ws, conn);
+            conn.resolve = resolve;
+            conn.reject = reject;
+            conn.file = file;
+
+            if (!conn.isStreaming) {
+              const signal = file.abortController?.signal;
+              conn.isStreaming = true;
+              uploadFileInChunks(conn.ws, file, config, wsConfig, conn, signal)
+                .then(() => {})
+                .catch((err) => {
+                  conn.isStreaming = false;
+                  const error =
+                    err instanceof UploaderError
+                      ? err
+                      : new UploaderError(err instanceof Error ? err.message : String(err), {
+                          fileId: file.id,
+                          code: UploaderErrorCodes.UPLOAD_FAILED,
+                        });
+                  if (
+                    error.code === UploaderErrorCodes.ABORT_ERROR ||
+                    error.message.includes('paused')
+                  ) {
+                    resolve({ success: false, error, bytesUploaded: file.progress.loaded });
+                  } else {
+                    reject(error);
+                  }
+                });
+            }
+          } else if (conn.ws.readyState === WebSocket.CONNECTING) {
+            conn.resolve = resolve;
+            conn.reject = reject;
+            conn.file = file;
           } else {
-            const originalOnOpen = conn.ws.onopen;
-            conn.ws.onopen = function (this: WebSocket, ev: Event) {
-              if (originalOnOpen) originalOnOpen.call(this, ev);
-              const currentConn = connections.get(file.id);
-              if (currentConn) onOpen(currentConn.ws, currentConn);
-            };
+            closeConnection(file.id);
+            createConnection(file, resolve, reject, config);
           }
         } else {
-          // console.log(`Creating new WebSocket for ${file.metadata.name}`);
-          const protocols =
-            wsConfig.protocols &&
-            (Array.isArray(wsConfig.protocols) ? wsConfig.protocols.length > 0 : true)
-              ? wsConfig.protocols
-              : undefined;
-
-          const ws = new WebSocket(wsConfig.url, protocols);
-          ws.binaryType = wsConfig.binaryType || 'blob';
-
-          const heartbeatInterval = window.setInterval(() => {
-            if (ws.readyState === WebSocket.OPEN) {
-              ws.send(JSON.stringify({ type: 'heartbeat' }));
-            }
-          }, wsConfig.heartbeatInterval);
-
-          const newConn: ActiveConnection = {
-            ws,
-            heartbeatInterval,
-            resolve,
-            reject,
-            file,
-            isStreaming: false,
-          };
-          connections.set(file.id, newConn);
-
-          ws.onopen = () => {
-            const currentConn = connections.get(file.id);
-            if (currentConn) onOpen(ws, currentConn);
-          };
-
-          ws.onmessage = (event) => {
-            try {
-              const wsMessage: WebSocketMessage = JSON.parse(event.data);
-              const currentConn = connections.get(file.id);
-              if (!currentConn) return;
-
-              if (wsMessage.type === 'init_ack') {
-                // console.log(`Received init_ack for ${file.id}`);
-                if (currentConn.onInitAck) currentConn.onInitAck();
-              } else if (wsMessage.type === 'complete') {
-                // console.log(`Received complete for ${file.id}`);
-                currentConn.isStreaming = false;
-                const res = {
-                  success: true,
-                  uploadId: wsMessage.uploadId || file.id,
-                  url: wsMessage.url,
-                  bytesUploaded: wsMessage.bytesUploaded || file.metadata.size,
-                  response: wsMessage,
-                };
-                currentConn.resolve(res);
-                closeConnection(file.id);
-              } else {
-                //if (message.type === 'error')
-                // eslint-disable-next-line
-                console.error(`Received error for ${file.id}:`, wsMessage.message);
-                const err = new UploaderError(wsMessage.message || 'Upload failed', {
-                  // eslint-disable-next-line
-                  code: (wsMessage as any).code,
-                  fileId: wsMessage.fileId || file.id,
-                  response: wsMessage,
-                });
-                currentConn.isStreaming = false;
-
-                if (currentConn.onInitError) {
-                  currentConn.onInitError(err);
-                } else {
-                  currentConn.reject(err);
-                  closeConnection(file.id, 4000, wsMessage.message);
-                }
-              }
-            } catch (err) {
-              const error =
-                err instanceof UploaderError
-                  ? err
-                  : new UploaderError(err instanceof Error ? err.message : String(err), {
-                      code: UploaderErrorCodes.SERVER_ERROR,
-                    });
-              // eslint-disable-next-line
-              console.error('Failed to parse WS message:', error);
-            }
-          };
-
-          ws.onerror = (error) => {
-            // eslint-disable-next-line
-            console.error(`WebSocket error for ${file.id}:`, error);
-            const currentConn = connections.get(file.id);
-            if (currentConn) {
-              const err = new UploaderError('WebSocket connection failed', {
-                fileId: file.id,
-                code: UploaderErrorCodes.NETWORK_ERROR,
-              });
-              if (currentConn.onInitError) {
-                currentConn.onInitError(err);
-              } else {
-                currentConn.isStreaming = false;
-                currentConn.reject(err);
-              }
-            }
-            closeConnection(file.id, 1006, 'Connection error');
-          };
-
-          ws.onclose = (event) => {
-            // console.log(`WebSocket closed for ${file.id} (Code: ${event.code})`);
-            const currentConn = connections.get(file.id);
-            if (currentConn) {
-              const err = new UploaderError(
-                `WebSocket closed: ${event.reason || 'Unknown reason'}`,
-                {
-                  fileId: file.id,
-                  // eslint-disable-next-line
-                  code: String(event.code) as any,
-                },
-              );
-              if (currentConn.onInitError) {
-                currentConn.onInitError(err);
-              } else {
-                currentConn.isStreaming = false;
-                if (event.code !== 1000) {
-                  currentConn.reject(err);
-                }
-              }
-            }
-            connections.delete(file.id);
-          };
+          createConnection(file, resolve, reject, config);
         }
       });
     },
@@ -272,7 +292,6 @@ export function createWebSocketAdapter(wsConfig: WebSocketConfig): ProtocolAdapt
     },
 
     async cancel(uploadId: string): Promise<void> {
-      // console.log(`WebSocket upload cancelled: ${uploadId}`);
       closeConnection(uploadId, 1000, 'Cancelled by user');
     },
 
@@ -307,6 +326,7 @@ async function uploadFileInChunks(
       fileSize: file.metadata.size,
       totalChunks,
       bytesUploaded: uploadedBytes,
+      metadata: wsConfig.metadata,
       auth: blueprint
         ? {
             headers: blueprint.headers,

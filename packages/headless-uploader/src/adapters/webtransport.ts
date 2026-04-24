@@ -35,6 +35,7 @@ export function createWebTransportAdapter(wtConfig: WebTransportConfig): Protoco
       try {
         await active.writer.close();
         if (active.reader) await active.reader.cancel();
+        wtConfig.onClosed?.();
       } catch (e) {
         // eslint-disable-next-line
         console.error(`Error closing stream ${fileId}:`, e);
@@ -67,16 +68,21 @@ export function createWebTransportAdapter(wtConfig: WebTransportConfig): Protoco
       } else {
         // eslint-disable-next-line
         console.log(`Creating new WebTransport stream for ${file.id}`);
-        const stream = wtConfig.bidirectionalStreams
+        const isBidi = wtConfig.bidirectionalStreams !== false;
+        const stream = isBidi
           ? await transport!.createBidirectionalStream()
           : await transport!.createUnidirectionalStream();
 
         const writer = (stream as { writable: WritableStream }).writable
           ? (stream as { writable: WritableStream }).writable.getWriter()
           : (stream as WritableStream).getWriter();
-        const reader = (stream as { readable: ReadableStream }).readable
-          ? (stream as { readable: ReadableStream }).readable.getReader()
-          : undefined;
+
+        let reader: ReadableStreamDefaultReader | undefined;
+        if (isBidi) {
+          reader = (stream as WebTransportBidirectionalStream).readable.getReader();
+        } else if ((stream as any).getReader) {
+          reader = (stream as unknown as ReadableStream).getReader();
+        }
 
         active = {
           writer,
@@ -378,6 +384,9 @@ export function createWebTransportAdapter(wtConfig: WebTransportConfig): Protoco
 
             if (wtMessage.type === expectedType) {
               return wtMessage;
+            } else if (wtMessage.type === 'progress' || wtMessage.type === 'heartbeat') {
+              // eslint-disable-next-line
+              console.log(`Received ${wtMessage.type} while waiting for ${expectedType}`);
             } else {
               throw new UploaderError(wtMessage.message || 'Server error', {
                 // eslint-disable-next-line

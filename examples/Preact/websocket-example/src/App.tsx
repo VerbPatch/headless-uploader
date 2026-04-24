@@ -40,11 +40,14 @@ export default function App() {
     protocol: 'websocket',
     websocket: {
       url: 'wss://nus.verbpatch.com/ws-upload',
-      reconnect: true,
-      reconnectDelay: 3000,
-      maxReconnectAttempts: 5,
       heartbeatInterval: 30000,
       binaryType: 'arraybuffer',
+      metadata: { connectionType: 'websocket' },
+      onOpen: () => console.log('Websocket connection opened at wss://nus.verbpatch.com/ws-upload'),
+      onClose: () =>
+        console.log('Websocket connection closed at wss://nus.verbpatch.com/ws-upload'),
+      onError: (error) =>
+        console.log('Websocket connection has errors at wss://nus.verbpatch.com/ws-upload', error),
     },
     maxFiles: 10,
     maxFileSize: 50 * 1024 * 1024,

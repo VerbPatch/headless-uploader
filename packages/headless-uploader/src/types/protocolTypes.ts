@@ -122,21 +122,6 @@ export interface WebSocketConfig {
   /** Sub-protocols to use during handshake */
   protocols?: string | string[];
   /**
-   * Whether to automatically reconnect if the connection drops.
-   * @default true
-   */
-  reconnect: boolean;
-  /**
-   * Delay in milliseconds before attempting to reconnect.
-   * @default 3000
-   */
-  reconnectDelay: number;
-  /**
-   * Maximum number of reconnection attempts before failing.
-   * @default 5
-   */
-  maxReconnectAttempts: number;
-  /**
    * Interval for sending heartbeat messages to keep connection alive.
    * @default 30000
    */

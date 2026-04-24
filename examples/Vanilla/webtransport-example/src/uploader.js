@@ -125,7 +125,7 @@ function removeNotification(id) {
 
 async function fetchWebTransportConfig() {
   try {
-    const response = await fetch('https://nus.verbpatch.com/webtransport-config');
+    const response = await fetch('http://localhost:3000/webtransport-config');
     if (response.ok) return await response.json();
   } catch (err) {
     // eslint-disable-next-line
@@ -137,9 +137,13 @@ async function fetchWebTransportConfig() {
 export async function setupUploader() {
   const wtConfig = await fetchWebTransportConfig();
   const transportOptions = {
-    url: 'https://127.0.0.1:4443/wt-upload',
-    bidirectionalStreams: true,
+    url: 'https://127.0.0.1:443/wt-upload',
+    allowPooling: true,
     congestionControl: 'throughput',
+    bidirectionalStreams: true,
+    metadata: { connectionType: 'persistent' },
+    onReady: () => console.log('Webtransport connected at https://127.0.0.1:443/wt-upload'),
+    onClosed: () => console.log('Webtransport closed at https://127.0.0.1:443/wt-upload'),
   };
 
   if (wtConfig?.certHash) {

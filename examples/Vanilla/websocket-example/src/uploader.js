@@ -128,11 +128,14 @@ export function setupUploader() {
     protocol: 'websocket',
     websocket: {
       url: 'wss://nus.verbpatch.com/ws-upload',
-      reconnect: true,
-      reconnectDelay: 3000,
-      maxReconnectAttempts: 5,
       heartbeatInterval: 30000,
       binaryType: 'arraybuffer',
+      metadata: { connectionType: 'websocket' },
+      onOpen: () => console.log('Websocket connection opened at wss://nus.verbpatch.com/ws-upload'),
+      onClose: () =>
+        console.log('Websocket connection closed at wss://nus.verbpatch.com/ws-upload'),
+      onError: (error) =>
+        console.log('Websocket connection has errors at wss://nus.verbpatch.com/ws-upload', error),
     },
     maxFiles: 10,
     maxFileSize: 50 * 1024 * 1024,
@@ -140,6 +143,10 @@ export function setupUploader() {
     chunkSize: 500 * 1024,
     maxConcurrent: 2,
     autoRetry: true,
+    retryConfig: {
+      maxRetries: 2,
+      retryDelay: 3000,
+    },
     enablePreviews: false,
 
     onBeforeRequest: async (file, chunk) => {
