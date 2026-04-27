@@ -66,4 +66,5 @@ export const DEFAULT_CONFIG: Required<
   previewMaxHeight: 200,
   extractMetadata: true,
   timeout: 0,
+  debug: false,
 };

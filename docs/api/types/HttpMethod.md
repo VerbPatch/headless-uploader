@@ -7,6 +7,6 @@ description: Defines the valid HTTP verbs used for upload requests.
 
 > **HttpMethod** = `"POST"` \| `"PUT"` \| `"PATCH"`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:18](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L18)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:19](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L19)
 
 Supported HTTP methods for upload

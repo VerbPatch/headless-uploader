@@ -9,6 +9,7 @@ import { startCleanupJob } from './cleanup.js';
 import { setupWebTransport, getWebTransportFingerprint } from './protocols/webtransport.js';
 
 const start = async () => {
+  console.log('DEBUG: Current Config:', JSON.stringify(config, null, 2));
   ensureDirSync(config.UPLOADS_DIR);
   ensureDirSync(config.CHUNKS_DIR);
 
@@ -30,11 +31,9 @@ const start = async () => {
     return 'OK';
   });
 
-  setupWebTransport();
-
   fastify.get('/webtransport-config', async () => {
     const certHash = getWebTransportFingerprint();
-    return { certHash };
+    return { certHash, port: config.WEBTRANSPORT_PORT };
   });
 
   fastify.get('/test-webtransport', async (request, reply) => {
@@ -50,7 +49,12 @@ const start = async () => {
 
   try {
     console.log({ port: listenOptions });
-    fastify.listen(listenOptions);
+    await fastify.listen(listenOptions);
+
+    // Give fastify a moment to bind before starting WT
+    await new Promise(r => setTimeout(r, 500));
+    await setupWebTransport();
+
     console.log(
       `🚀 WebTransport Config Server running on http://${config.APP_HOST}:${listenTarget}`,
     );

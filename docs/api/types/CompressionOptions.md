@@ -5,7 +5,7 @@ description: Configuration for client-side file compression.
 
 # CompressionOptions
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:141](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L141)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:142](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L142)
 
 Compression options
 
@@ -15,7 +15,7 @@ Compression options
 
 > **enabled**: `boolean`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:143](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L143)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:144](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L144)
 
 Whether to enable image compression before upload
 
@@ -25,7 +25,7 @@ Whether to enable image compression before upload
 
 > `optional` **maxHeight?**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:149](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L149)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:150](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L150)
 
 Target maximum height in pixels
 
@@ -35,7 +35,7 @@ Target maximum height in pixels
 
 > `optional` **maxWidth?**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:147](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L147)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:148](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L148)
 
 Target maximum width in pixels
 
@@ -45,7 +45,7 @@ Target maximum width in pixels
 
 > `optional` **mimeType?**: `string`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:151](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L151)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:152](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L152)
 
 Output MIME type (defaults to original type)
 
@@ -55,6 +55,6 @@ Output MIME type (defaults to original type)
 
 > **quality**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:145](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L145)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:146](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L146)
 
 Compression quality (0 to 1)

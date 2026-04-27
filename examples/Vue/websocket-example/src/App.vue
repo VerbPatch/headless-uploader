@@ -27,8 +27,7 @@ const uploader = useUploader({
     binaryType: 'arraybuffer',
     metadata: { connectionType: 'websocket' },
     onOpen: () => console.log('Websocket connection opened at wss://nus.verbpatch.com/ws-upload'),
-    onClose: () =>
-      console.log('Websocket connection closed at wss://nus.verbpatch.com/ws-upload'),
+    onClose: () => console.log('Websocket connection closed at wss://nus.verbpatch.com/ws-upload'),
     onError: (error) =>
       console.log('Websocket connection has errors at wss://nus.verbpatch.com/ws-upload', error),
   },

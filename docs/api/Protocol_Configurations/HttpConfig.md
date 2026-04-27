@@ -5,7 +5,7 @@ description: Configuration options for standard HTTP-based uploads (Multipart or
 
 # HttpConfig
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:63](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/protocolTypes.ts#L63)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:65](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/protocolTypes.ts#L65)
 
 HTTP Protocol Configuration
 
@@ -15,7 +15,7 @@ HTTP Protocol Configuration
 
 > `optional` **enableChunking?**: `boolean`
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:89](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/protocolTypes.ts#L89)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:91](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/protocolTypes.ts#L91)
 
 Whether to split files into smaller chunks.
 Recommended for files > 10MB to avoid server timeouts.
@@ -32,7 +32,7 @@ false
 
 > `optional` **endpoint?**: `string`
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:68](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/protocolTypes.ts#L68)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:70](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/protocolTypes.ts#L70)
 
 The server endpoint for uploads.
 Defaults to `/upload` if not specified.
@@ -43,7 +43,7 @@ Defaults to `/upload` if not specified.
 
 > `optional` **headers?**: `Record`\<`string`, `string`\>
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:78](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/protocolTypes.ts#L78)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:80](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/protocolTypes.ts#L80)
 
 Static custom headers for every request.
 For dynamic headers, use `onBeforeRequest` in the main config.
@@ -54,7 +54,7 @@ For dynamic headers, use `onBeforeRequest` in the main config.
 
 > `optional` **maxConcurrentChunks?**: `number`
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:95](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/protocolTypes.ts#L95)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:97](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/protocolTypes.ts#L97)
 
 Maximum number of chunks to upload at the same time for a single file.
 Higher values increase speed but consume more bandwidth and memory.
@@ -71,7 +71,7 @@ Higher values increase speed but consume more bandwidth and memory.
 
 > `optional` **method?**: [`HttpMethod`](/uploader/docs/api/Types/HttpMethod)
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:73](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/protocolTypes.ts#L73)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:75](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/protocolTypes.ts#L75)
 
 The HTTP method to use.
 
@@ -87,7 +87,7 @@ The HTTP method to use.
 
 > `optional` **withCredentials?**: `boolean`
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:83](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/protocolTypes.ts#L83)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:85](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/protocolTypes.ts#L85)
 
 Whether to send cookies and authentication headers in cross-origin requests.
 

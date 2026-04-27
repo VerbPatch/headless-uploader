@@ -5,7 +5,7 @@ description: The internal object representing a file in the uploader, including 
 
 # UploadFile
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:189](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L189)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:190](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L190)
 
 Upload file representation
 
@@ -15,7 +15,7 @@ Upload file representation
 
 > `optional` **abortController?**: `AbortController`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:213](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L213)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:214](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L214)
 
 Internal controller used to abort active requests
 
@@ -25,7 +25,7 @@ Internal controller used to abort active requests
 
 > `optional` **chunks?**: [`ChunkInfo`](/uploader/docs/api/Types/ChunkInfo)[]
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:203](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L203)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:204](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L204)
 
 Metadata for individual chunks if chunking is enabled
 
@@ -35,7 +35,7 @@ Metadata for individual chunks if chunking is enabled
 
 > `optional` **error?**: [`UploaderError`](/uploader/docs/api/Exception_Handling/UploaderError)
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:207](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L207)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:208](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L208)
 
 The last error encountered during the lifecycle
 
@@ -45,7 +45,7 @@ The last error encountered during the lifecycle
 
 > **file**: `File`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:193](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L193)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:194](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L194)
 
 The original browser File object
 
@@ -55,7 +55,7 @@ The original browser File object
 
 > **id**: `string`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:191](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L191)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:192](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L192)
 
 Unique identifier generated for the upload session
 
@@ -65,7 +65,7 @@ Unique identifier generated for the upload session
 
 > **metadata**: [`FileMetadata`](/uploader/docs/api/Types/FileMetadata)
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:195](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L195)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:196](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L196)
 
 Extracted file properties and metadata
 
@@ -75,7 +75,7 @@ Extracted file properties and metadata
 
 > `optional` **preview?**: `string`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:201](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L201)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:202](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L202)
 
 Local preview URL (data URL or blob URL)
 
@@ -85,7 +85,7 @@ Local preview URL (data URL or blob URL)
 
 > `optional` **processedFile?**: `File` \| `Blob`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:205](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L205)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:206](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L206)
 
 The final data being uploaded (may be a compressed Blob if enabled)
 
@@ -95,7 +95,7 @@ The final data being uploaded (may be a compressed Blob if enabled)
 
 > **progress**: [`UploadProgress`](/uploader/docs/api/Types/UploadProgress)
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:199](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L199)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:200](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L200)
 
 Real-time progress metrics
 
@@ -105,7 +105,7 @@ Real-time progress metrics
 
 > `optional` **response?**: `unknown`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:211](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L211)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:212](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L212)
 
 Final server response data after successful upload
 
@@ -115,7 +115,7 @@ Final server response data after successful upload
 
 > **retries**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:209](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L209)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:210](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L210)
 
 Total number of retry attempts made for this file
 
@@ -125,6 +125,6 @@ Total number of retry attempts made for this file
 
 > **status**: [`UploadStatus`](/uploader/docs/api/Types/UploadStatus)
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:197](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L197)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:198](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L198)
 
 Current state of the upload (e.g., 'uploading', 'completed')

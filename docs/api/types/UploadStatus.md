@@ -7,6 +7,6 @@ description: Enumerates all possible states a file can be in during its lifecycl
 
 > **UploadStatus** = `"pending"` \| `"validating"` \| `"queued"` \| `"uploading"` \| `"paused"` \| `"completed"` \| `"failed"` \| `"cancelled"`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:26](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L26)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:27](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L27)
 
 Upload status states

@@ -207,12 +207,19 @@
               const config = await configRes.json();
               if (config.certHash) {
                 log('✅ Received certificate hash from server', 'success');
+                console.log('Cert Hash received:', config.certHash);
                 transportOptions.serverCertificateHashes = [
                   {
                     algorithm: 'sha-256',
                     value: new Uint8Array(config.certHash),
                   },
                 ];
+              }
+              if (config.port) {
+                const hostname = '127.0.0.1';
+                const newUrl = `https://${hostname}:${config.port}/wt-upload`;
+                document.getElementById('serverUrl').value = newUrl;
+                log(`📡 Auto-updated Server URL to: ${newUrl}`, 'info');
               }
             }
           } catch (err) {
@@ -223,10 +230,13 @@
             );
           }
 
-          log('Connecting to WebTransport server...', 'info');
+          // Use the latest value from the input field (it might have been auto-updated)
+          const finalServerUrl = document.getElementById('serverUrl').value;
+          log(`Connecting to WebTransport server at: ${finalServerUrl}`, 'info');
+          console.log('Transport Options:', transportOptions);
 
           // Create connection
-          const transport = new WebTransport(serverUrl, transportOptions);
+          const transport = new WebTransport(finalServerUrl, transportOptions);
           await transport.ready;
           log('✅ WebTransport Connected', 'success');
 
@@ -351,10 +361,10 @@
 
       // Log on load
       window.addEventListener('load', () => {
-        // Auto-populate server URL based on current host
+        // Auto-populate server URL based on 127.0.0.1
         const urlInput = document.getElementById('serverUrl');
         if (urlInput && !urlInput.value) {
-          const hostname = window.location.hostname;
+          const hostname = '127.0.0.1';
           urlInput.value = `https://${hostname}:443/wt-upload`;
         }
 

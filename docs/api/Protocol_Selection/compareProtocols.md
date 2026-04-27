@@ -7,7 +7,7 @@ description: Ranks available protocols based on their suitability for a specific
 
 > **compareProtocols**(`fileSize`, `requirements?`): `ProtocolComparison`[]
 
-Defined in: [packages/headless-uploader/src/adapters/index.ts:220](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/adapters/index.ts#L220)
+Defined in: [packages/headless-uploader/src/adapters/index.ts:220](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/adapters/index.ts#L220)
 
 Compare and rank protocols for a specific set of requirements
 

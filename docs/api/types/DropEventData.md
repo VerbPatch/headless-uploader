@@ -5,7 +5,7 @@ description: Data structure passed to drop event handlers.
 
 # DropEventData
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:222](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L222)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:223](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L223)
 
 Drag and drop event data
 
@@ -15,7 +15,7 @@ Drag and drop event data
 
 > **event**: `DragEvent`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:226](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L226)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:227](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L227)
 
 The original browser DragEvent
 
@@ -25,6 +25,6 @@ The original browser DragEvent
 
 > **files**: `File`[]
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:224](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L224)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:225](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L225)
 
 Array of files extracted from the drop event

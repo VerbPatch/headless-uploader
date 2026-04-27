@@ -2,37 +2,8 @@ import type { UploaderInstance, UploadFile } from '../types';
 import { UploaderError } from '../types';
 import { UploaderErrorCodes } from '../constants/error-codes';
 import type { ProtocolFactoryConfig } from '../types/protocolTypes';
-import { sleep, compressImage, isImage } from '../utils';
+import { sleep, compressImage, isImage, updateFileStatus, checkAllComplete } from '../utils';
 import { createProtocolAdapter } from '../adapters';
-
-/**
- * Update file status and trigger onStateChange
- */
-function updateFileStatus(
-  instance: UploaderInstance,
-  file: UploadFile,
-  status: UploadFile['status'],
-) {
-  if (file.status !== status) {
-    file.status = status;
-    instance.config.onStateChange?.(file);
-  }
-}
-
-/**
- * Check if all uploads are complete and trigger onAllComplete
- */
-function checkAllComplete(instance: UploaderInstance) {
-  const { config, files, activeUploads } = instance;
-  const allFiles = Array.from(files.values());
-  const hasIncomplete = allFiles.some(
-    (f) => f.status === 'pending' || f.status === 'queued' || f.status === 'uploading',
-  );
-
-  if (activeUploads.size === 0 && !hasIncomplete) {
-    config.onAllComplete?.(allFiles);
-  }
-}
 
 /**
  * Retry failed upload with exponential backoff
@@ -105,6 +76,7 @@ export async function uploadFile(
         tus: config.tus,
         websocket: config.websocket,
         webtransport: config.webtransport,
+        logger: instance.logger,
       };
       instance.adapter = createProtocolAdapter(factoryConfig);
     }

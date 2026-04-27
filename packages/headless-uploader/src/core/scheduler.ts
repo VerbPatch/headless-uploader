@@ -2,6 +2,7 @@ import type { UploaderInstance } from '../types';
 import { UploaderError } from '../types';
 import { UploaderErrorCodes } from '../constants/error-codes';
 import { uploadFile } from './processor';
+import { updateFileStatus } from '../utils';
 
 /**
  * Upload all pending files
@@ -31,11 +32,11 @@ export async function uploadSingleFile(instance: UploaderInstance, fileId: strin
     });
   }
 
-  if (uploadFileObj.status === 'uploading') {
+  if (uploadFileObj.status === 'uploading' || uploadFileObj.status === 'queued') {
     return;
   }
 
-  uploadFileObj.status = 'queued';
+  updateFileStatus(instance, uploadFileObj, 'queued');
 
   await uploadFile(instance, uploadFileObj);
 }

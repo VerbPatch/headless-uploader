@@ -8,6 +8,7 @@ import {
   UploadProtocol,
   ProtocolAdapter,
 } from './protocolTypes';
+import { Logger } from '../utils/logger';
 
 /**
  * Supported HTTP methods for upload
@@ -320,6 +321,9 @@ export interface UploaderConfig {
   /** Global request timeout in milliseconds (0 for no timeout) */
   timeout?: number;
 
+  /** Whether to enable debug logging */
+  debug?: boolean;
+
   /** Callback fired when file validation begins */
   onValidationStart?: (files: File[]) => void;
   /** Function for custom file validation logic (local or remote) */
@@ -410,6 +414,7 @@ export interface UploaderInstance {
   activeUploads: Map<string, AbortController>;
   config: UploaderConfig;
   adapter?: ProtocolAdapter;
+  logger: Logger;
 }
 
 /**

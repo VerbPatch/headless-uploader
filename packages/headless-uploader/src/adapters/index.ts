@@ -23,7 +23,7 @@ export function createProtocolAdapter(config: ProtocolFactoryConfig): ProtocolAd
           code: UploaderErrorCodes.CONFIG_ERROR,
         });
       }
-      return createHttpAdapter(config.http);
+      return createHttpAdapter(config.http, config.logger);
 
     case 'tus':
       if (!config.tus) {
@@ -31,7 +31,7 @@ export function createProtocolAdapter(config: ProtocolFactoryConfig): ProtocolAd
           code: UploaderErrorCodes.CONFIG_ERROR,
         });
       }
-      return createTusAdapter(config.tus);
+      return createTusAdapter(config.tus, config.logger);
 
     case 'websocket':
       if (!config.websocket) {
@@ -39,7 +39,7 @@ export function createProtocolAdapter(config: ProtocolFactoryConfig): ProtocolAd
           code: UploaderErrorCodes.CONFIG_ERROR,
         });
       }
-      return createWebSocketAdapter(config.websocket);
+      return createWebSocketAdapter(config.websocket, config.logger);
 
     case 'webtransport':
       if (!isWebTransportSupported()) {
@@ -52,7 +52,7 @@ export function createProtocolAdapter(config: ProtocolFactoryConfig): ProtocolAd
           code: UploaderErrorCodes.CONFIG_ERROR,
         });
       }
-      return createWebTransportAdapter(config.webtransport);
+      return createWebTransportAdapter(config.webtransport, config.logger);
 
     default:
       throw new UploaderError(`Unknown protocol: ${config.protocol}`, {

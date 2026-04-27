@@ -7,7 +7,7 @@ description: Initializes a new headless uploader instance with the provided conf
 
 > **useUploader**(`config?`): [`UploaderInterface`](/uploader/docs/api/Types/UploaderInterface)
 
-Defined in: [packages/headless-uploader/src/core/instance.ts:529](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/core/instance.ts#L529)
+Defined in: [packages/headless-uploader/src/core/instance.ts:518](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/core/instance.ts#L518)
 
 Initializes a new headless uploader instance with the provided configuration.
 

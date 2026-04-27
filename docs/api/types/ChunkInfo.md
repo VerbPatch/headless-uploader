@@ -5,7 +5,7 @@ description: Contains metadata and state for a single part of a chunked upload.
 
 # ChunkInfo
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:99](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L99)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:100](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L100)
 
 Chunk information
 
@@ -15,7 +15,7 @@ Chunk information
 
 > **blob**: `Blob`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:111](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L111)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:112](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L112)
 
 The raw slice of the file for this chunk
 
@@ -25,7 +25,7 @@ The raw slice of the file for this chunk
 
 > **end**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:105](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L105)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:106](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L106)
 
 Byte offset where the chunk ends
 
@@ -35,7 +35,7 @@ Byte offset where the chunk ends
 
 > **index**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:101](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L101)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:102](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L102)
 
 Zero-based index of the chunk
 
@@ -45,7 +45,7 @@ Zero-based index of the chunk
 
 > **retries**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:115](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L115)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:116](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L116)
 
 Current number of retry attempts for this chunk
 
@@ -55,7 +55,7 @@ Current number of retry attempts for this chunk
 
 > **size**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:107](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L107)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:108](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L108)
 
 Size of this specific chunk in bytes
 
@@ -65,7 +65,7 @@ Size of this specific chunk in bytes
 
 > **start**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:103](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L103)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:104](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L104)
 
 Byte offset where the chunk starts
 
@@ -75,7 +75,7 @@ Byte offset where the chunk starts
 
 > **status**: [`ChunkStatus`](/uploader/docs/api/Types/ChunkStatus)
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:109](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L109)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:110](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L110)
 
 Current status of this chunk
 
@@ -85,6 +85,6 @@ Current status of this chunk
 
 > **uploadedBytes**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:113](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L113)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:114](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L114)
 
 Number of bytes successfully uploaded for this chunk

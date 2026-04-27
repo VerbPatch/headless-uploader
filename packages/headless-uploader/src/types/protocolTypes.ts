@@ -1,6 +1,7 @@
 import type { UploadFile, UploaderConfig, HttpMethod, UploaderError } from './uploader';
 import type { UploadOptions } from 'tus-js-client';
 import { UploaderErrorCode } from '../constants/error-codes';
+import { Logger } from '../utils/logger';
 
 /**
  * Upload protocol types
@@ -20,6 +21,7 @@ export type UploadProtocol = 'http' | 'tus' | 'websocket' | 'webtransport';
 export interface ProtocolAdapter {
   name: string;
   protocol: UploadProtocol;
+  logger?: Logger;
 
   initialize?: (config: UploaderConfig) => Promise<void>;
 
@@ -196,6 +198,7 @@ export interface ProtocolFactoryConfig {
   tus?: TusConfig;
   websocket?: WebSocketConfig;
   webtransport?: WebTransportConfig;
+  logger?: Logger;
 }
 
 /**

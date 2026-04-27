@@ -22,6 +22,7 @@
  * - Chrome/Chromium 86+ or Edge 86+
  * - Server must use HTTPS (or localhost with HTTP/3)
  * - Valid or self-signed certificate (accepted by browser)
+ * - ⚠️ CRITICAL: Self-signed certificates MUST be valid for 14 days or less for WebTransport
  *
  * 🔐 GENERATING SELF-SIGNED CERTIFICATES:
  * openssl req -x509 -newkey ec -pkeyopt ec_paramgen_curve:prime256v1 -keyout key.pem -out cert.pem -sha256 -days 14 -nodes -subj "//CN=127.0.0.1"

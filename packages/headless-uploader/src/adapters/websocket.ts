@@ -9,7 +9,8 @@ import type {
 } from '../types';
 import { UploaderError } from '../types/uploader';
 import { UploaderErrorCodes } from '../constants/error-codes';
-import { sleep } from '../utils';
+import { sleep, applyBeforeRequestHook } from '../utils';
+import { Logger, defaultLogger } from '../utils/logger';
 
 interface ActiveConnection {
   ws: WebSocket;
@@ -26,7 +27,10 @@ interface ActiveConnection {
  * WebSocket Upload Implementation
  * Maintains a persistent connection for each file that survives pause/resume cycles.
  */
-export function createWebSocketAdapter(wsConfig: WebSocketConfig): ProtocolAdapter {
+export function createWebSocketAdapter(
+  wsConfig: WebSocketConfig,
+  logger: Logger = defaultLogger,
+): ProtocolAdapter {
   const connections = new Map<string, ActiveConnection>();
 
   /**
@@ -42,8 +46,7 @@ export function createWebSocketAdapter(wsConfig: WebSocketConfig): ProtocolAdapt
         try {
           conn.ws.close(code, safeReason);
         } catch (e) {
-          // eslint-disable-next-line
-          console.error(e);
+          logger.error('Error closing WebSocket:', e);
           conn.ws.close(code);
         }
       }
@@ -74,11 +77,13 @@ export function createWebSocketAdapter(wsConfig: WebSocketConfig): ProtocolAdapt
       ws = new WebSocket(wsConfig.url, protocols);
       ws.binaryType = wsConfig.binaryType || 'blob';
     } catch (err) {
-      const error = new UploaderError(err instanceof Error ? err.message : 'Invalid WebSocket URL', {
-        fileId: file.id,
-        code: UploaderErrorCodes.CONFIG_ERROR,
-      });
-      reject(error);
+      reject(
+        logger.createError(err instanceof Error ? err.message : 'Invalid WebSocket URL', {
+          fileId: file.id,
+          code: UploaderErrorCodes.CONFIG_ERROR,
+          originalError: err,
+        }),
+      );
       return;
     }
 
@@ -106,15 +111,16 @@ export function createWebSocketAdapter(wsConfig: WebSocketConfig): ProtocolAdapt
       const signal = file.abortController?.signal;
 
       try {
-        await uploadFileInChunks(ws, file, config, wsConfig, connection, signal);
+        await uploadFileInChunks(ws, file, config, wsConfig, connection, logger, signal);
       } catch (err) {
         connection.isStreaming = false;
         const error =
           err instanceof UploaderError
             ? err
-            : new UploaderError(err instanceof Error ? err.message : String(err), {
+            : logger.createError(err instanceof Error ? err.message : String(err), {
                 fileId: file.id,
                 code: UploaderErrorCodes.UPLOAD_FAILED,
+                originalError: err,
               });
 
         if (error.code === UploaderErrorCodes.ABORT_ERROR || error.message.includes('paused')) {
@@ -153,14 +159,14 @@ export function createWebSocketAdapter(wsConfig: WebSocketConfig): ProtocolAdapt
           currentConn.resolve(res);
           closeConnection(file.id);
         } else if (wsMessage.type === 'progress' || wsMessage.type === 'heartbeat') {
-          // eslint-disable-next-line
-          console.log(`Received ${wsMessage.type} for ${file.id}`);
+          logger.log(`Received ${wsMessage.type} for ${file.id}`);
         } else {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const isError = wsMessage.type === 'error' || (wsMessage as any).success === false;
 
           if (isError) {
-            const err = new UploaderError(wsMessage.message || 'Upload failed', {
-              // eslint-disable-next-line
+            const err = logger.createError(wsMessage.message || 'Upload failed', {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               code: (wsMessage as any).code || UploaderErrorCodes.UPLOAD_FAILED,
               fileId: wsMessage.fileId || file.id,
               response: wsMessage,
@@ -176,14 +182,7 @@ export function createWebSocketAdapter(wsConfig: WebSocketConfig): ProtocolAdapt
           }
         }
       } catch (err) {
-        const error =
-          err instanceof UploaderError
-            ? err
-            : new UploaderError(err instanceof Error ? err.message : String(err), {
-                code: UploaderErrorCodes.SERVER_ERROR,
-              });
-        // eslint-disable-next-line
-        console.error('Failed to parse WS message:', error);
+        logger.error('Failed to parse WS message:', err);
       }
     };
 
@@ -191,9 +190,10 @@ export function createWebSocketAdapter(wsConfig: WebSocketConfig): ProtocolAdapt
       wsConfig.onError?.(error);
       const currentConn = connections.get(file.id);
       if (currentConn) {
-        const err = new UploaderError('WebSocket connection failed', {
+        const err = logger.createError('WebSocket connection failed', {
           fileId: file.id,
           code: UploaderErrorCodes.NETWORK_ERROR,
+          originalError: error,
         });
         currentConn.reject(err);
         closeConnection(file.id, 1006, 'Connection error');
@@ -205,7 +205,7 @@ export function createWebSocketAdapter(wsConfig: WebSocketConfig): ProtocolAdapt
       const currentConn = connections.get(file.id);
 
       if (currentConn) {
-        const err = new UploaderError(`WebSocket closed: ${event.reason || 'Unknown reason'}`, {
+        const err = logger.createError(`WebSocket closed: ${event.reason || 'Unknown reason'}`, {
           fileId: file.id,
           // eslint-disable-next-line
           code: String(event.code) as any,
@@ -225,14 +225,14 @@ export function createWebSocketAdapter(wsConfig: WebSocketConfig): ProtocolAdapt
     };
   }
 
-
   return {
     name: 'WebSocket',
     protocol: 'websocket',
+    logger,
 
     async initialize(): Promise<void> {
       if (typeof WebSocket === 'undefined') {
-        throw new UploaderError('WebSocket is not supported in this environment', {
+        throw logger.createError('WebSocket is not supported in this environment', {
           code: UploaderErrorCodes.BROWSER_UNSUPPORTED,
         });
       }
@@ -251,16 +251,17 @@ export function createWebSocketAdapter(wsConfig: WebSocketConfig): ProtocolAdapt
             if (!conn.isStreaming) {
               const signal = file.abortController?.signal;
               conn.isStreaming = true;
-              uploadFileInChunks(conn.ws, file, config, wsConfig, conn, signal)
+              uploadFileInChunks(conn.ws, file, config, wsConfig, conn, logger, signal)
                 .then(() => {})
                 .catch((err) => {
                   conn.isStreaming = false;
                   const error =
                     err instanceof UploaderError
                       ? err
-                      : new UploaderError(err instanceof Error ? err.message : String(err), {
+                      : logger.createError(err instanceof Error ? err.message : String(err), {
                           fileId: file.id,
                           code: UploaderErrorCodes.UPLOAD_FAILED,
+                          originalError: err,
                         });
                   if (
                     error.code === UploaderErrorCodes.ABORT_ERROR ||
@@ -287,8 +288,7 @@ export function createWebSocketAdapter(wsConfig: WebSocketConfig): ProtocolAdapt
     },
 
     async pause(uploadId: string): Promise<void> {
-      // eslint-disable-next-line
-      console.log(`WebSocket upload paused: ${uploadId}`);
+      logger.log(`WebSocket upload paused: ${uploadId}`);
     },
 
     async cancel(uploadId: string): Promise<void> {
@@ -308,9 +308,10 @@ async function uploadFileInChunks(
   config: UploaderConfig,
   wsConfig: WebSocketConfig,
   connection: ActiveConnection,
+  logger: Logger,
   signal?: AbortSignal,
 ): Promise<void> {
-  const blueprint = config.onBeforeRequest ? await config.onBeforeRequest(file) : null;
+  const blueprint = await applyBeforeRequestHook(file, config);
 
   const chunkSize = config.chunkSize || 64 * 1024;
   const totalChunks = Math.ceil(file.metadata.size / chunkSize);
@@ -351,21 +352,20 @@ async function uploadFileInChunks(
 
   for (let i = startChunk; i < totalChunks; i++) {
     if (signal?.aborted) {
-      const error = new UploaderError('Upload paused or cancelled', {
+      throw logger.createError('Upload paused or cancelled', {
         fileId: file.id,
         code: UploaderErrorCodes.ABORT_ERROR,
       });
-      throw error;
     }
 
     if (socket.readyState !== WebSocket.OPEN) {
-      throw new UploaderError('WebSocket disconnected', {
+      throw logger.createError('WebSocket disconnected', {
         fileId: file.id,
         code: UploaderErrorCodes.NETWORK_ERROR,
       });
     }
 
-    await waitForBuffer(socket);
+    await waitForBuffer(socket, logger);
 
     const start = i * chunkSize;
     const end = Math.min(start + chunkSize, file.metadata.size);
@@ -396,8 +396,6 @@ async function uploadFileInChunks(
       }),
     );
 
-    await sleep(5);
-
     socket.send(buffer);
 
     uploadedBytes = end;
@@ -423,13 +421,13 @@ async function uploadFileInChunks(
 /**
  * Wait until the buffer is low enough to send more data
  */
-async function waitForBuffer(socket: WebSocket): Promise<void> {
+async function waitForBuffer(socket: WebSocket, logger: Logger): Promise<void> {
   const HIGH_WATER_MARK = 1024 * 1024;
   if (socket.bufferedAmount < HIGH_WATER_MARK) return;
 
   while (socket.bufferedAmount >= HIGH_WATER_MARK) {
     if (socket.readyState !== WebSocket.OPEN)
-      throw new UploaderError('WebSocket closed', { code: UploaderErrorCodes.NETWORK_ERROR });
+      throw logger.createError('WebSocket closed', { code: UploaderErrorCodes.NETWORK_ERROR });
     await sleep(50);
   }
 }

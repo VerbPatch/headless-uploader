@@ -26,7 +26,7 @@ This is a dedicated server for handling file uploads using the **WebTransport (H
     ```env
     APP_HOST=localhost
     APP_PORT=3000
-    WEBTRANSPORT_PORT=4443
+    WEBTRANSPORT_PORT=443
     AUTH_TOKEN=your-secret-token
     ```
 

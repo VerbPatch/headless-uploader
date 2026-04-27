@@ -290,6 +290,7 @@ async function handleWTStream(stream, isUni = false) {
               await writer.write(new TextEncoder().encode(progressResponse));
             } catch {
               // eslint-disable-next-line
+              // empty
             }
           }
           delete uploadInfo.nextChunkIndex;

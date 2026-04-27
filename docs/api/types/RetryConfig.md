@@ -5,7 +5,7 @@ description: Defines how the uploader should handle failed requests and retries.
 
 # RetryConfig
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:124](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L124)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:125](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L125)
 
 Retry configuration
 
@@ -15,7 +15,7 @@ Retry configuration
 
 > **maxRetries**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:126](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L126)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:127](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L127)
 
 Maximum number of retry attempts per file/chunk
 
@@ -25,7 +25,7 @@ Maximum number of retry attempts per file/chunk
 
 > **retryableStatuses**: `number`[]
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:132](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L132)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:133](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L133)
 
 List of HTTP status codes that should trigger a retry
 
@@ -35,7 +35,7 @@ List of HTTP status codes that should trigger a retry
 
 > **retryDelay**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:128](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L128)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:129](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L129)
 
 Initial delay before first retry in milliseconds
 
@@ -45,6 +45,6 @@ Initial delay before first retry in milliseconds
 
 > **retryDelayMultiplier**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:130](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L130)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:131](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L131)
 
 Factor to multiply delay by for each subsequent retry (exponential backoff)

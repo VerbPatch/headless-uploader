@@ -8,8 +8,16 @@ import type {
 } from '../types';
 import { pauseUpload, cancelUpload } from './processor';
 import { uploadAll, uploadSingleFile } from './scheduler';
-import { generateId, extractMetadata, generatePreview, validateFiles } from '../utils';
+import {
+  generateId,
+  extractMetadata,
+  generatePreview,
+  validateFiles,
+  updateFileStatus,
+  triggerQueueChange,
+} from '../utils';
 import { DEFAULT_CONFIG } from '../constants/defaults';
+import { Logger } from '../utils/logger';
 
 /**
  * Create upload file object
@@ -61,27 +69,6 @@ async function createUploadFile(file: File, config: UploaderConfig): Promise<Upl
   }
 
   return uploadFile;
-}
-
-/**
- * Trigger onQueueChange event
- */
-function triggerQueueChange(instance: UploaderInstance) {
-  instance.config.onQueueChange?.(Array.from(instance.files.values()));
-}
-
-/**
- * Update file status and trigger onStateChange
- */
-function updateFileStatus(
-  instance: UploaderInstance,
-  file: UploadFile,
-  status: UploadFile['status'],
-) {
-  if (file.status !== status) {
-    file.status = status;
-    instance.config.onStateChange?.(file);
-  }
 }
 
 /**
@@ -468,10 +455,12 @@ export async function handleFileSelect(instance: UploaderInstance, event: Event)
  * @internal
  */
 export function createUploader(config: UploaderConfig = {}): UploaderInterface {
+  const mergedConfig = { ...DEFAULT_CONFIG, ...config };
   const instance: UploaderInstance = {
     files: new Map(),
     activeUploads: new Map(),
-    config: { ...DEFAULT_CONFIG, ...config },
+    config: mergedConfig,
+    logger: new Logger(mergedConfig.debug),
   };
 
   return {

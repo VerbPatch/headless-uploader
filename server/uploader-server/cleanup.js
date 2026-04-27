@@ -30,6 +30,7 @@ async function performCleanup(dirPath) {
           console.log(`[Cleanup] Removed empty directory: ${entry.name}`);
         } catch {
           // eslint-disable-next-line
+          // Empty
         }
       }
     } else {

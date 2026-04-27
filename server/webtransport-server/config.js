@@ -6,7 +6,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export const config = {
-  APP_HOST: process.env.APP_HOST || 'localhost',
+  APP_HOST: process.env.APP_HOST || '127.0.0.1',
   APP_PORT: process.env.APP_PORT || 3000,
   WEBTRANSPORT_PORT: process.env.WEBTRANSPORT_PORT || 443,
   UPLOADS_DIR: path.join(__dirname, 'uploads'),

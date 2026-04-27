@@ -8,7 +8,7 @@ description: |-
 
 # TusConfig
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:105](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/protocolTypes.ts#L105)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:107](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/protocolTypes.ts#L107)
 
 TUS Protocol Configuration
 
@@ -42,7 +42,7 @@ TUS Protocol Configuration
 
 > **endpoint**: `string`
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:110](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/protocolTypes.ts#L110)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:112](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/protocolTypes.ts#L112)
 
 The server endpoint for Tus uploads (e.g., `https://tus.io/files/`).
 This is a required field for the Tus protocol.

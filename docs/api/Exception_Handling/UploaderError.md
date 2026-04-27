@@ -5,7 +5,7 @@ description: Extends the standard Error with additional fields for machine-reada
 
 # UploaderError
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:160](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L160)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:161](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L161)
 
 Custom error object for uploader operations
 
@@ -19,7 +19,7 @@ Custom error object for uploader operations
 
 > **new UploaderError**(`message`, `options?`): `UploaderError`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:168](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L168)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:169](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L169)
 
 #### Parameters
 
@@ -55,7 +55,7 @@ Defined in: [packages/headless-uploader/src/types/uploader.ts:168](https://githu
 
 > `optional` **code?**: [`UploaderErrorCode`](/uploader/docs/api/Exception_Handling/UploaderErrorCode)
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:162](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L162)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:163](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L163)
 
 Machine-readable error code (e.g., 'INVALID_FILE_TYPE', 'FILE_TOO_LARGE')
 
@@ -65,7 +65,7 @@ Machine-readable error code (e.g., 'INVALID_FILE_TYPE', 'FILE_TOO_LARGE')
 
 > `optional` **fileId?**: `string`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:164](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L164)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:165](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L165)
 
 The unique identifier of the file associated with this error
 
@@ -99,7 +99,7 @@ Defined in: node\_modules/.pnpm/typescript@6.0.2/node\_modules/typescript/lib/li
 
 > `optional` **response?**: `unknown`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:166](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L166)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:167](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L167)
 
 The raw server response if the error occurred during a network request
 

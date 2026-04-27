@@ -125,7 +125,7 @@ function removeNotification(id) {
 
 async function fetchWebTransportConfig() {
   try {
-    const response = await fetch('http://localhost:3000/webtransport-config');
+    const response = await fetch('http://127.0.0.1:3000/webtransport-config');
     if (response.ok) return await response.json();
   } catch (err) {
     // eslint-disable-next-line
@@ -136,14 +136,19 @@ async function fetchWebTransportConfig() {
 
 export async function setupUploader() {
   const wtConfig = await fetchWebTransportConfig();
+  
+  // Use port from config if available, fallback to 443
+  const wtPort = wtConfig?.port || 443;
+  const wtUrl = `https://127.0.0.1:${wtPort}/wt-upload`;
+
   const transportOptions = {
-    url: 'https://127.0.0.1:443/wt-upload',
+    url: wtUrl,
     allowPooling: true,
     congestionControl: 'throughput',
     bidirectionalStreams: true,
     metadata: { connectionType: 'persistent' },
-    onReady: () => console.log('Webtransport connected at https://127.0.0.1:443/wt-upload'),
-    onClosed: () => console.log('Webtransport closed at https://127.0.0.1:443/wt-upload'),
+    onReady: () => console.log(`Webtransport connected at ${wtUrl}`),
+    onClosed: () => console.log(`Webtransport closed at ${wtUrl}`),
   };
 
   if (wtConfig?.certHash) {
@@ -165,6 +170,7 @@ export async function setupUploader() {
     maxConcurrent: 2,
     autoRetry: true,
     enablePreviews: false,
+    debug:true,
     onFilesRejected: (rejections) => {
       rejections.forEach((rejection) => {
         showNotification(`Rejected: ${rejection.file.name} - ${rejection.message}`, 'error');

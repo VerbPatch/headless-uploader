@@ -5,7 +5,7 @@ description: Describes the properties and extracted metadata of a file.
 
 # FileMetadata
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:65](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L65)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:66](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L66)
 
 File metadata interface
 
@@ -15,7 +15,7 @@ File metadata interface
 
 > `optional` **dimensions?**: `object`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:77](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L77)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:78](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L78)
 
 Dimensions for image/video files (requires `extractMetadata: true`)
 
@@ -33,7 +33,7 @@ Dimensions for image/video files (requires `extractMetadata: true`)
 
 > `optional` **duration?**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:82](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L82)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:83](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L83)
 
 Duration in seconds for audio/video files (requires `extractMetadata: true`)
 
@@ -43,7 +43,7 @@ Duration in seconds for audio/video files (requires `extractMetadata: true`)
 
 > `optional` **extension?**: `string`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:75](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L75)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:76](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L76)
 
 File extension (e.g., '.jpg') derived from name
 
@@ -53,7 +53,7 @@ File extension (e.g., '.jpg') derived from name
 
 > **lastModified**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:73](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L73)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:74](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L74)
 
 Unix timestamp of last modification
 
@@ -63,7 +63,7 @@ Unix timestamp of last modification
 
 > **name**: `string`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:67](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L67)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:68](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L68)
 
 Original name of the file
 
@@ -73,7 +73,7 @@ Original name of the file
 
 > **size**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:69](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L69)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:70](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L70)
 
 Total size in bytes
 
@@ -83,6 +83,6 @@ Total size in bytes
 
 > **type**: `string`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:71](https://github.com/VerbPatch/headless-uploader/blob/082c5bec110f6e902077af4c9022810c190c723f/packages/headless-uploader/src/types/uploader.ts#L71)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:72](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L72)
 
 MIME type of the file

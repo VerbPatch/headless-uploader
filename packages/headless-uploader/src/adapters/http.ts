@@ -1,38 +1,21 @@
 import type { ProtocolAdapter, ProtocolUploadResult, HttpConfig } from '../types/protocolTypes';
-import type { UploadFile, UploaderConfig, ChunkInfo, UploadProgress } from '../types';
-import { UploaderError } from '../types/uploader';
+import type { UploadFile, UploaderConfig, ChunkInfo } from '../types';
 import { UploaderErrorCodes } from '../constants/error-codes';
-import { calculateSpeed, calculateTimeRemaining } from '../utils/helpers';
 import { createChunks } from '../utils/files';
-
-/**
- * Calculate progress information
- */
-function calculateProgress(loaded: number, total: number, startTime: number): UploadProgress {
-  const rawPercentage = total > 0 ? (loaded / total) * 100 : 0;
-  const percentage = Math.min(Math.round(rawPercentage), 100);
-  const speed = calculateSpeed(loaded, startTime);
-  const timeRemaining = calculateTimeRemaining(loaded, total, speed);
-  const elapsedTime = (Date.now() - startTime) / 1000;
-
-  return {
-    loaded,
-    total,
-    percentage,
-    speed,
-    timeRemaining,
-    startTime,
-    elapsedTime,
-  };
-}
+import { Logger, defaultLogger } from '../utils/logger';
+import { calculateProgress, applyBeforeRequestHook, prepareFormData } from '../utils';
 
 /**
  * HTTP Protocol Adapter Implementation
  */
-export function createHttpAdapter(httpConfig: HttpConfig = {}): ProtocolAdapter {
+export function createHttpAdapter(
+  httpConfig: HttpConfig = {},
+  logger: Logger = defaultLogger,
+): ProtocolAdapter {
   return {
     name: 'HTTP',
     protocol: 'http',
+    logger,
 
     async upload(file: UploadFile, config: UploaderConfig): Promise<ProtocolUploadResult> {
       const fileToUpload = file.processedFile || file.file;
@@ -40,20 +23,16 @@ export function createHttpAdapter(httpConfig: HttpConfig = {}): ProtocolAdapter 
 
       try {
         if (useChunking) {
-          await uploadWithChunks(file, fileToUpload, config, httpConfig);
+          await uploadWithChunks(file, fileToUpload, config, httpConfig, logger);
         } else {
-          await uploadSimple(file, fileToUpload, config, httpConfig);
+          await uploadSimple(file, fileToUpload, config, httpConfig, logger);
         }
 
         if (file.abortController?.signal.aborted) {
-          return {
-            success: false,
-            error: new UploaderError('Upload paused', {
-              fileId: file.id,
-              code: UploaderErrorCodes.ABORT_ERROR,
-            }),
-            bytesUploaded: file.progress.loaded,
-          };
+          throw logger.createError('Upload paused', {
+            fileId: file.id,
+            code: UploaderErrorCodes.ABORT_ERROR,
+          });
         }
 
         return {
@@ -65,9 +44,10 @@ export function createHttpAdapter(httpConfig: HttpConfig = {}): ProtocolAdapter 
         return {
           success: false,
           error:
-            error instanceof UploaderError
-              ? error
-              : new UploaderError(error instanceof Error ? error.message : String(error), {
+            error instanceof Error
+              ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                (error as any)
+              : logger.createError(String(error), {
                   fileId: file.id,
                   code: UploaderErrorCodes.UPLOAD_FAILED,
                 }),
@@ -94,22 +74,10 @@ async function uploadSimple(
   fileToUpload: File | Blob,
   config: UploaderConfig,
   httpConfig: HttpConfig,
+  logger: Logger,
 ): Promise<void> {
-  const blueprint = config.onBeforeRequest ? await config.onBeforeRequest(uploadFile) : null;
-
-  const formData = new FormData();
-  formData.append('fileId', uploadFile.id);
-  if (uploadFile.metadata) {
-    formData.append('metadata', JSON.stringify(uploadFile.metadata));
-  }
-
-  if (blueprint?.params) {
-    Object.entries(blueprint.params).forEach(([key, value]) => {
-      formData.append(key, typeof value === 'object' ? JSON.stringify(value) : String(value));
-    });
-  }
-
-  formData.append('file', fileToUpload, uploadFile.file.name);
+  const blueprint = await applyBeforeRequestHook(uploadFile, config);
+  const formData = prepareFormData(uploadFile, fileToUpload, blueprint);
 
   const startTime = Date.now();
   const xhr = new XMLHttpRequest();
@@ -150,7 +118,7 @@ async function uploadSimple(
           responseData = xhr.responseText;
         }
         reject(
-          new UploaderError(message, {
+          logger.createError(message, {
             code: responseData?.code || UploaderErrorCodes.HTTP_ERROR,
             fileId: uploadFile.id,
             response: responseData,
@@ -161,19 +129,18 @@ async function uploadSimple(
 
     xhr.onerror = () => {
       cleanup();
-      const msg =
-        xhr.status === 0
-          ? 'Network error: Likely CORS or connection refused'
-          : `Network error: Status ${xhr.status}`;
       reject(
-        new UploaderError(msg, { code: UploaderErrorCodes.NETWORK_ERROR, fileId: uploadFile.id }),
+        logger.createError('Network error: Likely CORS or connection refused', {
+          code: UploaderErrorCodes.NETWORK_ERROR,
+          fileId: uploadFile.id,
+        }),
       );
     };
 
     xhr.ontimeout = () => {
       cleanup();
       reject(
-        new UploaderError('Upload timed out', {
+        logger.createError('Upload timed out', {
           code: UploaderErrorCodes.TIMEOUT_ERROR,
           fileId: uploadFile.id,
         }),
@@ -190,25 +157,14 @@ async function uploadSimple(
       blueprint?.url || httpConfig.endpoint || '/upload',
     );
 
-    if (config.timeout) {
-      xhr.timeout = config.timeout;
-    }
+    if (config.timeout) xhr.timeout = config.timeout;
+    if (httpConfig.withCredentials) xhr.withCredentials = true;
 
-    if (httpConfig.headers) {
-      Object.entries(httpConfig.headers).forEach(([key, value]) => {
-        xhr.setRequestHeader(key, value);
-      });
-    }
-
-    if (blueprint?.headers) {
-      Object.entries(blueprint.headers).forEach(([key, value]) => {
-        xhr.setRequestHeader(key, value);
-      });
-    }
-
-    if (httpConfig.withCredentials) {
-      xhr.withCredentials = true;
-    }
+    // Merge headers
+    const headers = { ...httpConfig.headers, ...blueprint?.headers };
+    Object.entries(headers).forEach(([key, value]) => {
+      if (value) xhr.setRequestHeader(key, value);
+    });
 
     if (uploadFile.abortController?.signal.aborted) {
       resolve();
@@ -227,27 +183,11 @@ async function uploadChunk(
   chunk: ChunkInfo,
   config: UploaderConfig,
   httpConfig: HttpConfig,
+  logger: Logger,
   onProgressUpdate: () => void,
 ): Promise<void> {
-  const blueprint = config.onBeforeRequest ? await config.onBeforeRequest(uploadFile, chunk) : null;
-
-  const formData = new FormData();
-  formData.append('fileId', uploadFile.id);
-  formData.append('chunkIndex', chunk.index.toString());
-  formData.append('totalChunks', uploadFile.chunks?.length.toString() || '0');
-  formData.append('filename', uploadFile.file.name);
-
-  if (uploadFile.metadata) {
-    formData.append('metadata', JSON.stringify(uploadFile.metadata));
-  }
-
-  if (blueprint?.params) {
-    Object.entries(blueprint.params).forEach(([key, value]) => {
-      formData.append(key, typeof value === 'object' ? JSON.stringify(value) : String(value));
-    });
-  }
-
-  formData.append('file', chunk.blob, uploadFile.file.name);
+  const blueprint = await applyBeforeRequestHook(uploadFile, config, chunk);
+  const formData = prepareFormData(uploadFile, chunk.blob, blueprint, chunk);
 
   const xhr = new XMLHttpRequest();
 
@@ -285,7 +225,7 @@ async function uploadChunk(
           responseData = xhr.responseText;
         }
         reject(
-          new UploaderError(message, {
+          logger.createError(message, {
             code: responseData?.code || UploaderErrorCodes.HTTP_ERROR,
             fileId: uploadFile.id,
             response: responseData,
@@ -296,19 +236,18 @@ async function uploadChunk(
 
     xhr.onerror = () => {
       cleanup();
-      const msg =
-        xhr.status === 0
-          ? 'Network error: Likely CORS or connection refused'
-          : `Network error: Status ${xhr.status}`;
       reject(
-        new UploaderError(msg, { code: UploaderErrorCodes.NETWORK_ERROR, fileId: uploadFile.id }),
+        logger.createError('Network error', {
+          code: UploaderErrorCodes.NETWORK_ERROR,
+          fileId: uploadFile.id,
+        }),
       );
     };
 
     xhr.ontimeout = () => {
       cleanup();
       reject(
-        new UploaderError('Upload timeout exceeded', {
+        logger.createError('Upload timeout exceeded', {
           code: UploaderErrorCodes.TIMEOUT_ERROR,
           fileId: uploadFile.id,
         }),
@@ -320,30 +259,19 @@ async function uploadChunk(
       resolve();
     };
 
-    if (config.timeout) {
-      xhr.timeout = config.timeout;
-    }
-
     xhr.open(
       blueprint?.method || httpConfig.method || 'POST',
       blueprint?.url || httpConfig.endpoint || '/upload',
     );
 
-    if (httpConfig.headers) {
-      Object.entries(httpConfig.headers).forEach(([key, value]) => {
-        xhr.setRequestHeader(key, value);
-      });
-    }
+    if (config.timeout) xhr.timeout = config.timeout;
+    if (httpConfig.withCredentials) xhr.withCredentials = true;
 
-    if (blueprint?.headers) {
-      Object.entries(blueprint.headers).forEach(([key, value]) => {
-        xhr.setRequestHeader(key, value);
-      });
-    }
-
-    if (httpConfig.withCredentials) {
-      xhr.withCredentials = true;
-    }
+    // Merge headers
+    const headers = { ...httpConfig.headers, ...blueprint?.headers };
+    Object.entries(headers).forEach(([key, value]) => {
+      if (value) xhr.setRequestHeader(key, value);
+    });
 
     if (uploadFile.abortController?.signal.aborted) {
       cleanup();
@@ -363,6 +291,7 @@ async function uploadWithChunks(
   fileToUpload: File | Blob,
   config: UploaderConfig,
   httpConfig: HttpConfig,
+  logger: Logger,
 ): Promise<void> {
   const file =
     fileToUpload instanceof File
@@ -403,7 +332,6 @@ async function uploadWithChunks(
       if (myIndex >= uploadFile.chunks!.length) break;
 
       const chunk = uploadFile.chunks![myIndex];
-
       if (chunk.status === 'completed') continue;
 
       chunk.status = 'uploading';
@@ -420,7 +348,7 @@ async function uploadWithChunks(
         }
 
         try {
-          await uploadChunk(uploadFile, chunk, config, httpConfig, updateGlobalProgress);
+          await uploadChunk(uploadFile, chunk, config, httpConfig, logger, updateGlobalProgress);
 
           if (uploadFile.abortController?.signal.aborted) {
             chunk.status = 'pending';
