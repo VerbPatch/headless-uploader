@@ -12,7 +12,7 @@ import { Logger } from '../utils/logger';
 
 /**
  * Supported HTTP methods for upload
- * @group Types
+ * @group types
  * @title HttpMethod
  * @description Defines the valid HTTP verbs used for upload requests.
  */
@@ -20,7 +20,7 @@ export type HttpMethod = 'POST' | 'PUT' | 'PATCH';
 
 /**
  * Upload status states
- * @group Types
+ * @group types
  * @title UploadStatus
  * @description Enumerates all possible states a file can be in during its lifecycle.
  */
@@ -36,7 +36,7 @@ export type UploadStatus =
 
 /**
  * Upload progress information
- * @group Types
+ * @group types
  * @title UploadProgress
  * @description Contains detailed metrics about the current progress of an upload.
  */
@@ -59,7 +59,7 @@ export interface UploadProgress {
 
 /**
  * File metadata interface
- * @group Types
+ * @group types
  * @title FileMetadata
  * @description Describes the properties and extracted metadata of a file.
  */
@@ -85,7 +85,7 @@ export interface FileMetadata {
 
 /**
  * Chunk upload status
- * @group Types
+ * @group types
  * @title ChunkStatus
  * @description Represents the status of an individual file chunk.
  */
@@ -93,7 +93,7 @@ export type ChunkStatus = 'pending' | 'queued' | 'uploading' | 'completed' | 'fa
 
 /**
  * Chunk information
- * @group Types
+ * @group types
  * @title ChunkInfo
  * @description Contains metadata and state for a single part of a chunked upload.
  */
@@ -118,7 +118,7 @@ export interface ChunkInfo {
 
 /**
  * Retry configuration
- * @group Types
+ * @group types
  * @title RetryConfig
  * @description Defines how the uploader should handle failed requests and retries.
  */
@@ -135,7 +135,7 @@ export interface RetryConfig {
 
 /**
  * Compression options
- * @group Types
+ * @group types
  * @title CompressionOptions
  * @description Configuration for client-side file compression.
  */
@@ -154,7 +154,7 @@ export interface CompressionOptions {
 
 /**
  * Custom error object for uploader operations
- * @group Exception Handling
+ * @group exception handling
  * @title UploaderError
  * @description Extends the standard Error with additional fields for machine-readable codes and file identification.
  */
@@ -183,7 +183,7 @@ export class UploaderError extends Error {
 
 /**
  * Upload file representation
- * @group Types
+ * @group types
  * @title UploadFile
  * @description The internal object representing a file in the uploader, including its state and progress.
  */
@@ -216,7 +216,7 @@ export interface UploadFile {
 
 /**
  * Drag and drop event data
- * @group Types
+ * @group types
  * @title DropEventData
  * @description Data structure passed to drop event handlers.
  */
@@ -229,7 +229,7 @@ export interface DropEventData {
 
 /**
  * Blueprint for customizing network requests
- * @group Types
+ * @group types
  * @title RequestBlueprint
  * @description Allows for fine-grained customization of individual network requests.
  * @example
@@ -255,7 +255,7 @@ export interface RequestBlueprint {
 
 /**
  * Main uploader configuration
- * @group Types
+ * @group types
  * @title UploaderConfig
  * @description The primary configuration object for initializing the uploader.
  * @example
@@ -405,7 +405,7 @@ export interface UploaderConfig {
 
 /**
  * Internal uploader instance state
- * @group Types
+ * @group types
  * @title UploaderInstance
  * @internal
  */
@@ -419,7 +419,7 @@ export interface UploaderInstance {
 
 /**
  * UI-friendly representation of the uploader state
- * @group Types
+ * @group types
  * @title UploaderState
  * @description A read-only snapshot of the uploader's current state.
  */
@@ -448,7 +448,7 @@ export interface UploaderState {
 
 /**
  * Uploader public interface
- * @group Types
+ * @group types
  * @title UploaderInterface
  * @description The public API for interacting with a headless uploader instance.
  */
@@ -480,74 +480,74 @@ export interface UploaderInterface {
   getTotalProgress: () => { loaded: number; total: number; percentage: number };
 
   /**
-   * @group Queue Actions
+   * @group queue actions
    * @description Add files to the upload queue. Triggers validation.
    */
   addFiles: (fileList: FileList | File[]) => Promise<void>;
   /**
-   * @group Queue Actions
+   * @group queue actions
    * @description Remove a file from the uploader and cancel its upload if active
    */
   removeFile: (fileId: string) => Promise<void>;
   /**
-   * @group Queue Actions
+   * @group queue actions
    * @description Cancel all uploads and clear the file list
    */
   clearAll: () => Promise<void>;
 
   /**
-   * @group Upload Actions
+   * @group upload actions
    * @description Start uploading all currently queued/pending files
    */
   uploadAll: () => Promise<void>;
   /**
-   * @group Upload Actions
+   * @group upload actions
    * @description Start or resume uploading a specific file
    */
   uploadFile: (fileId: string) => Promise<void>;
   /**
-   * @group Upload Actions
+   * @group upload actions
    * @description Pause an active file upload. Supports resumption.
    */
   pauseUpload: (fileId: string) => Promise<void>;
   /**
-   * @group Upload Actions
+   * @group upload actions
    * @description Resume a paused file upload from the last known state
    */
   resumeUpload: (fileId: string) => Promise<void>;
   /**
-   * @group Upload Actions
+   * @group upload actions
    * @description Cancel an active or queued file upload. Aborts requests.
    */
   cancelUpload: (fileId: string) => Promise<void>;
   /**
-   * @group Upload Actions
+   * @group upload actions
    * @description Retry a failed file upload
    */
   retryUpload: (fileId: string) => Promise<void>;
 
   /**
-   * @group Event Handlers
+   * @group event handlers
    * @description Helper for handling dragover events. Sets drop effect.
    */
   handleDragOver: (event: DragEvent) => void;
   /**
-   * @group Event Handlers
+   * @group event handlers
    * @description Helper for handling drop events. Extracts files.
    */
   handleDrop: (event: DragEvent) => Promise<void>;
   /**
-   * @group Event Handlers
+   * @group event handlers
    * @description Helper for handling file input change events. Extracts files.
    */
   handleFileSelect: (event: Event) => Promise<void>;
   /**
-   * @group Actions
+   * @group actions
    * @description Update the uploader's configuration on the fly
    */
   updateConfig: (config: Partial<UploaderConfig>) => void;
   /**
-   * @group Lifecycle
+   * @group lifecycle
    * @description Cleanup the uploader instance, release memory and abort requests
    */
   destroy: () => Promise<void>;

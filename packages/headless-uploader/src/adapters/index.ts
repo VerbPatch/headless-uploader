@@ -10,7 +10,7 @@ import { createWebTransportAdapter, isWebTransportSupported } from './webtranspo
  * Create a protocol adapter based on the provided configuration
  * @param config - The configuration for the protocol factory
  * @returns A protocol adapter instance
- * @group Internal
+ * @group internal
  * @title createProtocolAdapter
  * @description Factory function that instantiates the appropriate adapter (HTTP, TUS, WebSocket, or WebTransport).
  * @internal
@@ -66,7 +66,7 @@ export function createProtocolAdapter(config: ProtocolFactoryConfig): ProtocolAd
  * @param fileSize - Size of the file in bytes
  * @param browserCapabilities - Optional overrides for browser capability detection
  * @returns The recommended UploadProtocol
- * @group Protocol Selection
+ * @group protocol selection
  * @title getRecommendedProtocol
  * @description Suggests the most suitable upload protocol based on file size and modern browser feature support.
  * @example
@@ -112,7 +112,7 @@ export function getRecommendedProtocol(
 
 /**
  * Detailed feature matrix for each supported protocol
- * @group Protocol Selection
+ * @group protocol selection
  * @title PROTOCOL_FEATURES
  * @description Comparison matrix showing capabilities like resumability and chunking.
  */
@@ -143,7 +143,7 @@ export const PROTOCOL_FEATURES = {
  * Check if a specific protocol is supported in the current environment
  * @param protocol - The protocol to check
  * @returns True if the protocol is supported
- * @group Protocol Selection
+ * @group protocol selection
  * @title isProtocolSupported
  * @description Verifies if the browser environment supports the required APIs for a given protocol.
  */
@@ -167,7 +167,7 @@ export function isProtocolSupported(protocol: UploadProtocol): boolean {
 /**
  * Get a list of all protocols supported by the current environment
  * @returns Array of supported UploadProtocol values
- * @group Protocol Selection
+ * @group protocol selection
  * @title getSupportedProtocols
  * @description Returns all protocols that can be used in the current browser or environment.
  */
@@ -187,7 +187,7 @@ export function getSupportedProtocols(): UploadProtocol[] {
 
 /**
  * Detailed comparison result for a protocol
- * @group Protocol Selection
+ * @group protocol selection
  * @title ProtocolComparison
  */
 export interface ProtocolComparison {
@@ -206,7 +206,7 @@ export interface ProtocolComparison {
  * @param fileSize - Size of the file in bytes
  * @param requirements - Optional set of functional requirements
  * @returns An array of ProtocolComparison objects sorted by score
- * @group Protocol Selection
+ * @group protocol selection
  * @title compareProtocols
  * @description Ranks available protocols based on their suitability for a specific upload scenario.
  *

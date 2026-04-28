@@ -82,168 +82,168 @@
     "group": "api"
   },
   {
-    "title": "Exception Handling",
+    "title": "exception handling",
     "children": [
       {
         "title": "UploaderError",
         "kind": 128,
-        "path": "/uploader/docs/api/Exception_Handling/UploaderError",
+        "path": "/uploader/docs/api/exception_handling/UploaderError",
         "isDeprecated": false
       },
       {
         "title": "UploaderErrorCode",
         "kind": 2097152,
-        "path": "/uploader/docs/api/Exception_Handling/UploaderErrorCode",
+        "path": "/uploader/docs/api/exception_handling/UploaderErrorCode",
         "isDeprecated": false
       },
       {
         "title": "UploaderErrorCodes",
         "kind": 32,
-        "path": "/uploader/docs/api/Exception_Handling/UploaderErrorCodes",
+        "path": "/uploader/docs/api/exception_handling/UploaderErrorCodes",
         "isDeprecated": false
       }
     ],
     "group": "api"
   },
   {
-    "title": "Protocol Configurations",
+    "title": "protocol configurations",
     "children": [
       {
         "title": "HttpConfig",
         "kind": 256,
-        "path": "/uploader/docs/api/Protocol_Configurations/HttpConfig",
+        "path": "/uploader/docs/api/protocol_configurations/HttpConfig",
         "isDeprecated": false
       },
       {
         "title": "TusConfig",
         "kind": 256,
-        "path": "/uploader/docs/api/Protocol_Configurations/TusConfig",
+        "path": "/uploader/docs/api/protocol_configurations/TusConfig",
         "isDeprecated": false
       },
       {
         "title": "WebSocketConfig",
         "kind": 256,
-        "path": "/uploader/docs/api/Protocol_Configurations/WebSocketConfig",
+        "path": "/uploader/docs/api/protocol_configurations/WebSocketConfig",
         "isDeprecated": false
       },
       {
         "title": "WebTransportConfig",
         "kind": 256,
-        "path": "/uploader/docs/api/Protocol_Configurations/WebTransportConfig",
+        "path": "/uploader/docs/api/protocol_configurations/WebTransportConfig",
         "isDeprecated": false
       }
     ],
     "group": "api"
   },
   {
-    "title": "Protocol Selection",
+    "title": "protocol selection",
     "children": [
       {
         "title": "compareProtocols",
         "kind": 64,
-        "path": "/uploader/docs/api/Protocol_Selection/compareProtocols",
+        "path": "/uploader/docs/api/protocol_selection/compareProtocols",
         "isDeprecated": false
       },
       {
         "title": "getRecommendedProtocol",
         "kind": 64,
-        "path": "/uploader/docs/api/Protocol_Selection/getRecommendedProtocol",
+        "path": "/uploader/docs/api/protocol_selection/getRecommendedProtocol",
         "isDeprecated": false
       },
       {
         "title": "getSupportedProtocols",
         "kind": 64,
-        "path": "/uploader/docs/api/Protocol_Selection/getSupportedProtocols",
+        "path": "/uploader/docs/api/protocol_selection/getSupportedProtocols",
         "isDeprecated": false
       }
     ],
     "group": "api"
   },
   {
-    "title": "Types",
+    "title": "types",
     "children": [
       {
         "title": "ChunkInfo",
         "kind": 256,
-        "path": "/uploader/docs/api/Types/ChunkInfo",
+        "path": "/uploader/docs/api/types/ChunkInfo",
         "isDeprecated": false
       },
       {
         "title": "CompressionOptions",
         "kind": 256,
-        "path": "/uploader/docs/api/Types/CompressionOptions",
+        "path": "/uploader/docs/api/types/CompressionOptions",
         "isDeprecated": false
       },
       {
         "title": "DropEventData",
         "kind": 256,
-        "path": "/uploader/docs/api/Types/DropEventData",
+        "path": "/uploader/docs/api/types/DropEventData",
         "isDeprecated": false
       },
       {
         "title": "FileMetadata",
         "kind": 256,
-        "path": "/uploader/docs/api/Types/FileMetadata",
+        "path": "/uploader/docs/api/types/FileMetadata",
         "isDeprecated": false
       },
       {
         "title": "RetryConfig",
         "kind": 256,
-        "path": "/uploader/docs/api/Types/RetryConfig",
+        "path": "/uploader/docs/api/types/RetryConfig",
         "isDeprecated": false
       },
       {
         "title": "UploaderConfig",
         "kind": 256,
-        "path": "/uploader/docs/api/Types/UploaderConfig",
+        "path": "/uploader/docs/api/types/UploaderConfig",
         "isDeprecated": false
       },
       {
         "title": "UploaderInterface",
         "kind": 256,
-        "path": "/uploader/docs/api/Types/UploaderInterface",
+        "path": "/uploader/docs/api/types/UploaderInterface",
         "isDeprecated": false
       },
       {
         "title": "UploaderState",
         "kind": 256,
-        "path": "/uploader/docs/api/Types/UploaderState",
+        "path": "/uploader/docs/api/types/UploaderState",
         "isDeprecated": false
       },
       {
         "title": "UploadFile",
         "kind": 256,
-        "path": "/uploader/docs/api/Types/UploadFile",
+        "path": "/uploader/docs/api/types/UploadFile",
         "isDeprecated": false
       },
       {
         "title": "UploadProgress",
         "kind": 256,
-        "path": "/uploader/docs/api/Types/UploadProgress",
+        "path": "/uploader/docs/api/types/UploadProgress",
         "isDeprecated": false
       },
       {
         "title": "ChunkStatus",
         "kind": 2097152,
-        "path": "/uploader/docs/api/Types/ChunkStatus",
+        "path": "/uploader/docs/api/types/ChunkStatus",
         "isDeprecated": false
       },
       {
         "title": "HttpMethod",
         "kind": 2097152,
-        "path": "/uploader/docs/api/Types/HttpMethod",
+        "path": "/uploader/docs/api/types/HttpMethod",
         "isDeprecated": false
       },
       {
         "title": "UploadProtocol",
         "kind": 2097152,
-        "path": "/uploader/docs/api/Types/UploadProtocol",
+        "path": "/uploader/docs/api/types/UploadProtocol",
         "isDeprecated": false
       },
       {
         "title": "UploadStatus",
         "kind": 2097152,
-        "path": "/uploader/docs/api/Types/UploadStatus",
+        "path": "/uploader/docs/api/types/UploadStatus",
         "isDeprecated": false
       }
     ],

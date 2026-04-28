@@ -5,7 +5,7 @@ import { Logger } from '../utils/logger';
 
 /**
  * Upload protocol types
- * @group Types
+ * @group types
  * @title UploadProtocol
  * @description Defines the available communication protocols for file transfer.
  */
@@ -13,7 +13,7 @@ export type UploadProtocol = 'http' | 'tus' | 'websocket' | 'webtransport';
 
 /**
  * Protocol adapter interface
- * @group Internal
+ * @group internal
  * @title ProtocolAdapter
  * @description Internal interface for implementing specific upload protocols.
  * @internal
@@ -36,7 +36,7 @@ export interface ProtocolAdapter {
 
 /**
  * Protocol upload result
- * @group Internal
+ * @group internal
  * @title ProtocolUploadResult
  * @description Represents the outcome of a protocol-specific upload operation.
  * @internal
@@ -58,7 +58,7 @@ export interface ProtocolUploadResult {
 
 /**
  * HTTP Protocol Configuration
- * @group Protocol Configurations
+ * @group protocol configurations
  * @title HttpConfig
  * @description Configuration options for standard HTTP-based uploads (Multipart or Chunked).
  */
@@ -99,7 +99,7 @@ export interface HttpConfig {
 
 /**
  * TUS Protocol Configuration
- * @group Protocol Configurations
+ * @group protocol configurations
  * @title TusConfig
  * @description Configuration for the Tus resumable upload protocol.
  * Extends the official `tus-js-client` options.
@@ -114,7 +114,7 @@ export interface TusConfig extends Partial<UploadOptions> {
 
 /**
  * WebSocket Configuration
- * @group Protocol Configurations
+ * @group protocol configurations
  * @title WebSocketConfig
  * @description Configuration for uploading files over a persistent WebSocket connection.
  */
@@ -145,7 +145,7 @@ export interface WebSocketConfig {
 
 /**
  * WebTransport Configuration
- * @group Protocol Configurations
+ * @group protocol configurations
  * @title WebTransportConfig
  * @description Configuration for the modern WebTransport protocol (HTTP/3 + QUIC).
  */
@@ -187,7 +187,7 @@ export interface WebTransportConfig {
 
 /**
  * Protocol factory configuration
- * @group Internal
+ * @group internal
  * @title ProtocolFactoryConfig
  * @description Configuration used by the internal protocol factory.
  * @internal
@@ -203,7 +203,7 @@ export interface ProtocolFactoryConfig {
 
 /**
  * Upload session data
- * @group Types
+ * @group types
  * @title UploadSession
  * @description Data used to track and resume upload sessions across browser refreshes.
  */
@@ -232,7 +232,7 @@ export interface UploadSession {
 
 /**
  * WebSocket message types
- * @group Internal
+ * @group internal
  * @title WebSocketMessage
  * @description Defines the structure of control and data messages exchanged over WebSockets.
  * @internal

@@ -1,6 +1,6 @@
 /**
  * Common uploader error codes
- * @group Exception Handling
+ * @group exception handling
  * @title UploaderErrorCodes
  * @description Enumeration of machine-readable error codes for identifying specific failure conditions.
  */
@@ -45,7 +45,7 @@ export const UploaderErrorCodes = {
 
 /**
  * Type representing all possible uploader error codes
- * @group Exception Handling
+ * @group exception handling
  * @title UploaderErrorCode
  * @description Type representing all possible uploader error codes.
  */
