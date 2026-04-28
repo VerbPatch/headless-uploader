@@ -7,7 +7,7 @@ description: Enumeration of machine-readable error codes for identifying specifi
 
 > `const` **UploaderErrorCodes**: `object`
 
-Defined in: [packages/headless-uploader/src/constants/error-codes.ts:7](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/constants/error-codes.ts#L7)
+Defined in: [packages/headless-uploader/src/constants/error-codes.ts:7](https://github.com/VerbPatch/headless-uploader/blob/fa87929455581a674ea388abbe1f6a0fd686dc13/packages/headless-uploader/src/constants/error-codes.ts#L7)
 
 Common uploader error codes
 

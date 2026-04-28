@@ -5,7 +5,7 @@ description: Contains detailed metrics about the current progress of an upload.
 
 # UploadProgress
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:43](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L43)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:43](https://github.com/VerbPatch/headless-uploader/blob/fa87929455581a674ea388abbe1f6a0fd686dc13/packages/headless-uploader/src/types/uploader.ts#L43)
 
 Upload progress information
 
@@ -15,7 +15,7 @@ Upload progress information
 
 > **elapsedTime**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:57](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L57)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:57](https://github.com/VerbPatch/headless-uploader/blob/fa87929455581a674ea388abbe1f6a0fd686dc13/packages/headless-uploader/src/types/uploader.ts#L57)
 
 Seconds elapsed since the upload started
 
@@ -25,7 +25,7 @@ Seconds elapsed since the upload started
 
 > **loaded**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:45](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L45)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:45](https://github.com/VerbPatch/headless-uploader/blob/fa87929455581a674ea388abbe1f6a0fd686dc13/packages/headless-uploader/src/types/uploader.ts#L45)
 
 Total bytes transferred so far
 
@@ -35,7 +35,7 @@ Total bytes transferred so far
 
 > **percentage**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:49](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L49)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:49](https://github.com/VerbPatch/headless-uploader/blob/fa87929455581a674ea388abbe1f6a0fd686dc13/packages/headless-uploader/src/types/uploader.ts#L49)
 
 Progress as a percentage (0-100)
 
@@ -45,7 +45,7 @@ Progress as a percentage (0-100)
 
 > **speed**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:51](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L51)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:51](https://github.com/VerbPatch/headless-uploader/blob/fa87929455581a674ea388abbe1f6a0fd686dc13/packages/headless-uploader/src/types/uploader.ts#L51)
 
 Current upload speed in bytes per second
 
@@ -55,7 +55,7 @@ Current upload speed in bytes per second
 
 > **startTime**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:55](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L55)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:55](https://github.com/VerbPatch/headless-uploader/blob/fa87929455581a674ea388abbe1f6a0fd686dc13/packages/headless-uploader/src/types/uploader.ts#L55)
 
 Timestamp when the upload session started
 
@@ -65,7 +65,7 @@ Timestamp when the upload session started
 
 > **timeRemaining**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:53](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L53)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:53](https://github.com/VerbPatch/headless-uploader/blob/fa87929455581a674ea388abbe1f6a0fd686dc13/packages/headless-uploader/src/types/uploader.ts#L53)
 
 Estimated seconds remaining based on current speed
 
@@ -75,6 +75,6 @@ Estimated seconds remaining based on current speed
 
 > **total**: `number`
 
-Defined in: [packages/headless-uploader/src/types/uploader.ts:47](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/uploader.ts#L47)
+Defined in: [packages/headless-uploader/src/types/uploader.ts:47](https://github.com/VerbPatch/headless-uploader/blob/fa87929455581a674ea388abbe1f6a0fd686dc13/packages/headless-uploader/src/types/uploader.ts#L47)
 
 Total size of the file/blob in bytes

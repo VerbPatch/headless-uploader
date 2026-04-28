@@ -5,7 +5,7 @@ description: Configuration for uploading files over a persistent WebSocket conne
 
 # WebSocketConfig
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:121](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/protocolTypes.ts#L121)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:121](https://github.com/VerbPatch/headless-uploader/blob/fa87929455581a674ea388abbe1f6a0fd686dc13/packages/headless-uploader/src/types/protocolTypes.ts#L121)
 
 WebSocket Configuration
 
@@ -15,7 +15,7 @@ WebSocket Configuration
 
 > **binaryType**: `"blob"` \| `"arraybuffer"`
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:135](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/protocolTypes.ts#L135)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:135](https://github.com/VerbPatch/headless-uploader/blob/fa87929455581a674ea388abbe1f6a0fd686dc13/packages/headless-uploader/src/types/protocolTypes.ts#L135)
 
 Preferred binary type for data transfer.
 
@@ -31,7 +31,7 @@ Preferred binary type for data transfer.
 
 > **heartbeatInterval**: `number`
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:130](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/protocolTypes.ts#L130)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:130](https://github.com/VerbPatch/headless-uploader/blob/fa87929455581a674ea388abbe1f6a0fd686dc13/packages/headless-uploader/src/types/protocolTypes.ts#L130)
 
 Interval for sending heartbeat messages to keep connection alive.
 
@@ -47,7 +47,7 @@ Interval for sending heartbeat messages to keep connection alive.
 
 > `optional` **metadata?**: `Record`\<`string`, `string`\>
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:137](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/protocolTypes.ts#L137)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:137](https://github.com/VerbPatch/headless-uploader/blob/fa87929455581a674ea388abbe1f6a0fd686dc13/packages/headless-uploader/src/types/protocolTypes.ts#L137)
 
 Optional static metadata sent during the initial handshake
 
@@ -57,7 +57,7 @@ Optional static metadata sent during the initial handshake
 
 > `optional` **onClose?**: () => `void`
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:141](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/protocolTypes.ts#L141)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:141](https://github.com/VerbPatch/headless-uploader/blob/fa87929455581a674ea388abbe1f6a0fd686dc13/packages/headless-uploader/src/types/protocolTypes.ts#L141)
 
 Callback fired when the WebSocket connection closes
 
@@ -71,7 +71,7 @@ Callback fired when the WebSocket connection closes
 
 > `optional` **onError?**: (`error`) => `void`
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:143](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/protocolTypes.ts#L143)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:143](https://github.com/VerbPatch/headless-uploader/blob/fa87929455581a674ea388abbe1f6a0fd686dc13/packages/headless-uploader/src/types/protocolTypes.ts#L143)
 
 Callback fired on connection-level errors
 
@@ -91,7 +91,7 @@ Callback fired on connection-level errors
 
 > `optional` **onOpen?**: () => `void`
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:139](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/protocolTypes.ts#L139)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:139](https://github.com/VerbPatch/headless-uploader/blob/fa87929455581a674ea388abbe1f6a0fd686dc13/packages/headless-uploader/src/types/protocolTypes.ts#L139)
 
 Callback fired when the WebSocket connection opens successfully
 
@@ -105,7 +105,7 @@ Callback fired when the WebSocket connection opens successfully
 
 > `optional` **protocols?**: `string` \| `string`[]
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:125](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/protocolTypes.ts#L125)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:125](https://github.com/VerbPatch/headless-uploader/blob/fa87929455581a674ea388abbe1f6a0fd686dc13/packages/headless-uploader/src/types/protocolTypes.ts#L125)
 
 Sub-protocols to use during handshake
 
@@ -115,6 +115,6 @@ Sub-protocols to use during handshake
 
 > **url**: `string`
 
-Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:123](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/types/protocolTypes.ts#L123)
+Defined in: [packages/headless-uploader/src/types/protocolTypes.ts:123](https://github.com/VerbPatch/headless-uploader/blob/fa87929455581a674ea388abbe1f6a0fd686dc13/packages/headless-uploader/src/types/protocolTypes.ts#L123)
 
 The WebSocket server URL (e.g., `wss://api.example.com/upload`)

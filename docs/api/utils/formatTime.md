@@ -7,7 +7,7 @@ description: Converts a duration in seconds into a standard HH:MM:SS format.
 
 > **formatTime**(`seconds`): `string`
 
-Defined in: [packages/headless-uploader/src/utils/helpers.ts:48](https://github.com/VerbPatch/headless-uploader/blob/9533dd838fe6a6d6e04bf01dcdc5ddac530f3814/packages/headless-uploader/src/utils/helpers.ts#L48)
+Defined in: [packages/headless-uploader/src/utils/helpers.ts:48](https://github.com/VerbPatch/headless-uploader/blob/fa87929455581a674ea388abbe1f6a0fd686dc13/packages/headless-uploader/src/utils/helpers.ts#L48)
 
 Format seconds into a human-readable duration string
 

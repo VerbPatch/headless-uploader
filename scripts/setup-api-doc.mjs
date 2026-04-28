@@ -132,7 +132,7 @@ export function load(app) {
 
           if (publicPath) {
             const normalized = item.path.startsWith('/') ? item.path : '/' + item.path;
-            item.path = publicPath + normalized.toLowerCase();
+            item.path = publicPath + normalized;
           }
         } else {
           item.group = 'api';
